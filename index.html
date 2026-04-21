@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Global Travel Intercâmbios | Seu futuro não tem fronteiras</title>
+  <meta name="description" content="Passagens aéreas, intercâmbio, viagens internacionais, assessoria imigratória e planos para estudar, morar e trabalhar fora." />
+  <meta property="og:title" content="Global Travel Intercâmbios | Seu futuro não tem fronteiras" />
+  <meta property="og:description" content="Passagens aéreas, intercâmbio, viagens internacionais, assessoria imigratória e planos para estudar, morar e trabalhar fora." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/png" href="favicon_original_mark_v16.png" />
+  <meta name="theme-color" content="#07131F" />
+  <link rel="apple-touch-icon" href="favicon_original_mark_v16.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+:root{
+  --bg:#050d16;
+  --bg-soft:#0a1624;
+  --panel:rgba(11,22,35,.72);
+  --panel-2:rgba(7,14,24,.92);
+  --line:rgba(255,255,255,.08);
+  --line-strong:rgba(199,154,74,.28);
+  --text:#F8FBFF;
+  --muted:rgba(240,245,251,.76);
+  --muted-2:rgba(240,245,251,.58);
+  --gold:#C79A4A;
+  --gold-soft:#F2D49B;
+  --blue:#13304E;
+  --shadow:0 20px 50px rgba(0,0,0,.28);
+  --shadow-soft:0 14px 36px rgba(0,0,0,.18);
+  --radius:24px;
+  --radius-lg:28px;
+  --radius-sm:18px;
+  --container:min(1180px, calc(100vw - 40px));
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;overflow-x:hidden;
+  font-family:'Outfit',system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(ellipse at top left, rgba(40,95,150,.2), transparent 40%),
+    radial-gradient(ellipse at top right, rgba(199,154,74,.15), transparent 38%),
+    linear-gradient(180deg,#040b12 0%,#08121d 50%,#091421 100%);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+body.nav-open{overflow:hidden}
+a{color:inherit;text-decoration:none}
+img,video,svg{display:block;max-width:100%}
+button{cursor:pointer;border:0;background:none;color:inherit;font:inherit}
+::selection{background:rgba(199,154,74,.28);color:#fff}
+
+/* Typography */
+h1,h2,h3,.serif{font-family:'Cormorant Garamond',Georgia,serif;line-height:1.02;letter-spacing:-.02em;margin:0;font-weight:600}
+h1{font-size:clamp(2.4rem, 6.2vw, 5.2rem);line-height:1}
+h2{font-size:clamp(2rem, 4.6vw, 3.6rem)}
+h3{font-size:clamp(1.35rem, 2.4vw, 1.88rem)}
+p{margin:0}
+.copy,.lead,.small-copy{color:var(--muted);line-height:1.72}
+.lead{font-size:clamp(1rem, 1.4vw, 1.08rem)}
+.small-copy{font-size:.92rem}
+
+/* Layout */
+.container{width:var(--container);margin:0 auto}
+.section{padding:clamp(56px, 9vw, 104px) 0;position:relative;z-index:2}
+.section.tight{padding:clamp(44px, 6.5vw, 72px) 0}
+.section-head{display:grid;gap:16px;max-width:760px;margin-bottom:clamp(28px, 4.5vw, 40px)}
+
+.kicker{
+  display:inline-flex;align-items:center;gap:12px;
+  text-transform:uppercase;letter-spacing:.22em;font-size:.7rem;
+  color:rgba(255,255,255,.78);font-weight:500;
+}
+.kicker::before{content:"";width:42px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);flex-shrink:0}
+
+/* Buttons */
+.btn-row{display:flex;flex-wrap:wrap;gap:12px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:52px;padding:0 22px;border-radius:999px;
+  font-weight:600;font-size:.98rem;
+  border:1px solid transparent;cursor:pointer;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .3s var(--ease), border-color .3s var(--ease);
+  white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{
+  background:linear-gradient(135deg,var(--gold-soft),var(--gold));
+  color:#13253A;
+  box-shadow:0 14px 28px rgba(199,154,74,.24);
+}
+.btn-primary:hover{box-shadow:0 18px 36px rgba(199,154,74,.34)}
+.btn-secondary{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12);color:#fff;backdrop-filter:blur(12px)}
+.btn-secondary:hover{border-color:rgba(255,255,255,.24);background:rgba(255,255,255,.06)}
+.btn-link{padding:0;min-height:auto;background:none;color:var(--gold-soft);font-weight:600;display:inline-flex;gap:6px}
+
+/* Reveal animation */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.revealed{opacity:1;transform:none}
+
+/* Glass cards */
+.card,.glass,.service,.quote,.contact-box,.info-box,.path-card,.course-card,.destination-card,.faq-item,.mini-card,.cta-card,.sim-card,.result-card,.hero-card{
+  background:linear-gradient(180deg, rgba(11,22,35,.78), rgba(7,14,24,.92));
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(16px);
+  box-shadow:var(--shadow);
+  border-radius:var(--radius-lg);
+}
+
+/* Header */
+.site-header{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  border-bottom:1px solid transparent;
+  transition:background .35s var(--ease),backdrop-filter .35s var(--ease),border-color .35s var(--ease);
+}
+.site-header.scrolled{
+  background:rgba(4,10,18,.84);
+  backdrop-filter:blur(18px);
+  border-color:rgba(255,255,255,.08);
+}
+.nav-shell{
+  width:var(--container);margin:0 auto;
+  min-height:78px;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+}
+.brand{display:flex;align-items:center;min-width:0;position:relative;z-index:3}
+.brand-logo{
+  width:clamp(180px, 22vw, 260px);
+  height:auto;
+  object-fit:contain;
+  filter:drop-shadow(0 10px 24px rgba(0,0,0,.22));
+}
+.brand-mark{display:none}
+.brand-word{display:none}
+.nav-links{display:flex;align-items:center;gap:26px;color:rgba(255,255,255,.88);font-size:.95rem}
+.nav-links a{position:relative;padding:6px 0;transition:color .25s var(--ease)}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+.nav-links a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .3s var(--ease)}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+.nav-cta{display:flex;align-items:center;gap:12px}
+.burger{
+  display:none;
+  width:46px;height:46px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+  color:#fff;font-size:1.2rem;
+  align-items:center;justify-content:center;
+  transition:background .3s var(--ease);
+}
+.burger:hover{background:rgba(255,255,255,.08)}
+.mobile-panel{display:none}
+
+/* Preloader */
+.preloader{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:linear-gradient(180deg,#030912 0%,#08111a 100%);transition:opacity .75s var(--ease),visibility .75s var(--ease)}
+.preloader.hidden{opacity:0;visibility:hidden}
+.preloader-inner{display:grid;gap:18px;place-items:center;text-align:center;padding:22px}
+.preloader-logo{width:min(240px, 56vw);filter:drop-shadow(0 14px 34px rgba(0,0,0,.26));animation:floatLogo 3s ease-in-out infinite}
+.preloader-logo img{width:100%;height:auto;display:block}
+.preloader-bar{width:min(220px,72vw);height:3px;border-radius:999px;background:rgba(255,255,255,.08);overflow:hidden;position:relative}
+.preloader-bar::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,var(--gold-soft),transparent);transform:translateX(-100%);animation:loading 1.7s linear infinite}
+.preloader small{text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.68);font-size:.7rem}
+
+/* Hero */
+.hero{
+  position:relative;
+  min-height:min(100svh, 820px);
+  display:grid;align-items:end;
+  padding:116px 0 56px;
+  overflow:clip;
+}
+.hero-bg,.hero-slides{position:absolute;inset:0}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s var(--ease)}
+.hero-slide.active{opacity:1}
+.hero-slide video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.58) saturate(1.05) contrast(1.04);transform:scale(1.05)}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(5,10,16,.14) 0%,rgba(5,10,16,.42) 28%,rgba(5,10,16,.88) 100%),
+    radial-gradient(circle at 20% 30%,rgba(199,154,74,.18),transparent 30%),
+    radial-gradient(circle at 80% 20%,rgba(36,89,144,.2),transparent 28%);
+}
+.hero-inner{
+  position:relative;z-index:2;
+  width:var(--container);margin:0 auto;
+  display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.72fr);
+  gap:28px;align-items:end;
+}
+.hero-copy{max-width:680px}
+.hero-title{margin-top:16px}
+.hero-details{display:grid;gap:18px}
+.hero-lead{margin:18px 0 24px;max-width:56ch;color:rgba(247,251,255,.86)}
+.hero-card{padding:28px}
+.hero-card strong{display:block;font-size:clamp(1.7rem, 3.3vw, 2.25rem);font-family:'Cormorant Garamond',Georgia,serif;line-height:1.08;letter-spacing:-.02em}
+.hero-card p{margin-top:10px;color:var(--muted);line-height:1.7}
+.hero-dots{position:relative;z-index:2;display:flex;gap:10px;margin-top:24px}
+.hero-dots button{width:10px;height:10px;border-radius:999px;background:rgba(255,255,255,.35);padding:0;transition:all .3s var(--ease)}
+.hero-dots button.active{background:var(--gold-soft);transform:scale(1.3);box-shadow:0 0 0 4px rgba(199,154,74,.18)}
+
+.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+.mini-stats .mini-card{padding:14px;border-radius:18px;background:rgba(255,255,255,.03);box-shadow:none}
+.mini-stats strong{display:block;font-size:1.05rem;color:var(--gold-soft);font-family:'Outfit',sans-serif;font-weight:700;margin-bottom:4px}
+.mini-stats span{display:block;font-size:.78rem;line-height:1.44;color:rgba(255,255,255,.66)}
+
+/* Grids */
+.intro-grid,.story-grid,.contact-grid,.page-grid,.two-col{display:grid;gap:24px;align-items:stretch}
+.intro-grid{grid-template-columns:1.05fr .95fr}
+.story-grid{grid-template-columns:1.05fr .95fr;align-items:center}
+.contact-grid{grid-template-columns:1fr .92fr}
+.two-col{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-3,.services-grid,.destination-grid,.quotes-grid,.path-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.course-grid,.steps-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+
+/* Cards */
+.glass,.info-box,.contact-box{padding:clamp(22px, 2.8vw, 32px)}
+.service,.destination-card,.path-card,.course-card,.quote{padding:clamp(22px, 2.6vw, 28px)}
+.service,.destination-card,.path-card,.course-card{transition:transform .3s var(--ease),border-color .3s var(--ease),background .3s var(--ease)}
+.service:hover,.destination-card:hover,.path-card:hover,.course-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(199,154,74,.24);
+  background:linear-gradient(180deg, rgba(15,29,46,.94), rgba(8,15,24,.96));
+}
+.destination-card h3,.path-card h3,.course-card h3,.service h3{margin-bottom:12px}
+
+.pill-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.pill{padding:9px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);font-size:.86rem;color:rgba(255,255,255,.84)}
+
+.icon-box{
+  width:52px;height:52px;border-radius:16px;
+  display:grid;place-items:center;
+  background:linear-gradient(180deg,rgba(242,212,155,.2),rgba(199,154,74,.1));
+  border:1px solid rgba(242,212,155,.22);
+  color:var(--gold-soft);font-size:1.2rem;
+  margin-bottom:16px;
+}
+.flag{
+  width:58px;height:58px;border-radius:16px;
+  display:grid;place-items:center;
+  background:linear-gradient(180deg,rgba(242,212,155,.18),rgba(199,154,74,.08));
+  border:1px solid rgba(242,212,155,.22);
+  font-size:2rem;line-height:1;
+  margin-bottom:14px;
+  box-shadow:0 8px 20px rgba(0,0,0,.18);
+}
+.info-box .flag{width:48px;height:48px;font-size:1.65rem;margin-bottom:12px}
+.destination-card .flag{width:60px;height:60px;font-size:2.1rem}
+
+/* Video frame */
+.video-frame{position:relative;min-height:520px;border-radius:28px;overflow:hidden;background:#091521;border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow)}
+.video-frame video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.78) saturate(1.05)}
+.video-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,10,16,.06),rgba(4,10,16,.78))}
+.video-copy{position:absolute;left:24px;right:24px;bottom:24px;z-index:2;display:grid;gap:8px}
+.video-copy span{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+.video-copy strong{font-size:clamp(1.55rem, 3.2vw, 2.5rem);font-family:'Cormorant Garamond',Georgia,serif;line-height:1.1}
+
+/* Feature list */
+.feature-list{display:grid;gap:12px;margin-top:22px}
+.feature-item{display:grid;grid-template-columns:auto 1fr;gap:14px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.08);align-items:start}
+.feature-item:last-child{border-bottom:none}
+.badge{width:36px;height:36px;border-radius:999px;display:grid;place-items:center;font-weight:700;font-size:.95rem;background:linear-gradient(135deg,var(--gold-soft),var(--gold));color:#13253A;flex-shrink:0}
+.feature-item h3{font-size:1.1rem;margin-bottom:4px}
+
+/* Quote */
+.quote p{font-size:1rem;line-height:1.8;color:var(--muted)}
+.quote span{display:block;margin-top:16px;color:rgba(255,255,255,.62);font-size:.9rem}
+
+/* FAQ */
+.faq-list{display:grid;gap:12px}
+.faq-item{border-radius:22px;overflow:hidden}
+.faq-btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 24px;text-align:left;color:#fff}
+.faq-btn strong{font-size:clamp(1rem, 1.5vw, 1.15rem);font-family:'Outfit',sans-serif;font-weight:600}
+.faq-btn span{color:var(--gold);font-size:1.3rem;line-height:1;transition:transform .3s var(--ease);flex-shrink:0}
+.faq-item.open .faq-btn span{transform:rotate(45deg)}
+.faq-content{max-height:0;overflow:hidden;padding:0 24px;transition:max-height .4s var(--ease),padding .4s var(--ease)}
+.faq-item.open .faq-content{max-height:400px;padding:0 24px 22px}
+
+/* Contact */
+.contact-list{display:grid;gap:10px;margin-top:18px}
+.contact-list a,.contact-list span{display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);transition:background .3s var(--ease),border-color .3s var(--ease);font-size:.92rem;word-break:break-word}
+.contact-list a:hover{background:rgba(255,255,255,.06);border-color:rgba(199,154,74,.2)}
+
+/* Footer */
+.footer{padding:32px 0 42px;border-top:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.58)}
+.footer-row{width:var(--container);margin:0 auto;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;font-size:.88rem}
+
+/* Page hero */
+.page-hero{padding:140px 0 64px;position:relative;overflow:hidden}
+.page-hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 14%,rgba(199,154,74,.18),transparent 30%),radial-gradient(circle at 84% 18%,rgba(40,95,150,.2),transparent 28%)}
+.page-hero .container{position:relative;z-index:2}
+.page-tag{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.76);font-size:.78rem;letter-spacing:.06em;font-weight:500}
+
+.notice{padding:20px 22px;border-radius:22px;background:rgba(242,212,155,.08);border:1px solid rgba(242,212,155,.2);color:#f7edd6}
+.notice strong{display:block;margin-bottom:6px}
+.list{display:grid;gap:8px;padding-left:18px;color:var(--muted);line-height:1.72}
+
+/* Floating WhatsApp */
+.floating-wa{
+  position:fixed;right:18px;bottom:18px;z-index:900;
+  display:inline-flex;align-items:center;gap:10px;
+  min-height:54px;padding:0 18px;border-radius:999px;
+  background:linear-gradient(135deg,#29d366,#1fa855);
+  color:#fff;font-weight:700;
+  box-shadow:0 16px 32px rgba(37,211,102,.28), 0 0 0 1px rgba(255,255,255,.1) inset;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.floating-wa:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 22px 42px rgba(37,211,102,.4), 0 0 0 1px rgba(255,255,255,.14) inset}
+.floating-wa .icon{width:22px;height:22px;display:grid;place-items:center;font-size:1.05rem}
+.floating-wa small{display:block;font-size:.7rem;line-height:1;color:rgba(255,255,255,.82);font-weight:600;letter-spacing:.02em}
+.floating-wa strong{display:block;font-size:.92rem;line-height:1.14}
+
+/* CTA cards */
+.hero-offer{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.hero-offer .pill{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:#fff}
+.cta-grid,.sim-grid{display:grid;gap:14px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.cta-card .copy{font-size:.93rem;line-height:1.56}
+.cta-card{padding:clamp(18px, 2.2vw, 24px);transition:transform .3s var(--ease),border-color .3s var(--ease)}
+.cta-card:hover{transform:translateY(-3px);border-color:rgba(199,154,74,.24)}
+.cta-card h3{margin-bottom:6px;font-size:clamp(1.2rem, 1.9vw, 1.5rem);line-height:1.15}
+.cta-card .tag{
+  display:inline-flex;padding:5px 10px;border-radius:999px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);
+  color:var(--gold-soft);font-size:.66rem;letter-spacing:.14em;
+  text-transform:uppercase;margin-bottom:10px;font-weight:600;
+}
+.cta-card .btn-row{margin-top:12px}
+.cta-card .btn,.sim-card .btn,.result-card .btn{min-height:44px;font-size:.92rem}
+
+/* Simulator */
+.sim-wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:start}
+.sim-card,.result-card{padding:clamp(22px, 2.8vw, 30px)}
+.form-grid{display:grid;gap:14px}
+.field{display:grid;gap:8px}
+.field label{font-size:.88rem;color:rgba(255,255,255,.78);font-weight:500}
+.field select,.field input,.select{
+  width:100%;min-height:52px;padding:0 16px;border-radius:16px;
+  border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);
+  color:#fff;font:inherit;outline:none;
+  transition:border-color .3s var(--ease), box-shadow .3s var(--ease);
+}
+.field select:focus,.field input:focus{border-color:rgba(199,154,74,.42);box-shadow:0 0 0 3px rgba(199,154,74,.12)}
+.field select option{color:#07131f;background:#fff}
+.choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.choice{
+  display:flex;align-items:center;gap:10px;padding:14px;border-radius:16px;
+  border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);
+  cursor:pointer;font-size:.95rem;
+  transition:border-color .3s var(--ease), transform .3s var(--ease), background .3s var(--ease);
+}
+.choice input{accent-color:var(--gold)}
+.choice:hover{border-color:rgba(199,154,74,.3);background:rgba(199,154,74,.06);transform:translateY(-2px)}
+.choice.active{border-color:rgba(199,154,74,.42);background:rgba(199,154,74,.1)}
+.result-card ul{display:grid;gap:9px;padding-left:18px;color:var(--muted);line-height:1.7;margin:0}
+.result-highlight{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;background:rgba(199,154,74,.12);border:1px solid rgba(199,154,74,.24);color:var(--gold-soft);margin:14px 0 16px;font-size:.86rem;font-weight:600}
+.result-box{display:grid;gap:14px;margin-top:8px}
+.small-note{font-size:.84rem;color:rgba(255,255,255,.6);line-height:1.62}
+
+@keyframes loading{100%{transform:translateX(100%)}}
+@keyframes floatLogo{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+/* ========= RESPONSIVE ========= */
+@media (max-width: 1080px){
+  .hero-inner,.intro-grid,.story-grid,.contact-grid,.two-col,.sim-wrap{grid-template-columns:1fr}
+  .services-grid,.destination-grid,.quotes-grid,.path-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .video-frame{min-height:420px}
+}
+
+@media (max-width: 860px){
+  :root{--container:min(1180px, calc(100vw - 28px))}
+  .nav-links,.nav-cta .btn{display:none}
+  .burger{display:flex}
+  .site-header{background:rgba(4,10,18,.92);backdrop-filter:blur(16px);border-color:rgba(255,255,255,.06)}
+  .nav-shell{
+    display:grid;
+    grid-template-columns:46px 1fr 46px;
+    min-height:62px;gap:10px;align-items:center;
+  }
+  .nav-cta{grid-column:1;grid-row:1;justify-self:start;gap:0}
+  .brand{grid-column:2;grid-row:1;justify-self:center;max-width:100%}
+  .brand-logo{width:min(158px, 44vw)}
+  .mobile-panel{
+    display:grid;position:fixed;left:14px;right:14px;top:66px;
+    padding:16px;border-radius:22px;
+    background:rgba(5,11,18,.97);border:1px solid rgba(255,255,255,.08);
+    box-shadow:var(--shadow);gap:2px;
+    opacity:0;pointer-events:none;transform:translateY(-10px);
+    transition:opacity .28s var(--ease), transform .28s var(--ease);
+    z-index:998;
+  }
+  body.nav-open .mobile-panel{opacity:1;pointer-events:auto;transform:translateY(0)}
+  .mobile-panel a{padding:14px 6px;color:#fff;font-size:1rem;border-bottom:1px solid rgba(255,255,255,.05);font-weight:500}
+  .mobile-panel a:last-child{border-bottom:0}
+}
+
+@media (max-width: 768px){
+  .hero{padding:100px 0 44px;min-height:auto;align-items:center}
+  .hero-inner{grid-template-columns:1fr;align-items:center;gap:22px;justify-items:center}
+  .hero-copy{max-width:100%;text-align:center}
+  .hero-card{display:none}
+  .hero-details{width:100%;max-width:min(92vw, 420px);margin:8px auto 0;padding:20px;border-radius:22px;background:linear-gradient(180deg,rgba(7,14,24,.48),rgba(7,14,24,.72));border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(10px);box-shadow:0 14px 36px rgba(0,0,0,.22)}
+  .kicker{justify-content:center;margin:0 auto;font-size:.66rem;letter-spacing:.18em;gap:10px}
+  .kicker::before{width:32px;flex-shrink:0}
+  .hero-title,.hero-copy h1,h1{text-align:center;max-width:11ch;margin:0 auto;font-size:clamp(2rem, 8.2vw, 2.95rem);line-height:1.04}
+  .hero-lead,.lead{max-width:36ch;margin:14px auto 20px;text-align:center;font-size:.98rem;line-height:1.62}
+  .hero-details .btn-row,.btn-row{display:grid;grid-template-columns:1fr;gap:10px;max-width:320px;margin:0 auto}
+  .hero-details .btn-row .btn,.btn{width:100%;min-height:50px}
+  .hero-dots{justify-content:center;margin-top:12px}
+
+  /* Section sizing */
+  h2,.section-head h2{font-size:clamp(1.85rem, 6.6vw, 2.6rem);line-height:1.06;text-wrap:balance}
+  .section-head{margin-bottom:26px}
+
+  /* Grid collapse */
+  .grid-3,.services-grid,.destination-grid,.quotes-grid,.path-grid,.course-grid,.steps-grid,.two-col,.mini-stats,.cta-grid,.sim-grid,.choice-grid{grid-template-columns:1fr}
+
+  /* Card padding */
+  .glass,.contact-box,.info-box,.path-card,.service,.course-card,.destination-card,.quote,.cta-card,.sim-card,.result-card{padding:22px;border-radius:22px}
+
+  /* Page hero */
+  .page-hero{padding:116px 0 48px}
+
+  /* Forms */
+  .field select,.field input{min-height:50px;font-size:16px}
+
+  /* Footer */
+  .footer-row{flex-direction:column;text-align:center;gap:6px;padding:0 4px}
+
+  /* Video */
+  .video-frame{min-height:340px}
+  .video-copy{left:20px;right:20px;bottom:20px}
+
+  /* Floating WA */
+  .floating-wa{right:14px;bottom:calc(env(safe-area-inset-bottom, 0px) + 14px);width:56px;height:56px;min-height:auto;padding:0;justify-content:center;border-radius:999px;box-shadow:0 14px 28px rgba(37,211,102,.32), 0 0 0 1px rgba(255,255,255,.12) inset}
+  .floating-wa > span:not(.icon){display:none}
+  .floating-wa .icon{font-size:1.45rem;width:auto;height:auto}
+
+  /* Contact box */
+  .contact-list a,.contact-list span{font-size:.88rem;padding:12px 14px}
+}
+
+@media (max-width: 480px){
+  :root{--container:min(1180px, calc(100vw - 22px))}
+  .brand-logo{width:min(150px, 44vw)}
+  .nav-shell{min-height:64px}
+  .mobile-panel{top:68px;left:10px;right:10px}
+  .hero{padding:94px 0 36px}
+  .hero-title,.hero-copy h1,h1{font-size:clamp(1.85rem, 8.8vw, 2.45rem);max-width:10ch}
+  .hero-lead,.lead{font-size:.94rem;max-width:30ch}
+  .hero-details{padding:18px;border-radius:20px}
+  h2,.section-head h2{font-size:clamp(1.65rem, 7.6vw, 2.3rem)}
+  .glass,.contact-box,.info-box,.path-card,.service,.course-card,.destination-card,.quote,.cta-card,.sim-card,.result-card{padding:18px;border-radius:20px}
+  .kicker{font-size:.62rem;letter-spacing:.15em}
+  .btn{min-height:48px;font-size:.94rem;padding:0 18px}
+  .video-frame{min-height:280px}
+  .faq-btn{padding:18px 20px;gap:14px}
+  .faq-item.open .faq-content{padding:0 20px 18px}
+  .footer{padding:24px 0 36px}
+}
+
+</style>
+</head>
+<body>
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <div class="preloader-logo"><img src="globaltravel_logo_original_white_v16.png" alt="Global Travel Intercâmbios"></div>
+      <div class="preloader-bar"></div>
+      <small>Carregando sua jornada internacional</small>
+    </div>
+  </div>
+
+  <header class="site-header" id="site-header">
+    <div class="nav-shell">
+      <a class="brand" href="index.html" aria-label="Global Travel Intercâmbios"><img class="brand-logo" src="globaltravel_logo_original_white_v16.png" alt="Global Travel Intercâmbios"></a>
+
+      <nav class="nav-links" aria-label="Principal">
+        <a class="active" href="index.html#servicos">Serviços</a>
+        <a class="" href="index.html#destinos">Destinos</a>
+        <a class="" href="trabalhar-morar-fora.html">Trabalhar e morar fora</a>
+        <a class="" href="nossos-cursos.html">Nossos cursos</a>
+        <a class="" href="simulador.html">Simulador</a>
+        <a class="" href="index.html#contato">Contato</a>
+      </nav>
+
+      <div class="nav-cta">
+        <a class="btn btn-primary" href="https://wa.me/351910346159" target="_blank" rel="noopener">WhatsApp</a>
+        <button class="burger" id="burger" aria-label="Abrir menu">☰</button>
+      </div>
+    </div>
+    <div class="mobile-panel">
+      <a href="index.html#servicos">Serviços</a>
+      <a href="index.html#destinos">Destinos</a>
+      <a href="trabalhar-morar-fora.html">Trabalhar e morar fora</a>
+      <a href="nossos-cursos.html">Nossos cursos</a>
+      <a href="simulador.html">Simulador</a>
+      <a href="index.html#contato">Contato</a>
+    </div>
+  </header>
+
+  
+<main>
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true">
+            <div class="hero-slides">
+        <div class="hero-slide active">
+          <video muted playsinline autoplay loop preload="metadata" style="object-position:center 46%">
+            <source src="https://www.pexels.com/download/video/7712312/" type="video/mp4">
+          </video>
+        </div>
+        <div class="hero-slide">
+          <video muted playsinline loop preload="metadata" style="object-position:center 52%">
+            <source src="https://www.pexels.com/download/video/6947516/" type="video/mp4">
+          </video>
+        </div>
+        <div class="hero-slide">
+          <video muted playsinline loop preload="metadata" style="object-position:center 48%">
+            <source src="https://www.pexels.com/download/video/35468424/" type="video/mp4">
+          </video>
+        </div>
+        <div class="hero-slide">
+          <video muted playsinline loop preload="metadata" style="object-position:center 46%">
+            <source src="https://www.pexels.com/download/video/19542646/" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="hero-overlay"></div>
+    </div>
+
+    <div class="hero-inner">
+      <div class="hero-copy reveal">
+        <span class="kicker" id="hero-kicker">Passagens aéreas • Intercâmbio • Imigração • Viagens internacionais</span>
+        <h1 class="hero-title" id="hero-title">Seu futuro não tem fronteiras.</h1>
+        <div class="hero-details" id="hero-details">
+          <p class="lead hero-lead" id="hero-lead">Passagens aéreas, intercâmbio e planejamento internacional com foco em Portugal, Irlanda e EUA — tudo com suporte próximo e estratégico.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" id="hero-primary-btn" href="https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20atendimento%20para%20interc%C3%A2mbio%20ou%20viagem%20internacional." target="_blank" rel="noopener">Falar no WhatsApp</a>
+            <a class="btn btn-secondary" id="hero-secondary-btn" href="#servicos">Conhecer serviços</a>
+          </div>
+          <div class="hero-dots" aria-label="Trocar vídeo">
+            <button class="active" aria-label="Vídeo 1"></button>
+            <button aria-label="Vídeo 2"></button>
+            <button aria-label="Vídeo 3"></button>
+            <button aria-label="Vídeo 4"></button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="hero-card card reveal">
+        <strong id="hero-card-title">Passagens aéreas com ótimos preços, intercâmbio e viagens internacionais no mesmo lugar.</strong>
+        <p id="hero-card-copy">Da emissão da sua passagem com foco em melhores tarifas até o planejamento do curso, da viagem em família ao processo de mudança de país, a Global Travel organiza cada etapa com clareza, estratégia e suporte próximo.</p>
+        <div class="mini-stats">
+          <div class="mini-card"><strong id="mini-1-title">Passagens</strong><span id="mini-1-copy">Emissão com atenção a rotas, conexões e melhores tarifas.</span></div>
+          <div class="mini-card"><strong id="mini-2-title">Estudar</strong><span id="mini-2-copy">Intercâmbio e cursos com planejamento mais seguro.</span></div>
+          <div class="mini-card"><strong id="mini-3-title">Migrar</strong><span id="mini-3-copy">Orientação para quem quer construir uma nova fase fora.</span></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section tight" id="mobile-intro-section">
+    <div class="container intro-grid">
+      <div class="glass reveal">
+        <span class="kicker">Posicionamento</span>
+        <h2>Uma agência internacional com equilíbrio entre sonho e direção.</h2>
+        <p class="copy" style="margin-top:18px">A gente trabalha com projetos de vida reais. Desde uma viagem especial até o plano de estudar, morar ou trabalhar fora, cada atendimento é construído para unir emoção, estratégia e segurança.</p>
+        <div class="pill-row">
+          <span class="pill">Atendimento premium</span>
+          <span class="pill">Português do Brasil</span>
+          <span class="pill">Suporte humano</span>
+          <span class="pill">Experiência internacional</span>
+        </div>
+      </div>
+      <div class="two-col reveal">
+        <div class="info-box"><div class="flag" aria-hidden="true">🇵🇹</div><h3>Portugal</h3><p class="copy" style="margin-top:12px">Boa porta de entrada para estudos, novas fases profissionais e mobilidade internacional.</p></div>
+        <div class="info-box"><div class="flag" aria-hidden="true">🇮🇪</div><h3>Irlanda</h3><p class="copy" style="margin-top:12px">Destino forte para intercâmbio, experiência cultural e projetos de médio prazo.</p></div>
+        <div class="info-box"><div class="flag" aria-hidden="true">🇺🇸</div><h3>Estados Unidos</h3><p class="copy" style="margin-top:12px">Experiências acadêmicas e viagens de alto impacto para quem quer ampliar horizontes.</p></div>
+        <div class="info-box"><div class="flag" aria-hidden="true">🌍</div><h3>Mais soluções</h3><p class="copy" style="margin-top:12px">Também trabalhamos com outros roteiros, cursos e caminhos personalizados conforme o seu perfil.</p></div>
+      </div>
+    </div>
+  
+  <section class="section tight" id="ctas-inteligentes">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="kicker">Atalhos inteligentes</span>
+        <h2>Escolha um cenário pronto e fale com a gente já com o pedido certo.</h2>
+        <p class="copy">Em vez de um botão genérico, cada caminho já leva uma mensagem pronta para o WhatsApp. Isso deixa o atendimento mais rápido e o cliente chega com objetivo claro.</p>
+      </div>
+      <div class="cta-grid">
+        <article class="cta-card reveal">
+          <span class="tag">Turismo internacional</span>
+          <h3>Quero um pacote Disney em família</h3>
+          <p class="copy">Ideal para quem quer montar passagem, hotel e planejamento de viagem para Disney ou Paris com família e crianças.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20montar%20um%20pacote%20Disney%20ou%20Paris%20em%20fam%C3%ADlia%20e%20gostaria%20de%20atendimento.">Montar meu pacote</a>
+            <a class="btn btn-secondary" href="#simulador">Simular antes</a>
+          </div>
+        </article>
+        <article class="cta-card reveal">
+          <span class="tag">Intercâmbio</span>
+          <h3>Quero estudar em Lisboa</h3>
+          <p class="copy">Perfeito para quem quer intercâmbio, cursos e apoio para viver uma trajetória acadêmica em Portugal com mais clareza.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20entender%20op%C3%A7%C3%B5es%20de%20interc%C3%A2mbio%20e%20cursos%20em%20Lisboa.">Quero estudar em Lisboa</a>
+            <a class="btn btn-secondary" href="nossos-cursos.html">Ver cursos</a>
+          </div>
+        </article>
+        <article class="cta-card reveal">
+          <span class="tag">Imigração</span>
+          <h3>Quero planejar morar fora</h3>
+          <p class="copy">Para quem quer entender caminhos, documentação, orçamento e próximos passos para morar ou trabalhar fora.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20planejar%20morar%20fora%20e%20preciso%20de%20orienta%C3%A7%C3%A3o.">Quero ajuda para imigrar</a>
+            <a class="btn btn-secondary" href="trabalhar-morar-fora.html">Explorar opções</a>
+          </div>
+        </article>
+        <article class="cta-card reveal">
+          <span class="tag">Passagens aéreas</span>
+          <h3>Quero cotar minha passagem com as melhores tarifas</h3>
+          <p class="copy">Atendimento focado em rota, conexões, destino e melhor custo-benefício para viagem internacional, estudo ou mudança.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20cotar%20uma%20passagem%20a%C3%A9rea%20internacional%20com%20as%20melhores%20tarifas.">Cotar passagem</a>
+            <a class="btn btn-secondary" href="#contato">Atendimento humano</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="servicos">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="kicker">Serviços</span>
+        <h2>Passagens aéreas, intercâmbio e soluções completas para tirar o plano do papel.</h2>
+        <p class="copy">Tudo organizado para transformar uma ideia em experiência real, com passagens aéreas, suporte estratégico e mais segurança em cada etapa.</p>
+      </div>
+      <div class="services-grid">
+        <article class="service reveal"><div class="icon-box">✈</div><h3>Passagens aéreas</h3><p class="copy">Emissão de passagens aéreas com foco nas melhores tarifas, rotas estratégicas, conexões inteligentes e mais tranquilidade do orçamento ao embarque.</p></article>
+        <article class="service reveal"><div class="icon-box">🛡</div><h3>Seguro viagem</h3><p class="copy">Proteção ideal para o destino e para as exigências do seu processo.</p></article>
+        <article class="service reveal"><div class="icon-box">🎓</div><h3>Intercâmbios</h3><p class="copy">Programas de estudo no exterior com suporte antes, durante e depois da decisão.</p></article>
+        <article class="service reveal"><div class="icon-box">🌍</div><h3>Viagens completas</h3><p class="copy">Roteiros internacionais com estética, praticidade e sensação de sonho realizado.</p></article>
+        <article class="service reveal"><div class="icon-box">🧭</div><h3>Assessoria imigratória</h3><p class="copy">Direcionamento para documentos, etapas e caminhos possíveis com visão estratégica.</p></article>
+        <article class="service reveal"><div class="icon-box">💼</div><h3>Projetos de mudança</h3><p class="copy">Para quem quer estudar, morar ou trabalhar fora e precisa de mais clareza para começar.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="mobile-story-section">
+    <div class="container story-grid">
+      <div class="glass reveal">
+        <span class="kicker">Sensação de conquista</span>
+        <h2>Quando o destino combina com o seu momento, tudo flui melhor.</h2>
+        <p class="copy" style="margin-top:18px">A Global Travel une passagens aéreas, intercâmbio, viagens em família, turismo internacional e orientação migratória em uma experiência mais clara, bonita e profissional.</p>
+        <div class="feature-list">
+          <div class="feature-item"><span class="badge">1</span><div><h3>Atendimento com direção</h3><p class="small-copy">Cada projeto começa com leitura de perfil, objetivo e timing.</p></div></div>
+          <div class="feature-item"><span class="badge">2</span><div><h3>Experiência internacional completa</h3><p class="small-copy">Das passagens aéreas ao embarque, do curso à viagem dos sonhos, tudo com suporte real.</p></div></div>
+          <div class="feature-item"><span class="badge">3</span><div><h3>Melhores preços e mais clareza</h3><p class="small-copy">Atendimento que busca as melhores tarifas e organiza sua jornada com mais confiança.</p></div></div>
+        </div>
+      </div>
+      <div class="video-frame reveal">
+        <video muted playsinline autoplay loop preload="metadata" style="object-position:center 46%">
+          <source src="https://www.pexels.com/download/video/19542646/" type="video/mp4">
+        </video>
+        <div class="video-copy"><span>Viagem dos sonhos</span><strong>Da Disney à neve: viagens especiais e momentos que viram memória para a vida inteira.</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="destinos">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="kicker">Destinos</span>
+        <h2>Destinos em destaque para estudar, viajar e recomeçar.</h2>
+      </div>
+      <div class="destination-grid">
+        <article class="destination-card reveal"><div class="flag" aria-hidden="true">🇵🇹</div><h3>Portugal</h3><p class="copy">Ideal para quem busca proximidade cultural, novas oportunidades e um processo de adaptação mais natural.</p></article>
+        <article class="destination-card reveal"><div class="flag" aria-hidden="true">🇮🇪</div><h3>Irlanda</h3><p class="copy">Combina intercâmbio, experiência internacional e contato com um mercado dinâmico e multicultural.</p></article>
+        <article class="destination-card reveal"><div class="flag" aria-hidden="true">🇺🇸</div><h3>Estados Unidos</h3><p class="copy">Perfeito para projetos acadêmicos, viagens especiais e experiências marcantes com visão global.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="kicker">Caminhos</span>
+        <h2>Escolha o ponto de partida que combina com o seu objetivo.</h2>
+      </div>
+      <div class="path-grid">
+        <article class="path-card reveal"><h3>Quero estudar fora</h3><p class="copy">Intercâmbio, cursos e orientação para um plano acadêmico mais seguro.</p><a class="btn-link" href="nossos-cursos.html">Ver nossos cursos →</a></article>
+        <article class="path-card reveal"><h3>Quero trabalhar e morar fora</h3><p class="copy">Caminhos possíveis com apoio, planejamento e leitura realista do seu momento.</p><a class="btn-link" href="trabalhar-morar-fora.html">Explorar essa página →</a></article>
+        <article class="path-card reveal"><h3>Quero viajar com as melhores tarifas</h3><p class="copy">Passagens aéreas com melhores tarifas, roteiros internacionais e suporte para viver a viagem dos sonhos com mais economia e direção.</p><a class="btn-link" href="#contato">Solicitar atendimento →</a></article>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section" id="simulador">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="kicker">Simulador</span>
+        <h2>Planeje sua jornada internacional em menos de um minuto.</h2>
+        <p class="copy">Um exemplo de ferramenta comercial para o site: a pessoa escolhe o objetivo, destino, faixa de orçamento e prazo. O resultado já orienta a conversa e envia um briefing pronto para o WhatsApp.</p>
+      </div>
+      <div class="sim-wrap">
+        <div class="sim-card reveal">
+          <h3>Monte seu perfil</h3>
+          <div class="form-grid">
+            <div class="field">
+              <label>Qual é o seu objetivo?</label>
+              <div class="choice-grid" id="goal-choices">
+                <label class="choice active"><input type="radio" name="goal" value="estudar" checked> Estudar</label>
+                <label class="choice"><input type="radio" name="goal" value="viajar"> Viajar</label>
+                <label class="choice"><input type="radio" name="goal" value="morar"> Morar fora</label>
+              </div>
+            </div>
+            <div class="field">
+              <label for="destino">Destino de maior interesse</label>
+              <select id="destino">
+                <option value="portugal">Portugal / Lisboa</option>
+                <option value="irlanda">Irlanda</option>
+                <option value="eua">Estados Unidos</option>
+                <option value="disney">Disney / Paris</option>
+                <option value="neve">Viagem de neve</option>
+                <option value="outro">Outro destino</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="orcamento">Faixa de orçamento</label>
+              <select id="orcamento">
+                <option value="ate2">Até €2.000</option>
+                <option value="2a5">€2.000 a €5.000</option>
+                <option value="5a10">€5.000 a €10.000</option>
+                <option value="acima10">Acima de €10.000</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="prazo">Quando pretende começar?</label>
+              <select id="prazo">
+                <option value="agora">Nos próximos 30 dias</option>
+                <option value="90">Nos próximos 3 meses</option>
+                <option value="180">Nos próximos 6 meses</option>
+                <option value="planejando">Ainda estou planejando</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-card reveal">
+          <h3>Sugestão inicial</h3>
+          <div class="result-highlight" id="result-badge">Perfil sugerido: Intercâmbio em Lisboa</div>
+          <p class="copy" id="result-copy">Para quem quer estudar fora com mais segurança, Portugal aparece como caminho forte por idioma, adaptação e organização do projeto acadêmico.</p>
+          <div class="result-box">
+            <ul id="result-list">
+              <li>Melhor começar definindo curso, duração e cidade.</li>
+              <li>Depois disso, a equipe monta rota, custos e próximos documentos.</li>
+              <li>O atendimento por WhatsApp já pode seguir com uma mensagem pronta.</li>
+            </ul>
+            <a class="btn btn-primary" id="sim-wa" target="_blank" rel="noopener" href="https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20simular%20meu%20plano%20internacional.">Enviar meu briefing no WhatsApp</a>
+            <p class="small-note">Esse simulador é um preview de solução comercial para o site. Depois, se você gostar, dá para evoluir com orçamento estimado, pacotes e perguntas condicionais.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="kicker">Depoimentos</span>
+        <h2>Uma marca que precisa transmitir confiança desde o primeiro olhar.</h2>
+      </div>
+      <div class="quotes-grid">
+        <article class="quote reveal"><p>“Eu precisava de uma agência que me ajudasse a organizar tudo com calma. Foi exatamente a sensação que tive.”</p><span>Cliente Global Travel</span></article>
+        <article class="quote reveal"><p>“O atendimento foi claro, bonito e profissional. Parece simples, mas isso passa muita confiança para quem está decidindo.”</p><span>Cliente Global Travel</span></article>
+        <article class="quote reveal"><p>“Gostei porque senti que meu plano foi levado a sério, não como mais um atendimento genérico.”</p><span>Cliente Global Travel</span></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="kicker">FAQ</span>
+        <h2>Dúvidas frequentes</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item reveal"><button class="faq-btn"><strong>Vocês atendem quem quer apenas passagem e seguro?</strong><span>+</span></button><div class="faq-content"><p class="copy">Sim. Você pode contratar somente a parte da viagem ou montar uma solução completa com a gente.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-btn"><strong>Vocês ajudam em projetos para estudar, morar ou trabalhar fora?</strong><span>+</span></button><div class="faq-content"><p class="copy">Sim. A Global Travel pode orientar o caminho inicial, organizar etapas e indicar soluções mais alinhadas ao seu perfil.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-btn"><strong>Os atendimentos são em português do Brasil?</strong><span>+</span></button><div class="faq-content"><p class="copy">Sim. Todo o texto desta versão e o tom da marca já foram ajustados para pt-BR.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contato">
+    <div class="container contact-grid">
+      <div class="contact-box reveal">
+        <span class="kicker">Contato</span>
+        <h2>Vamos montar sua próxima etapa internacional.</h2>
+        <p class="copy" style="margin-top:18px">Se o seu plano envolve passagens aéreas, intercâmbio, viagem internacional, mudança de país ou orientação migratória, fale com a Global Travel e receba um atendimento mais claro, estratégico e profissional.</p>
+        <div class="btn-row" style="margin-top:26px">
+          <a class="btn btn-primary" href="https://wa.me/351910346159" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+          <a class="btn btn-secondary" href="mailto:globaltravelintracambios@gmail.com">Enviar e-mail</a>
+        </div>
+      </div>
+      <div class="contact-box reveal">
+        <h3>Fale com a gente</h3>
+        <div class="contact-list">
+          <a href="https://wa.me/351910346159" target="_blank" rel="noopener">WhatsApp: +351 910 346 159</a>
+          <a href="https://www.instagram.com/globaltravelintracambios" target="_blank" rel="noopener">Instagram: @globaltravelintracambios</a>
+          <a href="mailto:globaltravelintracambios@gmail.com">globaltravelintracambios@gmail.com</a>
+          <span>Atendimento para Portugal, Irlanda, EUA e outros projetos internacionais.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+
+  <a class="floating-wa" href="https://wa.me/351910346159" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <span class="icon">✆</span>
+    <span><small>Atendimento rápido</small><strong>WhatsApp</strong></span>
+  </a>
+
+  <footer class="footer">
+    <div class="footer-row">
+      <span>© 2026 Global Travel Intercâmbios</span>
+      <span>Seu futuro não tem fronteiras.</span>
+    </div>
+  </footer>
+  
+
+<script>
+(function(){
+  const preloader = document.getElementById('preloader');
+  const hidePreloader = () => preloader && preloader.classList.add('hidden');
+  window.addEventListener('load', () => setTimeout(hidePreloader, 650));
+  setTimeout(hidePreloader, 2500);
+
+  const header = document.getElementById('site-header');
+  const onScroll = () => {
+    if(!header) return;
+    header.classList.toggle('scrolled', window.scrollY > 18);
+  };
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  const burger = document.getElementById('burger');
+  burger && burger.addEventListener('click', () => document.body.classList.toggle('nav-open'));
+  document.querySelectorAll('.mobile-panel a').forEach(a => a.addEventListener('click', () => document.body.classList.remove('nav-open')));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if(entry.isIntersecting){ entry.target.classList.add('revealed'); observer.unobserve(entry.target);} });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const btn = item.querySelector('.faq-btn');
+    btn && btn.addEventListener('click', () => item.classList.toggle('open'));
+  });
+
+  const slides = Array.from(document.querySelectorAll('.hero-slide'));
+  const dots = Array.from(document.querySelectorAll('.hero-dots button'));
+  const heroData = [
+    {
+      title:'Seu futuro não tem fronteiras.',
+      mobileTitle:'Seu futuro sem fronteiras.',
+      lead:'Intercâmbio, cursos e planejamento internacional com foco em Portugal, Irlanda e Estados Unidos — da passagem aérea ao suporte para estudar fora com mais segurança.',
+      mobileLead:'Intercâmbio, cursos e passagens para Portugal, Irlanda e EUA.',
+      cardTitle:'Intercâmbio e passagens aéreas para começar a vida acadêmica fora.',
+      cardCopy:'Quando o foco é estudar, a Global Travel organiza destino, tarifa aérea, curso e próximos passos para transformar a decisão em plano real.',
+      cta1:'Quero estudar fora',
+      cta1href:'https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20atendimento%20para%20interc%C3%A2mbio%20e%20cursos%20fora%20do%20pa%C3%ADs.',
+      cta2:'Ver nossos cursos',
+      cta2href:'nossos-cursos.html',
+      mini:[
+        ['Cursos','Curadoria de opções para começar com mais direção.'],
+        ['Passagens','Busca de rotas e melhores tarifas para embarcar.'],
+        ['Suporte','Orientação clara antes da decisão final.']
+      ]
+    },
+    {
+      title:'Viaje para viver experiências que ficam para sempre.',
+      mobileTitle:'Experiências que ficam para sempre.',
+      lead:'Da emissão da passagem ao roteiro internacional, a Global Travel monta viagens de neve, turismo especial e experiências premium com suporte humano.',
+      mobileLead:'Viagens de neve e roteiros especiais com tarifa, planejamento e suporte próximo.',
+      cardTitle:'Passagens aéreas e viagens internacionais com atendimento mais estratégico.',
+      cardCopy:'Para viagens de neve e experiências especiais, a prioridade é combinar tarifa, destino, datas e conforto sem deixar o cliente perdido.',
+      cta1:'Quero uma viagem de neve',
+      mobileCta1:'Quero viagem de neve',
+      cta1href:'https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20planejar%20uma%20viagem%20de%20neve%20e%20cotar%20passagens.',
+      cta2:'Ver serviços',
+      mobileCta2:'Ver serviços',
+      cta2href:'#servicos',
+      mini:[
+        ['Tarifas','Passagens com foco em custo-benefício e conexão.'],
+        ['Roteiro','Viagem organizada conforme seu estilo e orçamento.'],
+        ['Suporte','Atendimento próximo do orçamento ao embarque.']
+      ]
+    },
+    {
+      title:'Lisboa pode ser o começo da sua nova fase.',
+      mobileTitle:'Lisboa pode ser o começo.',
+      lead:'Portugal e Lisboa aparecem como destinos fortes para quem quer estudar, se reposicionar e construir uma trajetória internacional com mais clareza.',
+      mobileLead:'Curso, passagens e planejamento para começar em Portugal com mais segurança.',
+      cardTitle:'Lisboa, cursos e suporte para uma jornada internacional mais bem pensada.',
+      cardCopy:'Se a ideia é Portugal, o atendimento pode unir curso, passagens aéreas e orientação prática para começar com mais segurança.',
+      cta1:'Quero estudar em Lisboa',
+      mobileCta1:'Quero estudar em Lisboa',
+      cta1href:'https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20estudar%20em%20Lisboa%20e%20entender%20curso%2C%20passagem%20e%20planejamento.',
+      cta2:'Explorar Portugal',
+      mobileCta2:'Portugal',
+      cta2href:'#destinos',
+      mini:[
+        ['Lisboa','Destino forte para intercâmbio e novas fases.'],
+        ['Planejamento','Curso, custos e rota organizados juntos.'],
+        ['Direção','Mais clareza para quem quer viver em Portugal.']
+      ]
+    },
+    {
+      title:'Sua viagem dos sonhos também pode começar aqui.',
+      mobileTitle:'Sua viagem dos sonhos começa aqui.',
+      lead:'Passagens aéreas, suporte e atendimento personalizado para Disney, Paris e viagens em família com planejamento completo e melhores tarifas.',
+      mobileLead:'Disney, Paris e viagens em família com roteiro, tarifa e apoio de ponta a ponta.',
+      cardTitle:'Turismo internacional e pacotes pensados para viajar melhor.',
+      cardCopy:'Para viagens em família, a Global Travel pode organizar passagem, roteiro, parque, datas e atendimento mais humano do começo ao fim.',
+      cta1:'Quero um pacote Disney',
+      mobileCta1:'Quero pacote Disney',
+      cta1href:'https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20montar%20um%20pacote%20Disney%20ou%20Paris%20em%20fam%C3%ADlia.',
+      cta2:'Falar com especialista',
+      mobileCta2:'Especialista',
+      cta2href:'#contato',
+      mini:[
+        ['Família','Viagens planejadas com mais conforto e clareza.'],
+        ['Pacotes','Suporte para montar a experiência ideal.'],
+        ['Passagens','Busca de melhores tarifas e datas mais estratégicas.']
+      ]
+    }
+  ];
+  const titleEl = document.getElementById('hero-title');
+  const leadEl = document.getElementById('hero-lead');
+  const cardTitleEl = document.getElementById('hero-card-title');
+  const cardCopyEl = document.getElementById('hero-card-copy');
+  const btn1 = document.getElementById('hero-primary-btn');
+  const btn2 = document.getElementById('hero-secondary-btn');
+  const miniEls = [
+    [document.getElementById('mini-1-title'), document.getElementById('mini-1-copy')],
+    [document.getElementById('mini-2-title'), document.getElementById('mini-2-copy')],
+    [document.getElementById('mini-3-title'), document.getElementById('mini-3-copy')]
+  ];
+  let current = 0;
+  const videos = slides.map(s => s.querySelector('video'));
+  const isCompactHero = () => window.matchMedia('(max-width: 768px)').matches;
+  function paintHero(index){
+    const data = heroData[index];
+    if(!data) return;
+    const compact = isCompactHero();
+    titleEl.textContent = compact && data.mobileTitle ? data.mobileTitle : data.title;
+    leadEl.textContent = compact && data.mobileLead ? data.mobileLead : data.lead;
+    cardTitleEl.textContent = data.cardTitle;
+    cardCopyEl.textContent = data.cardCopy;
+    btn1.textContent = compact && data.mobileCta1 ? data.mobileCta1 : data.cta1;
+    btn1.href = data.cta1href;
+    btn2.textContent = compact && data.mobileCta2 ? data.mobileCta2 : data.cta2;
+    btn2.href = data.cta2href;
+    data.mini.forEach((item, i) => {
+      if(miniEls[i]){
+        miniEls[i][0].textContent = item[0];
+        miniEls[i][1].textContent = item[1];
+      }
+    });
+  }
+  function activate(index){
+    slides.forEach((slide,i) => {
+      const active = i === index;
+      slide.classList.toggle('active', active);
+      if(dots[i]) dots[i].classList.toggle('active', active);
+      const video = videos[i];
+      if(video){
+        if(active){ video.play().catch(()=>{}); }
+        else { video.pause(); video.currentTime = 0; }
+      }
+    });
+    current = index;
+    paintHero(index);
+  }
+  dots.forEach((dot,i) => dot.addEventListener('click', () => activate(i)));
+
+  function applyMobileSectionLayout(){
+    const mobile = window.matchMedia('(max-width: 768px)').matches;
+    const introSection = document.getElementById('mobile-intro-section');
+    const storySection = document.getElementById('mobile-story-section');
+    const ctasSection = document.getElementById('ctas-inteligentes');
+    const destinosSection = document.getElementById('destinos');
+    if(!introSection || !storySection || !ctasSection || !destinosSection) return;
+    if(mobile){
+      if(introSection.previousElementSibling !== storySection){
+        introSection.parentNode.insertBefore(storySection, introSection);
+        destinosSection.parentNode.insertBefore(introSection, destinosSection);
+      }
+    } else {
+      if(ctasSection.previousElementSibling !== introSection){
+        ctasSection.parentNode.insertBefore(introSection, ctasSection);
+      }
+      if(destinosSection.previousElementSibling !== storySection){
+        destinosSection.parentNode.insertBefore(storySection, destinosSection);
+      }
+    }
+  }
+  applyMobileSectionLayout();
+  window.addEventListener('resize', applyMobileSectionLayout);
+  let heroResizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(heroResizeTimer);
+    heroResizeTimer = setTimeout(() => paintHero(current), 120);
+  });
+  activate(0);
+  setInterval(() => activate((current + 1) % slides.length), 6200);
+
+  const goalChoices = Array.from(document.querySelectorAll('input[name="goal"]'));
+  const goalLabels = Array.from(document.querySelectorAll('#goal-choices .choice'));
+  const destino = document.getElementById('destino');
+  const orcamento = document.getElementById('orcamento');
+  const prazo = document.getElementById('prazo');
+  const resultBadge = document.getElementById('result-badge');
+  const resultCopy = document.getElementById('result-copy');
+  const resultList = document.getElementById('result-list');
+  const simWa = document.getElementById('sim-wa');
+
+  const goalMap = {
+    estudar:'intercâmbio e cursos',
+    viajar:'viagem internacional',
+    morar:'morar fora'
+  };
+  const destinationMap = {
+    portugal:'Portugal / Lisboa',
+    irlanda:'Irlanda',
+    eua:'Estados Unidos',
+    disney:'Disney / Paris',
+    neve:'viagem de neve',
+    outro:'outro destino'
+  };
+  function updateChoiceState(){
+    goalLabels.forEach(label => {
+      const input = label.querySelector('input');
+      label.classList.toggle('active', !!input.checked);
+    });
+  }
+  function buildRecommendation(){
+    const goal = document.querySelector('input[name="goal"]:checked')?.value || 'estudar';
+    const dest = destino.value;
+    const budget = orcamento.value;
+    const when = prazo.value;
+
+    let badge = 'Perfil sugerido: ';
+    let copy = '';
+    let bullets = [];
+    if(goal === 'estudar'){
+      badge += dest === 'portugal' ? 'Intercâmbio em Lisboa' : 'Planejamento acadêmico internacional';
+      copy = dest === 'portugal'
+        ? 'Para quem quer estudar fora com idioma mais acessível e boa adaptação, Portugal e Lisboa aparecem como caminho forte.'
+        : 'O melhor primeiro passo é combinar curso, cidade, passagens aéreas e timing de aplicação.';
+      bullets = [
+        'Definir curso, duração e cidade antes de fechar o embarque.',
+        'Organizar passagens, orçamento e documentação em conjunto.',
+        'Seguir para o WhatsApp já com briefing de estudo mais claro.'
+      ];
+    } else if(goal === 'viajar'){
+      badge += dest === 'disney' ? 'Pacote Disney / Paris' : dest === 'neve' ? 'Viagem de neve com roteiro' : 'Viagem internacional personalizada';
+      copy = 'Quando o objetivo é viajar, o ideal é montar destino, datas e passagem aérea já pensando no melhor custo-benefício e no estilo da viagem.';
+      bullets = [
+        'Cotar passagens com melhores tarifas e datas mais estratégicas.',
+        'Definir hotel, roteiro e perfil da viagem antes do fechamento.',
+        'Levar o pedido pronto para o WhatsApp agiliza muito o atendimento.'
+      ];
+    } else {
+      badge += dest === 'portugal' ? 'Mudança para Portugal' : 'Plano inicial para morar fora';
+      copy = 'Projetos de imigração pedem clareza sobre país, custo inicial, prazo e próximos passos. O objetivo aqui é organizar a conversa certa desde o início.';
+      bullets = [
+        'Avaliar destino, orçamento e momento de vida antes de avançar.',
+        'Separar projeto de estudo, trabalho ou mudança definitiva.',
+        'Usar o WhatsApp para receber direcionamento mais individual.'
+      ];
+    }
+
+    resultBadge.textContent = badge;
+    resultCopy.textContent = copy;
+    resultList.innerHTML = bullets.map(item => `<li>${item}</li>`).join('');
+
+    const budgetLabel = orcamento.options[orcamento.selectedIndex].text;
+    const whenLabel = prazo.options[prazo.selectedIndex].text;
+    const msg = `Olá, usei o simulador do site. Meu objetivo é ${goalMap[goal]}, com interesse em ${destinationMap[dest]}. Meu orçamento estimado é ${budgetLabel} e pretendo começar ${whenLabel}. Quero receber orientação da Global Travel.`;
+    simWa.href = 'https://wa.me/351910346159?text=' + encodeURIComponent(msg);
+  }
+  goalChoices.forEach(input => input.addEventListener('change', () => {updateChoiceState(); buildRecommendation();}));
+  [destino, orcamento, prazo].forEach(el => el && el.addEventListener('change', buildRecommendation));
+  updateChoiceState();
+  buildRecommendation();
+})();
+</script>
+</body>
+</html>

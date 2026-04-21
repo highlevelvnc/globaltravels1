@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador • Global Travel Intercâmbios</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#040d16;
+  --line:rgba(255,255,255,.08);
+  --line-strong:rgba(215,174,97,.28);
+  --text:#f6f7fb;
+  --muted:rgba(246,247,251,.76);
+  --muted-2:rgba(246,247,251,.56);
+  --gold:#d7ae61;
+  --gold-soft:rgba(215,174,97,.12);
+  --gold-bright:#f2d28c;
+  --shadow:0 18px 50px rgba(0,0,0,.30);
+  --shadow-soft:0 12px 32px rgba(0,0,0,.20);
+  --radius-lg:28px;
+  --radius:22px;
+  --container:min(1180px, calc(100vw - 40px));
+  --ease:cubic-bezier(.22,.65,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;overflow-x:hidden;
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,sans-serif;
+  background:
+    radial-gradient(ellipse at top left,rgba(16,47,82,.42),transparent 40%),
+    radial-gradient(ellipse at top right,rgba(215,174,97,.12),transparent 36%),
+    linear-gradient(180deg,#04111c 0%,#06101a 100%);
+  min-height:100vh;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+body.nav-open{overflow:hidden}
+a{text-decoration:none;color:inherit}
+button,input{font:inherit;border:0;background:none;color:inherit;cursor:pointer}
+img,svg{display:block;max-width:100%}
+::selection{background:rgba(215,174,97,.28);color:#fff}
+
+.container{width:var(--container);margin:0 auto}
+
+/* Header */
+.site-header{
+  position:sticky;top:0;z-index:40;
+  background:rgba(4,11,18,.72);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.nav-shell{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;max-width:100%;min-width:0}
+.brand-logo{width:clamp(180px, 22vw, 240px);display:block;object-fit:contain;filter:drop-shadow(0 8px 24px rgba(0,0,0,.22))}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-weight:600;color:rgba(247,247,247,.82);font-size:.95rem;position:relative;padding:6px 0;transition:color .25s var(--ease)}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+.nav-links a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .28s var(--ease)}
+.nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
+.nav-cta{display:flex;gap:10px;align-items:center}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:14px 22px;min-height:52px;border-radius:999px;
+  border:1px solid transparent;font-weight:700;font-size:.96rem;
+  transition:transform .28s var(--ease), box-shadow .28s var(--ease), border-color .28s var(--ease), background .28s var(--ease);
+  white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:linear-gradient(135deg,var(--gold),#edc979);color:#10203a;box-shadow:0 12px 28px rgba(215,174,97,.25)}
+.btn-primary:hover{box-shadow:0 18px 36px rgba(215,174,97,.34)}
+.btn-secondary,.btn-ghost{background:rgba(255,255,255,.04);border-color:var(--line);color:#fff;backdrop-filter:blur(10px)}
+.btn-secondary:hover,.btn-ghost:hover{border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.06)}
+.burger{
+  display:none;
+  width:46px;height:46px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+  color:#fff;font-size:1.2rem;
+  align-items:center;justify-content:center;
+}
+.mobile-panel{display:none}
+
+/* Hero */
+.hero{padding:64px 0 28px}
+.kicker{
+  display:inline-flex;align-items:center;gap:12px;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:#fff;font-size:.72rem;font-weight:600;
+}
+.kicker::before{content:'';width:44px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);flex-shrink:0}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:end}
+.hero-copy h1{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:clamp(2.3rem, 5.5vw, 5rem);
+  line-height:1;margin:16px 0;
+  letter-spacing:-.02em;font-weight:600;
+}
+.lead,.copy,.small-note{line-height:1.72;color:var(--muted)}
+.lead{font-size:1.02rem}
+.small-note{font-size:.88rem;color:rgba(246,247,251,.62)}
+
+/* Glass cards */
+.glass,.hero-side,.sim-shell,.step-card,.result-box,.tip-card,.mini-card{
+  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.025));
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(10px);
+}
+.hero-side,.result-box,.tip-card,.mini-card{padding:24px}
+.hero-side strong{display:block;font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(1.7rem, 3.2vw, 2.4rem);line-height:1.08;letter-spacing:-.02em}
+.hero-side p{margin:12px 0 0;color:var(--muted);line-height:1.7}
+.badge-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.badge{padding:9px 13px;border-radius:999px;background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:.85rem;color:rgba(255,255,255,.82)}
+
+/* Section */
+.section{padding:clamp(44px, 6vw, 72px) 0 clamp(64px, 9vw, 96px)}
+.section-head{max-width:820px;margin-bottom:clamp(22px, 3vw, 32px)}
+.section-head h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(1.95rem, 4.4vw, 3.6rem);line-height:1.04;margin:14px 0;letter-spacing:-.02em;font-weight:600}
+
+/* Type tabs */
+.type-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.type-tab{
+  padding:16px 18px;border-radius:22px;
+  border:1px solid var(--line);background:rgba(255,255,255,.03);
+  text-align:left;color:#fff;
+  transition:transform .28s var(--ease), background .28s var(--ease), border-color .28s var(--ease);
+}
+.type-tab:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.18)}
+.type-tab strong{display:block;font-weight:700;font-size:.98rem}
+.type-tab small{display:block;color:var(--muted);margin-top:6px;line-height:1.5;font-size:.88rem}
+.type-tab.active{background:linear-gradient(180deg,rgba(215,174,97,.2),rgba(255,255,255,.03));border-color:var(--line-strong);box-shadow:0 10px 24px rgba(215,174,97,.1)}
+
+/* Simulator shell */
+.sim-shell{padding:16px;display:grid;grid-template-columns:1.05fr .95fr;gap:16px;align-items:start}
+.step-stack{display:grid;gap:14px}
+.step-card{padding:22px}
+.step-head{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+.step-number{
+  flex:0 0 auto;width:38px;height:38px;border-radius:999px;
+  background:var(--gold-soft);border:1px solid var(--line-strong);
+  display:grid;place-items:center;font-weight:800;color:#f1d5a1;font-size:.98rem;
+}
+.step-head h3{margin:0 0 4px;font-family:"Cormorant Garamond",Georgia,serif;font-size:1.35rem;line-height:1.15;font-weight:600;letter-spacing:-.01em}
+.step-head p{margin:0;color:var(--muted);line-height:1.6;font-size:.95rem}
+
+/* Choice groups */
+.choice-group{display:grid;gap:10px;margin-top:14px}
+.choice-group:first-of-type{margin-top:0}
+.choice-group.hidden{display:none}
+.choice-title{margin:0 0 2px;font-weight:700;font-size:1rem}
+.choice-help{margin:0 0 10px;color:var(--muted);font-size:.92rem;line-height:1.58}
+
+/* Option grid (destinations, profile etc.) */
+.option-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.option-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.option-card{
+  position:relative;border:1px solid var(--line);border-radius:20px;
+  background:rgba(255,255,255,.03);padding:16px;cursor:pointer;
+  transition:transform .24s var(--ease), border-color .24s var(--ease), background .24s var(--ease);
+  min-height:108px;display:flex;flex-direction:column;justify-content:space-between;
+}
+.option-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.04)}
+.option-card.active{border-color:var(--line-strong);background:linear-gradient(180deg,rgba(215,174,97,.14),rgba(255,255,255,.035));box-shadow:0 10px 24px rgba(215,174,97,.08)}
+.option-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.option-icon{font-size:1.5rem;line-height:1}
+.option-title{font-weight:700;font-size:1rem}
+.option-desc{margin-top:8px;color:var(--muted);font-size:.92rem;line-height:1.56}
+.option-check{width:18px;height:18px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04);transition:.24s var(--ease);flex-shrink:0}
+.option-card.active .option-check{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 4px rgba(215,174,97,.14) inset}
+
+/* Chip grid */
+.chip-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.chip-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.chip{
+  padding:14px;border-radius:16px;border:1px solid var(--line);
+  background:rgba(255,255,255,.03);text-align:left;color:#fff;
+  transition:transform .24s var(--ease), border-color .24s var(--ease), background .24s var(--ease);
+  min-height:70px;
+}
+.chip:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.18)}
+.chip strong{display:block;font-size:.98rem;font-weight:700}
+.chip span{display:block;color:var(--muted);font-size:.88rem;line-height:1.5;margin-top:4px}
+.chip.active{background:linear-gradient(180deg,rgba(215,174,97,.14),rgba(255,255,255,.035));border-color:var(--line-strong)}
+
+/* Budget */
+.budget-shell{display:grid;gap:10px}
+.budget-entry{display:grid;gap:6px}
+.budget-label{font-size:.88rem;color:var(--muted);font-weight:600}
+.budget-input-wrap{
+  display:flex;align-items:center;gap:12px;padding:14px 16px;
+  border-radius:16px;border:1px solid var(--line);
+  background:rgba(255,255,255,.03);
+  transition:border-color .28s var(--ease), box-shadow .28s var(--ease);
+}
+.budget-input-wrap:focus-within{border-color:rgba(215,174,97,.42);box-shadow:0 0 0 3px rgba(215,174,97,.12)}
+.budget-prefix{font-size:1.1rem;font-weight:800;color:var(--gold)}
+.budget-input{width:100%;background:transparent;outline:none;color:#fff;font-size:1.02rem;font-weight:600}
+.budget-input::placeholder{color:rgba(246,247,251,.42)}
+.budget-note{margin:0;color:var(--muted);font-size:.86rem;line-height:1.58}
+
+/* Result side */
+.side-stack{display:grid;gap:14px;position:sticky;top:96px}
+.result-box h3{margin:0 0 12px;font-size:1.32rem;font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;letter-spacing:-.01em}
+.meter{display:grid;gap:6px;margin-bottom:18px}
+.meter-head{display:flex;justify-content:space-between;gap:14px;font-size:.92rem;color:var(--muted)}
+.progress-bar{height:9px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;width:48%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));border-radius:999px;transition:.4s ease}
+.result-price{font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(2.3rem, 4.6vw, 3.6rem);line-height:1;margin:6px 0 10px;letter-spacing:-.02em}
+.result-copy{margin:0 0 14px;color:var(--muted);line-height:1.72}
+.summary-list,.action-list{display:grid;gap:9px;margin:16px 0}
+.summary-item,.action-item{padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:.92rem;line-height:1.55;color:rgba(255,255,255,.86)}
+.result-tags{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.result-tag{padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.03);border:1px solid var(--line);font-size:.84rem;color:rgba(255,255,255,.82)}
+.highlight-card{display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
+.highlight-icon{font-size:1.7rem;line-height:1;flex-shrink:0}
+.highlight-card strong{display:block;margin-bottom:4px;font-size:1rem}
+.cta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.cta-row .btn{flex:1;min-width:min(200px, 100%)}
+.mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.mini-card{padding:16px}
+.mini-card h4{margin:0 0 7px;font-size:.96rem;font-weight:700;color:var(--gold-bright)}
+.mini-card p{margin:0;color:var(--muted);line-height:1.58;font-size:.9rem}
+
+/* Tips */
+.tips-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:26px}
+.tip-card h3{margin:0 0 10px;font-size:1.18rem;font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;letter-spacing:-.01em}
+.tip-card p{margin:0;color:var(--muted);line-height:1.66;font-size:.94rem}
+
+/* Footer */
+footer{padding:36px 0 54px;border-top:1px solid var(--line);margin-top:20px}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:26px;align-items:start}
+.footer-grid strong{display:block;margin-bottom:10px;color:#fff;font-size:.96rem}
+.footer-grid p{margin:6px 0;color:var(--muted);font-size:.9rem}
+.footer-grid .brand-logo{width:clamp(160px, 22vw, 220px);margin-bottom:14px}
+
+/* Floating WA */
+.floating-wa{
+  position:fixed;right:18px;bottom:18px;z-index:39;
+  background:linear-gradient(135deg,#29d366,#1fa855);
+  color:#fff;padding:0 18px;min-height:54px;border-radius:999px;
+  display:inline-flex;align-items:center;gap:10px;
+  box-shadow:0 16px 36px rgba(37,211,102,.32), 0 0 0 1px rgba(255,255,255,.1) inset;
+  font-weight:700;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.floating-wa:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 22px 42px rgba(37,211,102,.4), 0 0 0 1px rgba(255,255,255,.14) inset}
+
+/* Reveal */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.visible,.reveal.revealed{opacity:1;transform:none}
+
+/* ========= RESPONSIVE ========= */
+@media (max-width: 1080px){
+  .hero-grid,.sim-shell,.footer-grid{grid-template-columns:1fr}
+  .type-tabs{grid-template-columns:1fr 1fr}
+  .tips-grid{grid-template-columns:1fr 1fr}
+  .side-stack{position:static}
+}
+
+@media (max-width: 860px){
+  :root{--container:min(1180px, calc(100vw - 28px))}
+  .nav-links,.nav-cta .btn{display:none}
+  .burger{display:flex}
+  .site-header{background:rgba(4,11,18,.88);backdrop-filter:blur(14px)}
+  .mobile-panel{
+    display:grid;position:fixed;left:14px;right:14px;top:72px;
+    padding:16px;border-radius:22px;
+    background:rgba(5,11,18,.97);border:1px solid rgba(255,255,255,.08);
+    box-shadow:var(--shadow);gap:2px;
+    opacity:0;pointer-events:none;transform:translateY(-10px);
+    transition:opacity .28s var(--ease), transform .28s var(--ease);
+    z-index:998;
+  }
+  body.nav-open .mobile-panel{opacity:1;pointer-events:auto;transform:translateY(0)}
+  .mobile-panel a{padding:14px 6px;color:#fff;font-size:1rem;border-bottom:1px solid rgba(255,255,255,.05);font-weight:500}
+  .mobile-panel a:last-child{border-bottom:0}
+  .nav-shell{min-height:68px;gap:12px}
+  .brand-logo{width:min(170px, 48vw)}
+  .type-tabs,.option-grid,.chip-grid,.mini-grid,.tips-grid{grid-template-columns:1fr 1fr}
+}
+
+@media (max-width: 700px){
+  :root{--container:min(1180px, calc(100vw - 22px))}
+  .hero{padding:44px 0 20px}
+  .hero-grid{gap:16px;align-items:start}
+  .hero-copy h1{max-width:12ch;font-size:clamp(1.95rem, 8.5vw, 2.95rem);line-height:1.02}
+  .section-head h2{font-size:clamp(1.8rem, 7.6vw, 2.55rem);line-height:1.06;text-wrap:balance}
+  .lead{font-size:.96rem;line-height:1.66}
+  .badge-row{gap:7px;margin-top:12px}
+  .badge{font-size:.82rem;padding:8px 12px}
+  .brand-logo{width:min(158px, 46vw)}
+  .nav-shell{min-height:64px}
+  .mobile-panel{top:66px;left:10px;right:10px}
+  .option-grid,.option-grid.two,.chip-grid,.chip-grid.two,.type-tabs,.mini-grid,.tips-grid{grid-template-columns:1fr}
+  .type-tab{padding:14px 16px;border-radius:18px}
+  .type-tab strong{font-size:.96rem}
+  .type-tab small{font-size:.88rem;line-height:1.46}
+  .cta-row{display:grid;grid-template-columns:1fr}
+  .cta-row .btn,.btn{width:100%;min-width:auto}
+  .hero-side,.step-card,.result-box,.tip-card,.mini-card{padding:18px;border-radius:20px}
+  .sim-shell{padding:12px;gap:12px}
+  .step-head{align-items:flex-start;gap:12px;margin-bottom:14px}
+  .step-head h3{font-size:1.18rem;line-height:1.18}
+  .step-head p{font-size:.93rem;line-height:1.55}
+  .step-number{width:34px;height:34px;font-size:.92rem}
+  .option-card{min-height:auto;padding:14px 15px;border-radius:18px;gap:8px}
+  .chip{min-height:auto;padding:12px 14px;border-radius:14px}
+  .budget-input-wrap{padding:13px 14px}
+  .side-stack{gap:12px}
+  .result-box h3{font-size:1.18rem}
+  .result-price{font-size:clamp(1.95rem, 9.6vw, 2.85rem);line-height:1}
+  .highlight-card{padding:14px;border-radius:18px}
+  .kicker{font-size:.66rem;letter-spacing:.18em;gap:10px}
+  .kicker::before{width:32px;flex-shrink:0}
+  .floating-wa{right:14px;bottom:calc(env(safe-area-inset-bottom, 0px) + 14px);width:56px;height:56px;min-height:auto;padding:0;justify-content:center;border-radius:999px;box-shadow:0 14px 28px rgba(37,211,102,.32), 0 0 0 1px rgba(255,255,255,.12) inset}
+  .floating-wa{font-size:0}
+  .floating-wa::before{content:"✆";font-size:1.55rem;color:#fff}
+  footer{padding:30px 0 42px}
+  .footer-grid{gap:22px}
+  .footer-grid .brand-logo{width:min(160px, 46vw);margin-bottom:10px}
+}
+
+@media (max-width: 420px){
+  .brand-logo{width:min(146px, 44vw)}
+  .hero-copy h1{font-size:clamp(1.8rem, 9vw, 2.55rem)}
+  .section-head h2{font-size:clamp(1.65rem, 8vw, 2.3rem)}
+  .kicker{font-size:.6rem;letter-spacing:.14em}
+  .kicker::before{width:28px}
+  .step-card,.result-box,.tip-card,.mini-card,.hero-side{padding:16px;border-radius:18px}
+  .btn{padding:12px 18px;min-height:48px;font-size:.94rem}
+}
+
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="index.html"><img class="brand-logo" src="globaltravel_logo_original_white_v16.png" alt="Global Travel Intercâmbios"></a>
+    <nav class="nav-links">
+      <a href="index.html#servicos">Serviços</a>
+      <a href="index.html#destinos">Destinos</a>
+      <a href="trabalhar-morar-fora.html">Trabalhar e morar fora</a>
+      <a href="nossos-cursos.html">Nossos cursos</a>
+      <a class="active" href="simulador.html">Simulador</a>
+      <a href="index.html#contato">Contato</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-primary" href="https://wa.me/351910346159?text=Olá,%20quero%20falar%20com%20a%20Global%20Travel." target="_blank" rel="noopener">WhatsApp</a>
+      <button class="burger" id="burger" aria-label="Abrir menu">☰</button>
+    </div>
+  </div>
+  <div class="mobile-panel" id="mobilePanel">
+    <a href="index.html#servicos">Serviços</a>
+    <a href="index.html#destinos">Destinos</a>
+    <a href="trabalhar-morar-fora.html">Trabalhar e morar fora</a>
+    <a href="nossos-cursos.html">Nossos cursos</a>
+    <a href="simulador.html">Simulador</a>
+    <a href="index.html#contato">Contato</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy reveal">
+        <span class="kicker">Simulador</span>
+        <h1>Seu próximo plano internacional começa com escolhas simples e um atendimento mais certeiro.</h1>
+        <p class="lead">Escolha o seu objetivo, selecione o destino, informe quanto pretende investir e envie um pedido claro para a nossa equipe preparar as melhores possibilidades para você.</p>
+        <div class="badge-row">
+          <span class="badge">Mais clareza para decidir</span>
+          <span class="badge">Seu orçamento, seu ritmo</span>
+          <span class="badge">Atendimento mais assertivo</span>
+        </div>
+      </div>
+      <div class="hero-side reveal">
+        <strong>Menos dúvida. Mais direção.</strong>
+        <p>Em poucos passos, você organiza o que deseja e envia para a nossa equipe um pedido mais completo, simples e fácil de atender.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="painel">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="kicker">Simulação guiada</span>
+        <h2>Conte o que procura. Nós transformamos em possibilidades.</h2>
+        <p class="copy">Selecione seu perfil, destino, preferências e investimento para receber um atendimento mais certeiro, humano e alinhado ao seu momento.</p>
+      </div>
+
+      <div class="type-tabs reveal" id="typeTabs"></div>
+
+      <div class="sim-shell reveal">
+        <div class="step-stack">
+          <section class="step-card">
+            <div class="step-head">
+              <div class="step-number">1</div>
+              <div>
+                <h3>Comece por aqui</h3>
+                <p>Escolha seu perfil, o melhor momento e informe o valor que pretende investir.</p>
+              </div>
+            </div>
+            <div class="choice-group" id="profileGroup"></div>
+            <div class="choice-group" id="timelineGroup"></div>
+            <div class="choice-group" id="budgetGroup"></div>
+          </section>
+
+          <section class="step-card">
+            <div class="step-head">
+              <div class="step-number">2</div>
+              <div>
+                <h3>Destino</h3>
+                <p>Selecione o destino que mais combina com o seu objetivo para direcionarmos a proposta com mais precisão.</p>
+              </div>
+            </div>
+            <div class="option-grid" id="destinationGrid"></div>
+          </section>
+
+          <section class="step-card">
+            <div class="step-head">
+              <div class="step-number">3</div>
+              <div>
+                <h3>Preferências do projeto</h3>
+                <p>Personalize os detalhes mais importantes para que a nossa equipe entenda exatamente o que você procura.</p>
+              </div>
+            </div>
+            <div class="choice-group" id="specificGroupA"></div>
+            <div class="choice-group" id="specificGroupB"></div>
+          </section>
+        </div>
+
+        <aside class="side-stack">
+          <section class="result-box">
+            <div class="meter">
+              <div class="meter-head">
+                <span>Seu pedido</span>
+                <strong id="progressLabel">80%</strong>
+              </div>
+              <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            </div>
+
+            <h3 id="resultTitle">Viagem internacional</h3>
+            <div class="result-price" id="resultPrice">Informe seu investimento</div>
+            <p class="result-copy" id="resultCopy">Preencha suas preferências e informe o valor que pretende investir para receber um atendimento mais alinhado ao que você busca.</p>
+
+            <div class="highlight-card">
+              <div class="highlight-icon" id="highlightIcon">🇵🇹</div>
+              <div>
+                <strong id="highlightTitle">Lisboa / Portugal</strong>
+                <div class="small-note" id="highlightText">Boa porta de entrada para quem quer viagem, estudo ou planejamento internacional com idioma próximo.</div>
+              </div>
+            </div>
+
+            <div class="result-tags" id="resultTags"></div>
+            <div class="summary-list" id="summaryList"></div>
+
+            <div class="mini-grid">
+              <div class="mini-card">
+                <h4>Próximo passo indicado</h4>
+                <p id="nextStep">Enviar seu pedido para o WhatsApp e avançar com um atendimento mais direcionado.</p>
+              </div>
+              <div class="mini-card">
+                <h4>O que a equipe prepara</h4>
+                <p id="teamAction">Uma seleção inicial de opções mais compatíveis com o seu objetivo, perfil e investimento informado.</p>
+              </div>
+            </div>
+
+            <div class="cta-row">
+              <a class="btn btn-primary" id="primaryCta" href="#" target="_blank" rel="noopener">Levar para o WhatsApp</a>
+              <a class="btn btn-ghost" id="secondaryCta" href="#" target="_blank" rel="noopener">Quero comparar opções</a>
+            </div>
+
+            <p class="small-note" style="margin:18px 0 0">O valor informado serve como referência do seu planejamento. A proposta final varia conforme datas, disponibilidade, instituição, temporada e fornecedores.</p>
+          </section>
+
+          <section class="result-box">
+            <h3>Como funciona após o envio</h3>
+            <div class="action-list">
+              <div class="action-item">Analisamos o seu objetivo e o melhor momento para avançar.</div>
+              <div class="action-item">Selecionamos opções compatíveis com o seu perfil e o investimento informado.</div>
+              <div class="action-item">Entramos em contato com um direcionamento mais claro para facilitar a sua decisão.</div>
+            </div>
+          </section>
+        </aside>
+      </div>
+
+      <div class="tips-grid">
+        <div class="tip-card reveal">
+          <h3>Escolhas mais claras</h3>
+          <p>Cada etapa foi pensada para tornar o preenchimento simples, rápido e intuitivo.</p>
+        </div>
+        <div class="tip-card reveal">
+          <h3>Atendimento mais alinhado</h3>
+          <p>Com um pedido mais completo, a nossa equipe pode sugerir caminhos com mais precisão.</p>
+        </div>
+        <div class="tip-card reveal">
+          <h3>Menos tempo, mais direção</h3>
+          <p>Em poucos cliques, você organiza suas preferências e avança para um atendimento personalizado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container footer-grid">
+    <div>
+      <img class="brand-logo" src="globaltravel_logo_original_white_v16.png" alt="Global Travel Intercâmbios">
+      <p class="copy" style="max-width:520px">Planeje a sua próxima experiência internacional com mais clareza, confiança e atendimento personalizado.</p>
+    </div>
+    <div>
+      <strong>Contato</strong>
+      <p class="copy">WhatsApp: +351 910 346 159</p>
+      <p class="copy">globaltravelintracambios@gmail.com</p>
+    </div>
+    <div>
+      <strong>Navegação</strong>
+      <p><a href="index.html">Home</a></p>
+      <p><a href="nossos-cursos.html">Nossos cursos</a></p>
+      <p><a href="trabalhar-morar-fora.html">Trabalhar e morar fora</a></p>
+    </div>
+  </div>
+</footer>
+
+<a class="floating-wa" href="https://wa.me/351910346159?text=Olá,%20quero%20falar%20com%20a%20Global%20Travel." target="_blank" rel="noopener">WhatsApp</a>
+
+<script>
+const burger=document.getElementById('burger');
+burger?.addEventListener('click',()=>document.body.classList.toggle('nav-open'));
+
+const flows={
+  viagem:{
+    label:'Viagem internacional',
+    tabCopy:'Pacotes, hospedagem e roteiro.',
+    profile:{
+      title:'Quem vai nessa viagem?',
+      help:'Escolha o perfil principal do grupo para orientar melhor a proposta.',
+      options:[
+        {id:'solo',icon:'🧍',title:'1 pessoa',desc:'Viagem individual com mais flexibilidade.'},
+        {id:'casal',icon:'💑',title:'Casal',desc:'Boa leitura para romântico, férias e roteiro a dois.'},
+        {id:'familia',icon:'👨‍👩‍👧',title:'Família',desc:'Mais útil para Disney, neve e férias escolares.'},
+        {id:'grupo',icon:'🧑‍🤝‍🧑',title:'Grupo',desc:'Ideal para amigos e viagens compartilhadas.'}
+      ]
+    },
+    timeline:{
+      title:'Quando pretende viajar?',
+      help:'Isso ajuda a equipe a perceber urgência e janela de oportunidade.',
+      options:[
+        {id:'30d',title:'Próximos 30 dias',desc:'Preciso resolver logo.'},
+        {id:'90d',title:'Até 3 meses',desc:'Já quero andar com isso.'},
+        {id:'180d',title:'Até 6 meses',desc:'Tenho tempo para planejar.'}
+      ]
+    },
+    budget:{
+      title:'Quanto pretende investir?',
+      help:'Informe um valor aproximado para a equipe preparar opções mais alinhadas ao seu objetivo.',
+      options:[
+        {id:'baixo',title:'Econômica',desc:'Quero prioridade em custo-benefício.'},
+        {id:'medio',title:'Intermediária',desc:'Equilíbrio entre preço e conforto.'},
+        {id:'alto',title:'Confortável',desc:'Quero uma experiência mais completa.'}
+      ]
+    },
+    destinations:[
+      {id:'lisboa',icon:'🇵🇹',title:'Lisboa / Portugal',desc:'Europa com adaptação simples e apelo cultural.'},
+      {id:'paris',icon:'🗼',title:'Paris',desc:'Viagem clássica, romântica e com forte valor percebido.'},
+      {id:'disney',icon:'🏰',title:'Disney / Orlando',desc:'Perfeito para férias em família e experiência planejada.'},
+      {id:'neve',icon:'❄️',title:'Destino de neve',desc:'Procura alta para inverno e viagens especiais.'}
+    ],
+    specifics:[
+      {
+        key:'style',
+        title:'Estilo de viagem',
+        help:'Ajuda a equipe a montar o tom certo da proposta.',
+        options:[
+          {id:'roteiro-base',title:'Essencial',desc:'Passagem + hotel + base do roteiro.'},
+          {id:'equilibrada',title:'Equilibrada',desc:'Boa relação entre preço e conforto.'},
+          {id:'premium',title:'Mais exclusiva',desc:'Mais comodidade e curadoria.'}
+        ]
+      },
+      {
+        key:'stay',
+        title:'Hospedagem desejada',
+        help:'A hospedagem costuma puxar bastante a percepção de preço.',
+        options:[
+          {id:'smart',title:'Econômica',desc:'Prática e funcional.'},
+          {id:'comfort',title:'Confortável',desc:'Mais segurança e boa localização.'},
+          {id:'premium',title:'Premium',desc:'Mais conforto e experiência.'}
+        ]
+      }
+    ],
+    estimate:{
+      base:{lisboa:1200,paris:1600,disney:2200,neve:1900},
+      profile:{solo:1,casal:1.7,familia:2.45,grupo:2.1},
+      timeline:{'30d':1.12,'90d':1.02,'180d':.96},
+      budget:{baixo:1,medio:1.22,alto:1.48},
+      style:{'roteiro-base':1,equilibrada:1.12,premium:1.35},
+      stay:{smart:1,comfort:1.14,premium:1.32}
+    },
+    summary:(state,dest)=>[
+      `Perfil principal: ${labelFor('profile',state.profile)}`,
+      `Prazo da decisão: ${labelFor('timeline',state.timeline)}`,
+      `Estilo desejado: ${labelFor('style',state.style)}`
+    ],
+    nextStep:'Validar datas, número de passageiros, hotel e estrutura do pacote.',
+    teamAction:'A equipe pode comparar rotas, hospedagem e formato da viagem.',
+    copy:'Faixa inicial para viagem com pacote e estrutura de roteiro. Serve para abrir a conversa certa, não para fechar preço no site.',
+    compare:'Olá, quero comparar opções de viagem internacional com a Global Travel.'
+  },
+  passagem:{
+    label:'Passagens aéreas',
+    tabCopy:'Emissão, rota e bagagem.',
+    profile:{
+      title:'Quem embarca?',
+      help:'Aqui o foco é entender a dinâmica da emissão e da tarifa.',
+      options:[
+        {id:'solo',icon:'🧍',title:'1 pessoa',desc:'Compra objetiva e mais simples.'},
+        {id:'casal',icon:'💑',title:'Casal',desc:'Boa para lazer e viagem conjunta.'},
+        {id:'familia',icon:'👨‍👩‍👧',title:'Família',desc:'Mais sensível a bagagem e conexões.'},
+        {id:'grupo',icon:'🧑‍🤝‍🧑',title:'Grupo',desc:'Ideal para viagens compartilhadas.'}
+      ]
+    },
+    timeline:{
+      title:'Quando pretende emitir?',
+      help:'Antecedência faz diferença real em tarifa.',
+      options:[
+        {id:'30d',title:'Urgente',desc:'Preciso emitir logo.'},
+        {id:'90d',title:'Planejando',desc:'Consigo acompanhar boas janelas.'},
+        {id:'180d',title:'Antecedência alta',desc:'Quero comprar com calma.'}
+      ]
+    },
+    budget:{
+      title:'Quanto pretende investir?',
+      help:'Informe um valor aproximado para a equipe preparar opções mais alinhadas ao seu objetivo.',
+      options:[
+        {id:'baixo',title:'Mais econômica',desc:'Buscar menor tarifa possível.'},
+        {id:'medio',title:'Intermediária',desc:'Equilíbrio entre custo e conforto.'},
+        {id:'alto',title:'Mais confortável',desc:'Melhor rota e menos desgaste.'}
+      ]
+    },
+    destinations:[
+      {id:'portugal',icon:'🇵🇹',title:'Portugal',desc:'Procura constante para estudo, turismo e mudança.'},
+      {id:'irlanda',icon:'🇮🇪',title:'Irlanda',desc:'Muito buscada para intercâmbio e viagens longas.'},
+      {id:'eua',icon:'🇺🇸',title:'Estados Unidos',desc:'Destino com grande variação de tarifa e rota.'},
+      {id:'outro',icon:'🌍',title:'Outro destino',desc:'Quando o foco é só a melhor emissão possível.'}
+    ],
+    specifics:[
+      {
+        key:'bag',
+        title:'Bagagem',
+        help:'Bagagem muda bastante o comparativo entre tarifas.',
+        options:[
+          {id:'hand',title:'Mala de mão',desc:'Tarifa mais enxuta.'},
+          {id:'checked',title:'1 bagagem',desc:'Boa para viagem média.'},
+          {id:'full',title:'Bagagem completa',desc:'Mais conforto e flexibilidade.'}
+        ]
+      },
+      {
+        key:'route',
+        title:'Prioridade da emissão',
+        help:'Isso orienta o tipo de busca que a equipe deve fazer.',
+        options:[
+          {id:'preco',title:'Menor preço',desc:'Aceito mais ajustes para pagar menos.'},
+          {id:'equilibrio',title:'Equilíbrio',desc:'Quero custo-benefício.'},
+          {id:'comodidade',title:'Mais conforto',desc:'Menos escalas e melhor experiência.'}
+        ]
+      }
+    ],
+    estimate:{
+      base:{portugal:420,irlanda:460,eua:760,outro:540},
+      profile:{solo:1,casal:1.75,familia:2.55,grupo:2.2},
+      timeline:{'30d':1.2,'90d':1.03,'180d':.94},
+      budget:{baixo:1,medio:1.15,alto:1.3},
+      bag:{hand:1,checked:1.13,full:1.26},
+      route:{preco:1,equilibrio:1.08,comodidade:1.18}
+    },
+    summary:(state)=>[
+      `Passageiros: ${labelFor('profile',state.profile)}`,
+      `Bagagem: ${labelFor('bag',state.bag)}`,
+      `Prioridade: ${labelFor('route',state.route)}`
+    ],
+    nextStep:'Enviar datas aproximadas, cidade de saída e flexibilidade da viagem.',
+    teamAction:'A equipe compara rotas, conexões e melhores tarifas disponíveis.',
+    copy:'Estimativa inicial para emissão aérea. O valor final varia muito conforme datas, cidade de saída, antecedência e regra tarifária.',
+    compare:'Olá, quero comparar opções de passagens aéreas com a Global Travel.'
+  },
+  ingles:{
+    label:'Intercâmbio de inglês',
+    tabCopy:'Curso, cidade e acomodação.',
+    profile:{
+      title:'Perfil do estudante',
+      help:'Aqui entram perfis compatíveis com intercâmbio de idiomas, sem opções confusas.',
+      options:[
+        {id:'adulto',icon:'🎓',title:'Adulto',desc:'Busca desenvolvimento pessoal ou profissional.'},
+        {id:'universitario',icon:'📚',title:'Universitário',desc:'Quer fortalecer currículo e experiência internacional.'},
+        {id:'teen',icon:'🧒',title:'Teen',desc:'Programa com apoio e estrutura mais guiada.'},
+        {id:'executivo',icon:'💼',title:'Executivo',desc:'Precisa de formato mais objetivo e eficiente.'}
+      ]
+    },
+    timeline:{
+      title:'Quando pretende começar?',
+      help:'Ajuda a avaliar urgência de matrícula e acomodação.',
+      options:[
+        {id:'30d',title:'Muito em breve',desc:'Quero sair logo.'},
+        {id:'90d',title:'Nos próximos meses',desc:'Já quero planejar.'},
+        {id:'180d',title:'Mais para frente',desc:'Ainda estou estruturando.'}
+      ]
+    },
+    budget:{
+      title:'Quanto pretende investir?',
+      help:'Informe um valor aproximado para a equipe preparar opções mais alinhadas ao seu objetivo.',
+      options:[
+        {id:'baixo',title:'Entrada',desc:'Mais foco em acessibilidade.'},
+        {id:'medio',title:'Intermediária',desc:'Boa margem de escolha.'},
+        {id:'alto',title:'Mais completa',desc:'Mais conforto e opções melhores.'}
+      ]
+    },
+    destinations:[
+      {id:'irlanda',icon:'🇮🇪',title:'Irlanda',desc:'Destino forte e clássico para inglês.'},
+      {id:'portugal',icon:'🇵🇹',title:'Portugal',desc:'Mais familiar para brasileiros, com adaptação simples e boa procura.'},
+      {id:'canada',icon:'🍁',title:'Canadá',desc:'Boa imagem de qualidade e experiência internacional.'}
+    ],
+    specifics:[
+      {
+        key:'course',
+        title:'Formato do curso',
+        help:'O formato interfere diretamente na faixa de investimento.',
+        options:[
+          {id:'regular',title:'Regular',desc:'Carga equilibrada e boa base.'},
+          {id:'intensivo',title:'Intensivo',desc:'Ritmo mais acelerado.'},
+          {id:'preparacao',title:'Preparação',desc:'Foco em objetivo acadêmico ou prova.'}
+        ]
+      },
+      {
+        key:'housing',
+        title:'Acomodação desejada',
+        help:'Acomodação é uma das maiores alavancas de preço nesse produto.',
+        options:[
+          {id:'familia',title:'Casa de família',desc:'Boa para imersão e rotina assistida.'},
+          {id:'residencia',title:'Residência estudantil',desc:'Mais independência e convivência.'},
+          {id:'privado',title:'Quarto privado',desc:'Mais conforto e privacidade.'}
+        ]
+      }
+    ],
+    estimate:{
+      base:{irlanda:2900,portugal:2600,canada:3600,australia:4700},
+      profile:{adulto:1,universitario:1.05,teen:1.14,executivo:1.22},
+      timeline:{'30d':1.08,'90d':1.02,'180d':.97},
+      budget:{baixo:1,medio:1.18,alto:1.38},
+      course:{regular:1,intensivo:1.14,preparacao:1.22},
+      housing:{familia:1,residencia:1.1,privado:1.24}
+    },
+    summary:(state)=>[
+      `Perfil do aluno: ${labelFor('profile',state.profile)}`,
+      `Formato do curso: ${labelFor('course',state.course)}`,
+      `Acomodação: ${labelFor('housing',state.housing)}`
+    ],
+    nextStep:'Validar cidade, escola, duração e melhor formato de acomodação.',
+    teamAction:'A equipe monta uma direção com escola, cidade e estrutura mais compatíveis.',
+    copy:'Faixa inicial para intercâmbio de inglês considerando destino, curso e acomodação. A proposta final depende de escola, carga horária e época.',
+    compare:'Olá, quero comparar opções de intercâmbio de inglês com a Global Travel.'
+  },
+  estudos:{
+    label:'Graduação / mestrado',
+    tabCopy:'Curso, instituição e plano acadêmico.',
+    profile:{
+      title:'Objetivo acadêmico',
+      help:'Aqui a conversa muda de viagem para projeto de vida, então o perfil precisa refletir isso.',
+      options:[
+        {id:'graduacao',icon:'🎓',title:'Graduação',desc:'Primeira formação internacional.'},
+        {id:'pos',icon:'📘',title:'Pós-graduação',desc:'Especialização com foco profissional.'},
+        {id:'mestrado',icon:'🏛️',title:'Mestrado',desc:'Projeto acadêmico mais robusto.'},
+        {id:'transicao',icon:'🚀',title:'Mudança de área',desc:'Quero recomeçar com estratégia.'}
+      ]
+    },
+    timeline:{
+      title:'Janela de início',
+      help:'Quanto antes a equipe souber disso, melhor para documentos e candidatura.',
+      options:[
+        {id:'30d',title:'Urgente',desc:'Quero começar o quanto antes.'},
+        {id:'90d',title:'Próxima intake',desc:'Estou mirando a próxima entrada.'},
+        {id:'180d',title:'Planejamento longo',desc:'Ainda estruturando o projeto.'}
+      ]
+    },
+    budget:{
+      title:'Quanto pretende investir?',
+      help:'Informe um valor aproximado para a equipe preparar opções mais alinhadas ao seu objetivo.',
+      options:[
+        {id:'baixo',title:'Mais acessível',desc:'Quero prioridade em custo e viabilidade.'},
+        {id:'medio',title:'Equilibrada',desc:'Quero boas opções sem exagerar.'},
+        {id:'alto',title:'Mais competitiva',desc:'Busco estrutura mais forte e premium.'}
+      ]
+    },
+    destinations:[
+      {id:'portugal',icon:'🇵🇹',title:'Portugal',desc:'Caminho natural para brasileiros e forte apelo acadêmico.'},
+      {id:'irlanda',icon:'🇮🇪',title:'Irlanda',desc:'Combina estudo e experiência internacional.'},
+      {id:'eua',icon:'🇺🇸',title:'Estados Unidos',desc:'Ticket maior e alta percepção de valor.'},
+      {id:'espanha',icon:'🇪🇸',title:'Espanha',desc:'Boa alternativa europeia para formação.'}
+    ],
+    specifics:[
+      {
+        key:'institution',
+        title:'Perfil da instituição',
+        help:'A percepção de valor muda muito conforme o nível da instituição.',
+        options:[
+          {id:'acessivel',title:'Mais acessível',desc:'Prioridade em entrada e custo.'},
+          {id:'privada',title:'Privada',desc:'Combina suporte e estrutura.'},
+          {id:'premium',title:'Mais competitiva',desc:'Busca instituição de maior peso.'}
+        ]
+      },
+      {
+        key:'support',
+        title:'Nível de apoio desejado',
+        help:'Define se a conversa deve começar por admissão, documentos ou projeto completo.',
+        options:[
+          {id:'curso',title:'Só curso',desc:'Quero entender a parte acadêmica.'},
+          {id:'curso-documentos',title:'Curso + documentos',desc:'Preciso de apoio mais completo.'},
+          {id:'projeto-total',title:'Projeto completo',desc:'Quero visão de ponta a ponta.'}
+        ]
+      }
+    ],
+    estimate:{
+      base:{portugal:4100,irlanda:5200,eua:8900,espanha:4700},
+      profile:{graduacao:1,pos:1.08,mestrado:1.2,transicao:1.1},
+      timeline:{'30d':1.06,'90d':1.01,'180d':.98},
+      budget:{baixo:1,medio:1.2,alto:1.45},
+      institution:{acessivel:1,privada:1.18,premium:1.42},
+      support:{curso:1,'curso-documentos':1.1,'projeto-total':1.2}
+    },
+    summary:(state)=>[
+      `Objetivo: ${labelFor('profile',state.profile)}`,
+      `Instituição: ${labelFor('institution',state.institution)}`,
+      `Apoio desejado: ${labelFor('support',state.support)}`
+    ],
+    nextStep:'Definir curso, intake, instituição e escopo do suporte desejado.',
+    teamAction:'A equipe pode alinhar curso, candidatura, documentos e visão de investimento.',
+    copy:'Faixa inicial para graduação e estudos avançados. É uma triagem comercial útil para separar interesse superficial de projeto realmente maduro.',
+    compare:'Olá, quero comparar opções de graduação ou mestrado com a Global Travel.'
+  }
+};
+
+
+let currentType='viagem';
+let state={
+  viagem:{profile:'casal',timeline:'90d',budget:'total',budgetValue:'',destination:'lisboa',style:'equilibrada',stay:'comfort'},
+  passagem:{profile:'solo',timeline:'90d',budget:'total',budgetValue:'',destination:'portugal',bag:'checked',route:'equilibrio'},
+  ingles:{profile:'adulto',timeline:'90d',budget:'mensal',budgetValue:'',destination:'irlanda',course:'regular',housing:'familia'},
+  estudos:{profile:'mestrado',timeline:'180d',budget:'mensal',budgetValue:'',destination:'portugal',institution:'privada',support:'curso-documentos'}
+};
+
+const budgetModes=[
+  {id:'total',title:'Valor total',desc:'Referência para o projeto completo.'},
+  {id:'pessoa',title:'Por pessoa',desc:'Ideal para casal, família ou grupo.'},
+  {id:'mensal',title:'Valor mensal',desc:'Útil para estudo e projetos longos.'}
+];
+
+const typeTabs=document.getElementById('typeTabs');
+const profileGroup=document.getElementById('profileGroup');
+const timelineGroup=document.getElementById('timelineGroup');
+const budgetGroup=document.getElementById('budgetGroup');
+const destinationGrid=document.getElementById('destinationGrid');
+const specificGroupA=document.getElementById('specificGroupA');
+const specificGroupB=document.getElementById('specificGroupB');
+
+const resultTitle=document.getElementById('resultTitle');
+const resultPrice=document.getElementById('resultPrice');
+const resultCopy=document.getElementById('resultCopy');
+const highlightIcon=document.getElementById('highlightIcon');
+const highlightTitle=document.getElementById('highlightTitle');
+const highlightText=document.getElementById('highlightText');
+const resultTags=document.getElementById('resultTags');
+const summaryList=document.getElementById('summaryList');
+const nextStep=document.getElementById('nextStep');
+const teamAction=document.getElementById('teamAction');
+const primaryCta=document.getElementById('primaryCta');
+const secondaryCta=document.getElementById('secondaryCta');
+const progressFill=document.getElementById('progressFill');
+const progressLabel=document.getElementById('progressLabel');
+
+
+function budgetModeLabel(value){
+  return budgetModes.find(item=>item.id===value)?.title || 'Valor informado';
+}
+
+function formatBudgetValue(value){
+  const numeric = String(value || '').replace(/\D/g,'');
+  return numeric ? Number(numeric).toLocaleString('pt-PT') : '';
+}
+
+function budgetSummaryText(s){
+  if(!s.budgetValue) return 'A definir';
+  return `€ ${formatBudgetValue(s.budgetValue)} (${budgetModeLabel(s.budget).toLowerCase()})`;
+}
+
+
+function budgetModeLabel(value){
+  return budgetModes.find(item=>item.id===value)?.title || 'Valor informado';
+}
+
+function formatBudgetValue(value){
+  const numeric = String(value || '').replace(/\D/g,'');
+  return numeric ? Number(numeric).toLocaleString('pt-PT') : '';
+}
+
+function budgetSummaryText(s){
+  if(!s.budgetValue) return 'A definir';
+  return `€ ${formatBudgetValue(s.budgetValue)} (${budgetModeLabel(s.budget).toLowerCase()})`;
+}
+
+function labelFor(groupKey,value){
+  const flow=flows[currentType];
+  const pools=[flow.profile,flow.timeline,...flow.specifics];
+  if(groupKey==='destination'){
+    return flow.destinations.find(item=>item.id===value)?.title || '';
+  }
+  if(groupKey==='budget'){
+    return budgetModeLabel(value);
+  }
+  const group=pools.find(item=>item.key===groupKey || item===flow[groupKey]);
+  return group?.options.find(item=>item.id===value)?.title || '';
+}
+
+function renderTabs(){
+  typeTabs.innerHTML=Object.entries(flows).map(([key,flow])=>`
+    <button class="type-tab ${key===currentType?'active':''}" data-type="${key}">
+      <strong>${flow.label}</strong>
+      <small>${flow.tabCopy}</small>
+    </button>
+  `).join('');
+  typeTabs.querySelectorAll('.type-tab').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      currentType=btn.dataset.type;
+      renderAll();
+    });
+  });
+}
+
+function renderChoiceGroup(target,group,stateKey){
+  const cls=group.options.length===2 ? 'chip-grid two' : 'chip-grid';
+  target.innerHTML=`
+    <div>
+      <h4 class="choice-title">${group.title}</h4>
+      <p class="choice-help">${group.help}</p>
+      <div class="${cls}">
+        ${group.options.map(option=>`
+          <button class="chip ${state[currentType][stateKey]===option.id?'active':''}" data-state-key="${stateKey}" data-value="${option.id}">
+            <strong>${option.title}</strong>
+            <span>${option.desc}</span>
+          </button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderBudgetField(target,group){
+  target.innerHTML=`
+    <div class="budget-shell">
+      <div>
+        <h4 class="choice-title">${group.title}</h4>
+        <p class="choice-help">${group.help}</p>
+      </div>
+      <div class="budget-entry">
+        <span class="budget-label">Valor aproximado em euro</span>
+        <label class="budget-input-wrap" for="budgetValueInput">
+          <span class="budget-prefix">€</span>
+          <input class="budget-input" id="budgetValueInput" inputmode="numeric" autocomplete="off" placeholder="Ex.: 2500" value="${formatBudgetValue(state[currentType].budgetValue)}">
+        </label>
+        <p class="budget-note">Compartilhe um valor aproximado. Assim conseguimos alinhar melhor a proposta ao seu momento.</p>
+      </div>
+      <div class="chip-grid">
+        ${budgetModes.map(option=>`
+          <button class="chip ${state[currentType].budget===option.id?'active':''}" data-state-key="budget" data-value="${option.id}">
+            <strong>${option.title}</strong>
+            <span>${option.desc}</span>
+          </button>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderOptionCards(target,items,stateKey){
+  target.innerHTML=items.map(item=>`
+    <button class="option-card ${state[currentType][stateKey]===item.id?'active':''}" data-state-key="${stateKey}" data-value="${item.id}">
+      <div class="option-top">
+        <span class="option-icon">${item.icon}</span>
+        <span class="option-check"></span>
+      </div>
+      <div>
+        <div class="option-title">${item.title}</div>
+        <div class="option-desc">${item.desc}</div>
+      </div>
+    </button>
+  `).join('');
+}
+
+function renderGroups(){
+  const flow=flows[currentType];
+  renderChoiceGroup(profileGroup,flow.profile,'profile');
+  renderChoiceGroup(timelineGroup,flow.timeline,'timeline');
+  renderBudgetField(budgetGroup,flow.budget);
+  renderOptionCards(destinationGrid,flow.destinations,'destination');
+  renderChoiceGroup(specificGroupA,flow.specifics[0],flow.specifics[0].key);
+  renderChoiceGroup(specificGroupB,flow.specifics[1],flow.specifics[1].key);
+}
+
+function attachStateEvents(){
+  document.querySelectorAll('[data-state-key]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      state[currentType][btn.dataset.stateKey]=btn.dataset.value;
+      renderAll();
+    });
+  });
+  const budgetInput=document.getElementById('budgetValueInput');
+  if(budgetInput){
+    budgetInput.addEventListener('input',e=>{
+      const numeric=e.target.value.replace(/\D/g,'').slice(0,7);
+      state[currentType].budgetValue=numeric;
+      e.target.value=formatBudgetValue(numeric);
+      renderResult();
+    });
+  }
+}
+
+function progressValue(){
+  const s=state[currentType];
+  const keys=Object.keys(s).filter(key=>key!=='budget');
+  const filled=keys.filter(key=>Boolean(s[key])).length;
+  return Math.round((filled/keys.length)*100);
+}
+
+function whatsSummary(){
+  const flow=flows[currentType];
+  const s=state[currentType];
+  const lines=[
+    'Olá, fiz a simulação no site da Global Travel.',
+    '',
+    `Objetivo: ${flow.label}`,
+    `Destino: ${labelFor('destination',s.destination)}`,
+    `Perfil: ${labelFor('profile',s.profile)}`,
+    `Prazo: ${labelFor('timeline',s.timeline)}`,
+    `Investimento previsto: ${budgetSummaryText(s)}`,
+    `${flow.specifics[0].title}: ${labelFor(flow.specifics[0].key,s[flow.specifics[0].key])}`,
+    `${flow.specifics[1].title}: ${labelFor(flow.specifics[1].key,s[flow.specifics[1].key])}`,
+    '',
+    'Quero avançar com um atendimento com base nessas informações.'
+  ];
+  return encodeURIComponent(lines.join('\n'));
+}
+
+function specificCta(){
+  const flow=flows[currentType];
+  const s=state[currentType];
+  const dest=labelFor('destination',s.destination);
+  const budgetInfo=s.budgetValue ? ` com investimento previsto de ${budgetSummaryText(s)}` : '';
+  const messages={
+    viagem:`Olá, fiz a simulação de viagem no site. Quero montar uma proposta para ${dest}${budgetInfo}.`,
+    passagem:`Olá, fiz a simulação de passagens no site. Quero cotar uma emissão para ${dest}${budgetInfo}.`,
+    ingles:`Olá, fiz a simulação de intercâmbio de inglês no site. Quero avaliar opções para ${dest}${budgetInfo}.`,
+    estudos:`Olá, fiz a simulação de graduação/mestrado no site. Quero avaliar um projeto em ${dest}${budgetInfo}.`
+  };
+  return encodeURIComponent(messages[currentType]);
+}
+
+function renderResult(){
+  const flow=flows[currentType];
+  const s=state[currentType];
+  const dest=flow.destinations.find(item=>item.id===s.destination);
+  const pct=progressValue();
+  const budgetText=s.budgetValue ? `€ ${formatBudgetValue(s.budgetValue)}` : 'Informe o valor que pretende investir';
+  const budgetCopy=s.budgetValue
+    ? `Receba um atendimento mais alinhado ao seu objetivo, momento e investimento informado (${budgetModeLabel(s.budget).toLowerCase()}).`
+    : 'Preencha suas preferências e informe o valor que pretende investir para receber um atendimento mais alinhado ao que procura.';
+
+  resultTitle.textContent=flow.label;
+  resultPrice.textContent=budgetText;
+  resultCopy.textContent=budgetCopy;
+  highlightIcon.textContent=dest.icon;
+  highlightTitle.textContent=dest.title;
+  highlightText.textContent=dest.desc;
+  nextStep.textContent=flow.nextStep;
+  teamAction.textContent=flow.teamAction;
+
+  progressFill.style.width=`${pct}%`;
+  progressLabel.textContent=`${pct}%`;
+
+  const tags=[labelFor('destination',s.destination),labelFor('profile',s.profile),labelFor(flow.specifics[0].key,s[flow.specifics[0].key])];
+  resultTags.innerHTML=tags.map(tag=>`<span class="result-tag">${tag}</span>`).join('');
+
+  summaryList.innerHTML=[
+    ...flow.summary(s,dest),
+    `Investimento previsto: ${budgetSummaryText(s)}`
+  ].map(item=>`<div class="summary-item">${item}</div>`).join('');
+
+  primaryCta.textContent=currentType==='passagem' ? 'Levar pedido para o WhatsApp' : 'Levar para o WhatsApp';
+  primaryCta.href=`https://wa.me/351910346159?text=${whatsSummary()}`;
+  secondaryCta.href=`https://wa.me/351910346159?text=${encodeURIComponent(flow.compare)}`;
+  primaryCta.dataset.direct=specificCta();
+}
+
+function renderAll(){
+  renderTabs();
+  renderGroups();
+  attachStateEvents();
+  renderResult();
+}
+
+renderAll();
+
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting) entry.target.classList.add('visible');
+  });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

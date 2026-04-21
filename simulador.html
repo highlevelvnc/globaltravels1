@@ -354,6 +354,117 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
 /* ===== 3D tilt cards ===== */
 .course-card,.path-card,.destination-card{transform-style:preserve-3d;will-change:transform}
 
+
+/* ===== Font display swap (faster first render) ===== */
+
+/* ===== Subtle film grain overlay (desktop only) ===== */
+body::after{
+  content:"";position:fixed;inset:0;z-index:1;
+  pointer-events:none;
+  background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.04;mix-blend-mode:overlay;
+}
+@media (max-width:768px){body::after{display:none}}
+@media (prefers-reduced-motion:reduce){body::after{display:none}}
+
+/* ===== Shimmer sweep on primary buttons (desktop hover) ===== */
+.btn-primary{position:relative;overflow:hidden;isolation:isolate}
+.btn-primary::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(110deg, transparent 34%, rgba(255,255,255,.45) 50%, transparent 66%);
+  transform:translateX(-130%);
+  transition:transform .85s var(--ease);
+  pointer-events:none;z-index:-1;
+}
+@media (hover:hover){
+  .btn-primary:hover::after{transform:translateX(130%)}
+}
+
+/* ===== Header compacts on scroll ===== */
+.site-header.scrolled .nav-shell{min-height:64px}
+.site-header.scrolled .brand-logo{width:clamp(155px,18vw,215px)}
+@media (max-width:860px){
+  .site-header.scrolled .nav-shell{min-height:48px}
+  .site-header.scrolled .brand-logo{width:min(116px,33vw)}
+}
+
+/* ===== Focus-visible (accessibility) ===== */
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px;border-radius:10px}
+.btn:focus-visible,.choice:focus-visible,.option-card:focus-visible,.faq-btn:focus-visible{outline-offset:4px}
+
+/* ===== Back to top ===== */
+.to-top{
+  position:fixed;left:18px;bottom:calc(env(safe-area-inset-bottom, 0px) + 16px);
+  z-index:900;
+  width:46px;height:46px;border-radius:999px;
+  background:rgba(4,10,18,.7);border:1px solid rgba(242,212,155,.32);
+  color:var(--gold-soft);font-size:1.15rem;font-weight:600;
+  backdrop-filter:blur(12px);
+  opacity:0;pointer-events:none;
+  transform:translateY(16px) scale(.9);
+  transition:opacity .4s var(--ease), transform .4s var(--ease), background .3s var(--ease), border-color .3s var(--ease);
+  display:grid;place-items:center;
+}
+.to-top.visible{opacity:1;pointer-events:auto;transform:translateY(0) scale(1)}
+.to-top:hover{background:rgba(199,154,74,.14);border-color:rgba(242,212,155,.58)}
+@media (max-width:768px){
+  .to-top{left:14px;bottom:calc(env(safe-area-inset-bottom, 0px) + 14px);width:42px;height:42px}
+}
+
+/* ===== Gold gradient text accent class ===== */
+.gold-text{
+  background:linear-gradient(135deg, var(--gold-soft), var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* ===== Contact list link with chevron on hover ===== */
+.contact-list a{position:relative;transition:padding-right .35s var(--ease), background .3s var(--ease), border-color .3s var(--ease)}
+.contact-list a::after{
+  content:"→";position:absolute;right:18px;top:50%;
+  transform:translateY(-50%) translateX(-6px);opacity:0;
+  color:var(--gold-soft);transition:all .35s var(--ease);
+}
+.contact-list a:hover{padding-right:38px}
+.contact-list a:hover::after{opacity:1;transform:translateY(-50%) translateX(0)}
+
+/* ===== Stat completion pulse ===== */
+@keyframes statPulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.045)}
+  100%{transform:scale(1)}
+}
+.stat-number.done{animation:statPulse .55s var(--ease)}
+
+
+/* ===== Mobile responsive fine-tuning ===== */
+@media (max-width: 700px){
+  .section{padding:26px 0 72px}
+  .container{width:min(1180px, calc(100vw - 24px))}
+  .btn{min-height:48px;padding:0 20px}
+  .hero{padding:46px 0 18px}
+  .hero-grid{gap:14px}
+  .option-grid,.option-grid.two,.chip-grid,.chip-grid.two{gap:8px}
+  .option-card,.chip{padding:13px 13px}
+  .step-card{padding:18px 16px}
+  .step-head{gap:10px;margin-bottom:12px}
+  .step-head h3{font-size:1.1rem}
+  .step-head p{font-size:.9rem}
+  .section-head{margin-bottom:20px}
+  .lead{font-size:.94rem}
+  .badge{font-size:.8rem;padding:7px 11px}
+  .footer-grid{gap:18px}
+  .to-top{left:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 12px)}
+  .floating-wa{right:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 12px)}
+}
+@media (max-width:420px){
+  .container{width:min(1180px, calc(100vw - 20px))}
+  .hero-copy h1{font-size:clamp(1.7rem, 8vw, 2.25rem)}
+  .section-head h2{font-size:clamp(1.65rem, 7.6vw, 2.2rem)}
+  .to-top{width:40px;height:40px;font-size:1rem}
+  .kicker{font-size:.6rem;letter-spacing:.14em}
+}
+
 </style>
 </head>
 <body>
@@ -389,17 +500,17 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
     <div class="container hero-grid">
       <div class="hero-copy reveal">
         <span class="kicker">Simulador</span>
-        <h1>Seu próximo plano internacional começa com escolhas simples e um atendimento mais certeiro.</h1>
-        <p class="lead">Escolha o seu objetivo, selecione o destino, informe quanto pretende investir e envie um pedido claro para a nossa equipe preparar as melhores possibilidades para você.</p>
+        <h1>Responde três perguntas. A gente volta com um plano.</h1>
+        <p class="lead">Perfil, destino, investimento. O simulador monta um briefing do seu projeto — e quando você envia, a gente já sabe o que procurar.</p>
         <div class="badge-row">
-          <span class="badge">Mais clareza para decidir</span>
-          <span class="badge">Seu orçamento, seu ritmo</span>
-          <span class="badge">Atendimento mais assertivo</span>
+          <span class="badge">Menos formulário genérico</span>
+          <span class="badge">Seu orçamento, sem julgamento</span>
+          <span class="badge">Resposta com plano na mão</span>
         </div>
       </div>
       <div class="hero-side reveal">
-        <strong>Menos dúvida. Mais direção.</strong>
-        <p>Em poucos passos, você organiza o que deseja e envia para a nossa equipe um pedido mais completo, simples e fácil de atender.</p>
+        <strong>Menos formulário. Mais resposta útil.</strong>
+        <p>Em 3 passos você monta um briefing. Nós recebemos e já pulamos para a parte de "aqui estão suas opções" — sem ficar enviando perguntas óbvias.</p>
       </div>
     </div>
   </section>
@@ -408,8 +519,8 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
     <div class="container">
       <div class="section-head reveal">
         <span class="kicker">Simulação guiada</span>
-        <h2>Conte o que procura. Nós transformamos em possibilidades.</h2>
-        <p class="copy">Selecione seu perfil, destino, preferências e investimento para receber um atendimento mais certeiro, humano e alinhado ao seu momento.</p>
+        <h2>Simula seu plano. A gente volta com resposta.</h2>
+        <p class="copy">Seu perfil, destino e valor. Em 1 minuto você envia um pedido que a gente já consegue montar opção.</p>
       </div>
 
       <div class="type-tabs reveal" id="typeTabs"></div>
@@ -420,8 +531,8 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
             <div class="step-head">
               <div class="step-number">1</div>
               <div>
-                <h3>Comece por aqui</h3>
-                <p>Escolha seu perfil, o melhor momento e informe o valor que pretende investir.</p>
+                <h3>Quem é você</h3>
+                <p>Perfil, janela de tempo e o que dá pra investir nesse projeto agora.</p>
               </div>
             </div>
             <div class="choice-group" id="profileGroup"></div>
@@ -433,8 +544,8 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
             <div class="step-head">
               <div class="step-number">2</div>
               <div>
-                <h3>Destino</h3>
-                <p>Selecione o destino que mais combina com o seu objetivo para direcionarmos a proposta com mais precisão.</p>
+                <h3>Pra onde</h3>
+                <p>Destino principal. Se estiver em dúvida entre dois, escolhe o que fala mais alto agora.</p>
               </div>
             </div>
             <div class="option-grid" id="destinationGrid"></div>
@@ -444,8 +555,8 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
             <div class="step-head">
               <div class="step-number">3</div>
               <div>
-                <h3>Preferências do projeto</h3>
-                <p>Personalize os detalhes mais importantes para que a nossa equipe entenda exatamente o que você procura.</p>
+                <h3>Como você gosta</h3>
+                <p>Detalhes que puxam a proposta pro seu estilo: estilo de viagem, acomodação, prioridade.</p>
               </div>
             </div>
             <div class="choice-group" id="specificGroupA"></div>
@@ -500,9 +611,9 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
           <section class="result-box">
             <h3>Como funciona após o envio</h3>
             <div class="action-list">
-              <div class="action-item">Analisamos o seu objetivo e o melhor momento para avançar.</div>
-              <div class="action-item">Selecionamos opções compatíveis com o seu perfil e o investimento informado.</div>
-              <div class="action-item">Entramos em contato com um direcionamento mais claro para facilitar a sua decisão.</div>
+              <div class="action-item">Lemos seu pedido e cruzamos com destinos e janelas que funcionam.</div>
+              <div class="action-item">Separamos 2 ou 3 opções reais dentro do seu orçamento.</div>
+              <div class="action-item">Te chamamos no WhatsApp com proposta, valor e próximo passo.</div>
             </div>
           </section>
         </aside>
@@ -510,16 +621,16 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
 
       <div class="tips-grid">
         <div class="tip-card reveal">
-          <h3>Escolhas mais claras</h3>
-          <p>Cada etapa foi pensada para tornar o preenchimento simples, rápido e intuitivo.</p>
+          <h3>Sem formulário eterno</h3>
+          <p>3 passos, poucos cliques. Montamos o briefing e você só envia.</p>
         </div>
         <div class="tip-card reveal">
-          <h3>Atendimento mais alinhado</h3>
-          <p>Com um pedido mais completo, a nossa equipe pode sugerir caminhos com mais precisão.</p>
+          <h3>Resposta com plano</h3>
+          <p>Quando a gente recebe, já pula para a parte de "aqui estão 2 ou 3 opções".</p>
         </div>
         <div class="tip-card reveal">
-          <h3>Menos tempo, mais direção</h3>
-          <p>Em poucos cliques, você organiza suas preferências e avança para um atendimento personalizado.</p>
+          <h3>Direto ao ponto</h3>
+          <p>Sem ficar trocando 10 mensagens pra chegar no ponto. Tudo que precisamos num envio só.</p>
         </div>
       </div>
     </div>
@@ -546,6 +657,7 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
   </div>
 </footer>
 
+<button class="to-top" id="toTop" aria-label="Voltar ao topo" title="Topo">↑</button>
 <a class="floating-wa" href="https://wa.me/351910346159?text=Olá,%20quero%20falar%20com%20a%20Global%20Travel." target="_blank" rel="noopener">WhatsApp</a>
 
 <script>
@@ -1263,7 +1375,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
     // Lenis smooth scroll (desktop only)
     if (typeof Lenis !== 'undefined' && window.matchMedia('(hover: hover) and (min-width: 861px)').matches) {
-      const lenis = new Lenis({
+      const lenis = window.__lenis = new Lenis({
         duration: 1.1,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
@@ -1336,6 +1448,22 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   }
+  // ===== Back to top =====
+  const _toTop = document.getElementById('toTop');
+  if (_toTop) {
+    const threshold = 500;
+    const onScroll = () => _toTop.classList.toggle('visible', window.scrollY > threshold);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    _toTop.addEventListener('click', () => {
+      if (window.__lenis && typeof window.__lenis.scrollTo === 'function') {
+        window.__lenis.scrollTo(0, { duration: 1.2 });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  }
+
 })();
 </script>
 </body>

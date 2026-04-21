@@ -705,6 +705,179 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
   .hero-scroll-hint{animation:none!important}
 }
 
+
+/* ===== Font display swap (faster first render) ===== */
+
+/* ===== Subtle film grain overlay (desktop only) ===== */
+body::after{
+  content:"";position:fixed;inset:0;z-index:1;
+  pointer-events:none;
+  background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.04;mix-blend-mode:overlay;
+}
+@media (max-width:768px){body::after{display:none}}
+@media (prefers-reduced-motion:reduce){body::after{display:none}}
+
+/* ===== Shimmer sweep on primary buttons (desktop hover) ===== */
+.btn-primary{position:relative;overflow:hidden;isolation:isolate}
+.btn-primary::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(110deg, transparent 34%, rgba(255,255,255,.45) 50%, transparent 66%);
+  transform:translateX(-130%);
+  transition:transform .85s var(--ease);
+  pointer-events:none;z-index:-1;
+}
+@media (hover:hover){
+  .btn-primary:hover::after{transform:translateX(130%)}
+}
+
+/* ===== Header compacts on scroll ===== */
+.site-header.scrolled .nav-shell{min-height:64px}
+.site-header.scrolled .brand-logo{width:clamp(155px,18vw,215px)}
+@media (max-width:860px){
+  .site-header.scrolled .nav-shell{min-height:48px}
+  .site-header.scrolled .brand-logo{width:min(116px,33vw)}
+}
+
+/* ===== Focus-visible (accessibility) ===== */
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px;border-radius:10px}
+.btn:focus-visible,.choice:focus-visible,.option-card:focus-visible,.faq-btn:focus-visible{outline-offset:4px}
+
+/* ===== Back to top ===== */
+.to-top{
+  position:fixed;left:18px;bottom:calc(env(safe-area-inset-bottom, 0px) + 16px);
+  z-index:900;
+  width:46px;height:46px;border-radius:999px;
+  background:rgba(4,10,18,.7);border:1px solid rgba(242,212,155,.32);
+  color:var(--gold-soft);font-size:1.15rem;font-weight:600;
+  backdrop-filter:blur(12px);
+  opacity:0;pointer-events:none;
+  transform:translateY(16px) scale(.9);
+  transition:opacity .4s var(--ease), transform .4s var(--ease), background .3s var(--ease), border-color .3s var(--ease);
+  display:grid;place-items:center;
+}
+.to-top.visible{opacity:1;pointer-events:auto;transform:translateY(0) scale(1)}
+.to-top:hover{background:rgba(199,154,74,.14);border-color:rgba(242,212,155,.58)}
+@media (max-width:768px){
+  .to-top{left:14px;bottom:calc(env(safe-area-inset-bottom, 0px) + 14px);width:42px;height:42px}
+}
+
+/* ===== Gold gradient text accent class ===== */
+.gold-text{
+  background:linear-gradient(135deg, var(--gold-soft), var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* ===== Contact list link with chevron on hover ===== */
+.contact-list a{position:relative;transition:padding-right .35s var(--ease), background .3s var(--ease), border-color .3s var(--ease)}
+.contact-list a::after{
+  content:"→";position:absolute;right:18px;top:50%;
+  transform:translateY(-50%) translateX(-6px);opacity:0;
+  color:var(--gold-soft);transition:all .35s var(--ease);
+}
+.contact-list a:hover{padding-right:38px}
+.contact-list a:hover::after{opacity:1;transform:translateY(-50%) translateX(0)}
+
+/* ===== Stat completion pulse ===== */
+@keyframes statPulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.045)}
+  100%{transform:scale(1)}
+}
+.stat-number.done{animation:statPulse .55s var(--ease)}
+
+
+/* ===== Mobile responsive fine-tuning ===== */
+@media (max-width: 768px){
+  /* Slight section padding tightening */
+  .section{padding:clamp(48px, 8vw, 80px) 0}
+  .section.tight{padding:clamp(40px, 6vw, 64px) 0}
+  .section-head{margin-bottom:22px}
+  
+  /* Copy readability */
+  .copy,.lead{font-size:.96rem;line-height:1.66}
+  .small-copy{font-size:.88rem;line-height:1.62}
+  
+  /* Touch targets - bigger tap areas */
+  .btn{min-height:48px;padding:0 20px}
+  .btn-primary,.btn-secondary{min-height:50px}
+  .faq-btn{padding:18px 20px;min-height:56px}
+  
+  /* Safer horizontal breathing room */
+  .container{width:min(1180px, calc(100vw - 24px))}
+  
+  /* Footer tidier */
+  .footer{padding:26px 0 38px}
+  .footer-row{text-align:center;font-size:.82rem;gap:4px}
+  
+  /* FAQ spacing */
+  .faq-item.open .faq-content{max-height:520px}
+  
+  /* Mini stats tighter */
+  .mini-stats{gap:10px;margin-top:14px}
+  
+  /* Better vertical rhythm for service cards */
+  .services-grid,.destination-grid,.quotes-grid,.path-grid,.course-grid,.steps-grid,.cta-grid,.sim-grid{gap:14px}
+  
+  /* Quote on mobile */
+  .quote p{font-size:.96rem;line-height:1.74}
+  
+  /* Contact list readable */
+  .contact-list a,.contact-list span{font-size:.88rem;padding:14px 15px}
+  
+  /* Pills tighter */
+  .pill-row{gap:7px;margin-top:14px}
+  .pill{padding:7px 12px;font-size:.82rem}
+  
+  /* Page transitions/back-to-top don't clash with WhatsApp float */
+  .to-top{left:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 12px)}
+  .floating-wa{right:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 12px)}
+}
+
+@media (max-width: 420px){
+  .container{width:min(1180px, calc(100vw - 20px))}
+  h1{font-size:clamp(1.75rem, 8vw, 2.35rem)}
+  .section{padding:clamp(40px, 7vw, 68px) 0}
+  .btn{font-size:.92rem;padding:0 16px}
+  .faq-btn strong{font-size:.98rem}
+  .pill{font-size:.78rem;padding:6px 10px}
+  .kicker{font-size:.6rem;letter-spacing:.14em}
+  .to-top{width:40px;height:40px;font-size:1.05rem}
+  
+  /* Journey refinements for small screens */
+  .journey-step{padding:18px 16px;min-height:auto}
+  .journey-step h3{font-size:1.2rem;max-width:72%}
+  .journey-step p{font-size:.92rem;line-height:1.6}
+  .journey-index{top:12px;right:16px;font-size:2.6rem}
+  .journey-heading{font-size:clamp(1.7rem, 7.4vw, 2.3rem)}
+  
+  /* Stat card labels don't overflow */
+  .stat-label{font-size:.68rem;letter-spacing:.08em;line-height:1.3}
+  .stat-card{padding:16px 10px}
+  
+  /* Destinations: flag smaller */
+  .destination-card .flag{width:52px;height:52px;font-size:1.8rem}
+  .info-box .flag{width:44px;height:44px;font-size:1.5rem}
+  
+  /* Marquee items smaller */
+  .marquee-item{font-size:clamp(1.05rem, 5vw, 1.4rem)}
+  .marquee{padding:18px 0}
+  
+  /* Reduce story video height on very small */
+  .video-frame{min-height:260px}
+}
+
+/* Super tiny (iPhone SE / 320px) */
+@media (max-width: 360px){
+  .container{width:min(1180px, calc(100vw - 16px))}
+  .nav-shell{gap:6px}
+  .brand-logo{width:min(108px, 32vw)}
+  .hero-title,.hero-copy h1,h1{font-size:clamp(1.6rem, 7.8vw, 2.1rem)}
+  .hero-lead{font-size:.86rem}
+  .stat-number{font-size:clamp(1.8rem, 9vw, 2.6rem)}
+}
+
 </style>
 </head>
 <body>
@@ -779,12 +952,12 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
 
     <div class="hero-inner">
       <div class="hero-copy reveal">
-        <span class="kicker" id="hero-kicker">Passagens aéreas • Intercâmbio • Imigração • Viagens internacionais</span>
+        <span class="kicker" id="hero-kicker">Passagens • Intercâmbio • Imigração • Viagens</span>
         <h1 class="hero-title" id="hero-title">Seu futuro não tem fronteiras.</h1>
         <div class="hero-details" id="hero-details">
           <p class="lead hero-lead" id="hero-lead">Passagens aéreas, intercâmbio e planejamento internacional com foco em Portugal, Irlanda e EUA — tudo com suporte próximo e estratégico.</p>
           <div class="btn-row">
-            <a class="btn btn-primary" id="hero-primary-btn" href="https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20atendimento%20para%20interc%C3%A2mbio%20ou%20viagem%20internacional." target="_blank" rel="noopener">Falar no WhatsApp</a>
+            <a class="btn btn-primary" id="hero-primary-btn" href="https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20atendimento%20para%20interc%C3%A2mbio%20ou%20viagem%20internacional." target="_blank" rel="noopener">Chamar no WhatsApp</a>
             <a class="btn btn-secondary" id="hero-secondary-btn" href="#servicos">Conhecer serviços</a>
           </div>
           <div class="hero-dots" aria-label="Trocar vídeo">
@@ -870,20 +1043,20 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
     <div class="container intro-grid">
       <div class="glass reveal">
         <span class="kicker">Posicionamento</span>
-        <h2>Uma agência internacional com equilíbrio entre sonho e direção.</h2>
-        <p class="copy" style="margin-top:18px">A gente trabalha com projetos de vida reais. Desde uma viagem especial até o plano de estudar, morar ou trabalhar fora, cada atendimento é construído para unir emoção, estratégia e segurança.</p>
+        <h2>Uma agência que escuta antes de cotar.</h2>
+        <p class="copy" style="margin-top:18px">Cada pessoa que chega aqui tá num momento diferente. A gente escuta primeiro, entende o que cabe agora e monta um caminho real — da primeira conversa até você estar lá.</p>
         <div class="pill-row">
-          <span class="pill">Atendimento premium</span>
           <span class="pill">Português do Brasil</span>
-          <span class="pill">Suporte humano</span>
-          <span class="pill">Experiência internacional</span>
+          <span class="pill">Resposta rápida</span>
+          <span class="pill">Planejamento honesto</span>
+          <span class="pill">Atendimento 1-pra-1</span>
         </div>
       </div>
       <div class="two-col reveal">
-        <div class="info-box"><div class="flag" aria-hidden="true">🇵🇹</div><h3>Portugal</h3><p class="copy" style="margin-top:12px">Boa porta de entrada para estudos, novas fases profissionais e mobilidade internacional.</p></div>
-        <div class="info-box"><div class="flag" aria-hidden="true">🇮🇪</div><h3>Irlanda</h3><p class="copy" style="margin-top:12px">Destino forte para intercâmbio, experiência cultural e projetos de médio prazo.</p></div>
-        <div class="info-box"><div class="flag" aria-hidden="true">🇺🇸</div><h3>Estados Unidos</h3><p class="copy" style="margin-top:12px">Experiências acadêmicas e viagens de alto impacto para quem quer ampliar horizontes.</p></div>
-        <div class="info-box"><div class="flag" aria-hidden="true">🌍</div><h3>Mais soluções</h3><p class="copy" style="margin-top:12px">Também trabalhamos com outros roteiros, cursos e caminhos personalizados conforme o seu perfil.</p></div>
+        <div class="info-box"><div class="flag" aria-hidden="true">🇵🇹</div><h3>Portugal</h3><p class="copy" style="margin-top:12px">Idioma, visto de estudo que deixa trabalhar e comunidade brasileira grande. Continua sendo o destino nº 1.</p></div>
+        <div class="info-box"><div class="flag" aria-hidden="true">🇮🇪</div><h3>Irlanda</h3><p class="copy" style="margin-top:12px">Intercâmbio com permissão pra trabalhar. Dublin ensina inglês e banca sua vida fora ao mesmo tempo.</p></div>
+        <div class="info-box"><div class="flag" aria-hidden="true">🇺🇸</div><h3>Estados Unidos</h3><p class="copy" style="margin-top:12px">Universidade top, Disney em família ou a viagem especial de uma vida. Peso de proposta e de memória.</p></div>
+        <div class="info-box"><div class="flag" aria-hidden="true">🌍</div><h3>Mais soluções</h3><p class="copy" style="margin-top:12px">Canadá, Austrália, Espanha, Dubai. Se o destino não tá aqui, chama que a gente acha.</p></div>
       </div>
     </div>
   </section>
@@ -892,14 +1065,14 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
     <div class="container">
       <div class="section-head reveal">
         <span class="kicker">Atalhos inteligentes</span>
-        <h2>Escolha um cenário pronto e fale com a gente já com o pedido certo.</h2>
-        <p class="copy">Em vez de um botão genérico, cada caminho já leva uma mensagem pronta para o WhatsApp. Isso deixa o atendimento mais rápido e o cliente chega com objetivo claro.</p>
+        <h2>Pula o formulário. Escolhe o cenário que é o seu.</h2>
+        <p class="copy">Cada botão já leva uma mensagem pronta pro WhatsApp. Você clica, ajusta o que quiser, envia. A gente responde em minutos.</p>
       </div>
       <div class="cta-grid">
         <article class="cta-card reveal">
           <span class="tag">Turismo internacional</span>
           <h3>Quero um pacote Disney em família</h3>
-          <p class="copy">Ideal para quem quer montar passagem, hotel e planejamento de viagem para Disney ou Paris com família e crianças.</p>
+          <p class="copy">Disney ou Paris com a família: passagem, hotel, parque e transfer no mesmo orçamento — e na data que funciona pra todo mundo.</p>
           <div class="btn-row">
             <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20montar%20um%20pacote%20Disney%20ou%20Paris%20em%20fam%C3%ADlia%20e%20gostaria%20de%20atendimento.">Montar meu pacote</a>
             <a class="btn btn-secondary" href="#simulador">Simular antes</a>
@@ -908,7 +1081,7 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
         <article class="cta-card reveal">
           <span class="tag">Intercâmbio</span>
           <h3>Quero estudar em Lisboa</h3>
-          <p class="copy">Perfeito para quem quer intercâmbio, cursos e apoio para viver uma trajetória acadêmica em Portugal com mais clareza.</p>
+          <p class="copy">Curso certo, cidade certa, visto, passagem e moradia dos primeiros 30 dias. Tudo pra você chegar em Lisboa pronto.</p>
           <div class="btn-row">
             <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20entender%20op%C3%A7%C3%B5es%20de%20interc%C3%A2mbio%20e%20cursos%20em%20Lisboa.">Quero estudar em Lisboa</a>
             <a class="btn btn-secondary" href="nossos-cursos.html">Ver cursos</a>
@@ -917,7 +1090,7 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
         <article class="cta-card reveal">
           <span class="tag">Imigração</span>
           <h3>Quero planejar morar fora</h3>
-          <p class="copy">Para quem quer entender caminhos, documentação, orçamento e próximos passos para morar ou trabalhar fora.</p>
+          <p class="copy">Documentos, orçamento realista, prazo honesto. Saímos do "eu quero" pro próximo passo concreto.</p>
           <div class="btn-row">
             <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20planejar%20morar%20fora%20e%20preciso%20de%20orienta%C3%A7%C3%A3o.">Quero ajuda para imigrar</a>
             <a class="btn btn-secondary" href="trabalhar-morar-fora.html">Explorar opções</a>
@@ -926,7 +1099,7 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
         <article class="cta-card reveal">
           <span class="tag">Passagens aéreas</span>
           <h3>Quero cotar minha passagem com as melhores tarifas</h3>
-          <p class="copy">Atendimento focado em rota, conexões, destino e melhor custo-benefício para viagem internacional, estudo ou mudança.</p>
+          <p class="copy">Tarifa que cabe, rota que faz sentido, datas flexíveis. Cotação feita por gente que voou 20 vezes esse mesmo trecho.</p>
           <div class="btn-row">
             <a class="btn btn-primary" target="_blank" rel="noopener" href="https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20cotar%20uma%20passagem%20a%C3%A9rea%20internacional%20com%20as%20melhores%20tarifas.">Cotar passagem</a>
             <a class="btn btn-secondary" href="#contato">Atendimento humano</a>
@@ -940,16 +1113,16 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
     <div class="container">
       <div class="section-head reveal">
         <span class="kicker">Serviços</span>
-        <h2>Passagens aéreas, intercâmbio e soluções completas para tirar o plano do papel.</h2>
-        <p class="copy">Tudo organizado para transformar uma ideia em experiência real, com passagens aéreas, suporte estratégico e mais segurança em cada etapa.</p>
+        <h2>Passagem, curso, visto, moradia. A gente junta tudo.</h2>
+        <p class="copy">Não adianta ter passagem boa se o curso não encaixa com o visto. Tratamos cada projeto como um só — com uma pessoa cuidando do começo ao fim.</p>
       </div>
       <div class="services-grid">
-        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.19a.51.51 0 0 0-.56.13L2.93 7.63a.5.5 0 0 0 .06.73L9 12l-1.8 2.7-3-.3a.5.5 0 0 0-.43.14L2.47 15.84a.5.5 0 0 0 .14.8l3.39 1.5 1.5 3.39a.5.5 0 0 0 .82.14l1.26-1.26a.5.5 0 0 0 .14-.42L9.3 16.5 12 14.5l3.64 6a.5.5 0 0 0 .74.1l1.4-1.4a.5.5 0 0 0 .12-.5Z"/></svg></div><h3>Passagens aéreas</h3><p class="copy">Emissão de passagens aéreas com foco nas melhores tarifas, rotas estratégicas, conexões inteligentes e mais tranquilidade do orçamento ao embarque.</p></article>
-        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div><h3>Seguro viagem</h3><p class="copy">Proteção ideal para o destino e para as exigências do seu processo.</p></article>
-        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><h3>Intercâmbios</h3><p class="copy">Programas de estudo no exterior com suporte antes, durante e depois da decisão.</p></article>
-        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/></svg></div><h3>Viagens completas</h3><p class="copy">Roteiros internacionais com estética, praticidade e sensação de sonho realizado.</p></article>
-        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div><h3>Assessoria imigratória</h3><p class="copy">Direcionamento para documentos, etapas e caminhos possíveis com visão estratégica.</p></article>
-        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><h3>Projetos de mudança</h3><p class="copy">Para quem quer estudar, morar ou trabalhar fora e precisa de mais clareza para começar.</p></article>
+        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.19a.51.51 0 0 0-.56.13L2.93 7.63a.5.5 0 0 0 .06.73L9 12l-1.8 2.7-3-.3a.5.5 0 0 0-.43.14L2.47 15.84a.5.5 0 0 0 .14.8l3.39 1.5 1.5 3.39a.5.5 0 0 0 .82.14l1.26-1.26a.5.5 0 0 0 .14-.42L9.3 16.5 12 14.5l3.64 6a.5.5 0 0 0 .74.1l1.4-1.4a.5.5 0 0 0 .12-.5Z"/></svg></div><h3>Passagens aéreas</h3><p class="copy">Caçamos tarifa, rota e bagagem que encaixam no seu bolso e nos seus prazos. Emissão feita por quem também viaja.</p></article>
+        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div><h3>Seguro viagem</h3><p class="copy">A cobertura certa pro seu destino — e pro que seu visto exige. Sem você precisar entender a apólice.</p></article>
+        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><h3>Intercâmbios</h3><p class="copy">Escola, cidade, duração e acomodação montados pro seu momento. A gente responde no WhatsApp até você virar a chave.</p></article>
+        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/></svg></div><h3>Viagens completas</h3><p class="copy">Roteiros prontos pra você só abrir a mala e viver. Passagem, hotel, transfer, parques e experiências — um pacote só.</p></article>
+        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div><h3>Assessoria imigratória</h3><p class="copy">Mapeamos documentos, prazos e caminhos possíveis pro seu projeto de morar fora. Sem promessa furada.</p></article>
+        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><h3>Projetos de mudança</h3><p class="copy">Transformamos um "eu quero morar fora" em plano com data, orçamento e próximos passos bem claros.</p></article>
       </div>
     </div>
   </section>
@@ -958,12 +1131,12 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
     <div class="container story-grid">
       <div class="glass reveal">
         <span class="kicker">Sensação de conquista</span>
-        <h2>Quando o destino combina com o seu momento, tudo flui melhor.</h2>
-        <p class="copy" style="margin-top:18px">A Global Travel une passagens aéreas, intercâmbio, viagens em família, turismo internacional e orientação migratória em uma experiência mais clara, bonita e profissional.</p>
+        <h2>O destino certo muda tudo. E é isso que a gente procura junto com você.</h2>
+        <p class="copy" style="margin-top:18px">Passagem, curso, visto, hotel, moradia. A gente trata tudo como um projeto único, com uma pessoa cuidando do começo ao fim. Sem lista infinita pra você resolver sozinho.</p>
         <div class="feature-list">
-          <div class="feature-item"><span class="badge">1</span><div><h3>Atendimento com direção</h3><p class="small-copy">Cada projeto começa com leitura de perfil, objetivo e timing.</p></div></div>
-          <div class="feature-item"><span class="badge">2</span><div><h3>Experiência internacional completa</h3><p class="small-copy">Das passagens aéreas ao embarque, do curso à viagem dos sonhos, tudo com suporte real.</p></div></div>
-          <div class="feature-item"><span class="badge">3</span><div><h3>Melhores preços e mais clareza</h3><p class="small-copy">Atendimento que busca as melhores tarifas e organiza sua jornada com mais confiança.</p></div></div>
+          <div class="feature-item"><span class="badge">1</span><div><h3>Atendimento com cabeça</h3><p class="small-copy">Entendemos onde você tá, pra onde quer ir e quanto dá pra gastar — antes de qualquer cotação.</p></div></div>
+          <div class="feature-item"><span class="badge">2</span><div><h3>Uma pessoa, todo o projeto</h3><p class="small-copy">Você não vai repetir sua história pra três pessoas. Quem atendeu te acompanha até o embarque.</p></div></div>
+          <div class="feature-item"><span class="badge">3</span><div><h3>Preço honesto, sem surpresa</h3><p class="small-copy">Mostramos o que está incluído, o que não está e onde dá pra economizar de verdade.</p></div></div>
         </div>
       </div>
       <div class="video-frame reveal">
@@ -1003,12 +1176,12 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
     <div class="container">
       <div class="section-head reveal">
         <span class="kicker">Destinos</span>
-        <h2>Destinos em destaque para estudar, viajar e recomeçar.</h2>
+        <h2>Destinos que a gente vive de verdade.</h2>
       </div>
       <div class="destination-grid">
-        <article class="destination-card reveal"><div class="flag" aria-hidden="true">🇵🇹</div><h3>Portugal</h3><p class="copy">Ideal para quem busca proximidade cultural, novas oportunidades e um processo de adaptação mais natural.</p></article>
-        <article class="destination-card reveal"><div class="flag" aria-hidden="true">🇮🇪</div><h3>Irlanda</h3><p class="copy">Combina intercâmbio, experiência internacional e contato com um mercado dinâmico e multicultural.</p></article>
-        <article class="destination-card reveal"><div class="flag" aria-hidden="true">🇺🇸</div><h3>Estados Unidos</h3><p class="copy">Perfeito para projetos acadêmicos, viagens especiais e experiências marcantes com visão global.</p></article>
+        <article class="destination-card reveal"><div class="flag" aria-hidden="true">🇵🇹</div><h3>Portugal</h3><p class="copy">Idioma que você já fala, moradia estruturada e comunidade brasileira em cada canto. Começo mais macio.</p></article>
+        <article class="destination-card reveal"><div class="flag" aria-hidden="true">🇮🇪</div><h3>Irlanda</h3><p class="copy">Aprende inglês e trabalha meio período legal pelo visto de estudo. Muita gente volta com economia no bolso.</p></article>
+        <article class="destination-card reveal"><div class="flag" aria-hidden="true">🇺🇸</div><h3>Estados Unidos</h3><p class="copy">Universidade de ponta, Disney com as crianças ou temporada de neve. Muitos sabores no mesmo país.</p></article>
       </div>
     </div>
   </section>
@@ -1017,12 +1190,12 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
     <div class="container">
       <div class="section-head reveal">
         <span class="kicker">Caminhos</span>
-        <h2>Escolha o ponto de partida que combina com o seu objetivo.</h2>
+        <h2>Qual desses é você agora?</h2>
       </div>
       <div class="path-grid">
-        <article class="path-card reveal"><h3>Quero estudar fora</h3><p class="copy">Intercâmbio, cursos e orientação para um plano acadêmico mais seguro.</p><a class="btn-link" href="nossos-cursos.html">Ver nossos cursos →</a></article>
-        <article class="path-card reveal"><h3>Quero trabalhar e morar fora</h3><p class="copy">Caminhos possíveis com apoio, planejamento e leitura realista do seu momento.</p><a class="btn-link" href="trabalhar-morar-fora.html">Explorar essa página →</a></article>
-        <article class="path-card reveal"><h3>Quero viajar com as melhores tarifas</h3><p class="copy">Passagens aéreas com melhores tarifas, roteiros internacionais e suporte para viver a viagem dos sonhos com mais economia e direção.</p><a class="btn-link" href="#contato">Solicitar atendimento →</a></article>
+        <article class="path-card reveal"><h3>Quero estudar fora</h3><p class="copy">Você escolhe a área e o momento. A gente traz as escolas, os prazos e o orçamento real.</p><a class="btn-link" href="nossos-cursos.html">Ver nossos cursos →</a></article>
+        <article class="path-card reveal"><h3>Quero trabalhar e morar fora</h3><p class="copy">Estudo primeiro, trabalho depois, moradia definitiva. A gente monta a ordem que faz sentido pra você.</p><a class="btn-link" href="trabalhar-morar-fora.html">Explorar essa página →</a></article>
+        <article class="path-card reveal"><h3>Quero viajar com as melhores tarifas</h3><p class="copy">A gente compara datas, rotas e companhias pra achar a melhor combinação que existe pro seu bolso.</p><a class="btn-link" href="#contato">Solicitar atendimento →</a></article>
       </div>
     </div>
   </section>
@@ -1127,9 +1300,9 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
         <h2>Dúvidas frequentes</h2>
       </div>
       <div class="faq-list">
-        <div class="faq-item reveal"><button class="faq-btn"><strong>Vocês atendem quem quer apenas passagem e seguro?</strong><span>+</span></button><div class="faq-content"><p class="copy">Sim. Você pode contratar somente a parte da viagem ou montar uma solução completa com a gente.</p></div></div>
-        <div class="faq-item reveal"><button class="faq-btn"><strong>Vocês ajudam em projetos para estudar, morar ou trabalhar fora?</strong><span>+</span></button><div class="faq-content"><p class="copy">Sim. A Global Travel pode orientar o caminho inicial, organizar etapas e indicar soluções mais alinhadas ao seu perfil.</p></div></div>
-        <div class="faq-item reveal"><button class="faq-btn"><strong>Os atendimentos são em português do Brasil?</strong><span>+</span></button><div class="faq-content"><p class="copy">Sim. Todo o texto desta versão e o tom da marca já foram ajustados para pt-BR.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-btn"><strong>Vocês atendem quem quer só passagem ou só seguro?</strong><span>+</span></button><div class="faq-content"><p class="copy">Sim, sem mínimo. Você pode tirar só a passagem, só o seguro, ou montar o projeto completo — a escolha é sua.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-btn"><strong>Vocês ajudam em projetos para estudar, morar ou trabalhar fora?</strong><span>+</span></button><div class="faq-content"><p class="copy">É pra isso que a gente existe. Desde a primeira conversa mostramos os caminhos possíveis, os prazos reais e o que cabe no seu momento.</p></div></div>
+        <div class="faq-item reveal"><button class="faq-btn"><strong>Os atendimentos são em português do Brasil?</strong><span>+</span></button><div class="faq-content"><p class="copy">Sim, tudo em português do Brasil, com gente brasileira te respondendo em tempo real no WhatsApp.</p></div></div>
       </div>
     </div>
   </section>
@@ -1138,8 +1311,8 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
     <div class="container contact-grid">
       <div class="contact-box reveal">
         <span class="kicker">Contato</span>
-        <h2>Vamos montar sua próxima etapa internacional.</h2>
-        <p class="copy" style="margin-top:18px">Se o seu plano envolve passagens aéreas, intercâmbio, viagem internacional, mudança de país ou orientação migratória, fale com a Global Travel e receba um atendimento mais claro, estratégico e profissional.</p>
+        <h2>Chama a gente. Resposta real, de pessoa pra pessoa.</h2>
+        <p class="copy" style="margin-top:18px">Se o que tá na sua cabeça é passagem, curso, viagem ou mudança — manda mensagem no WhatsApp. Sem robô, sem formulário gigante. Só um atendimento direto.</p>
         <div class="btn-row" style="margin-top:26px">
           <a class="btn btn-primary" href="https://wa.me/351910346159" target="_blank" rel="noopener">Chamar no WhatsApp</a>
           <a class="btn btn-secondary" href="mailto:globaltravelintracambios@gmail.com">Enviar e-mail</a>
@@ -1160,6 +1333,7 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
 
 
 
+  <button class="to-top" id="toTop" aria-label="Voltar ao topo" title="Topo">↑</button>
   <a class="floating-wa" href="https://wa.me/351910346159" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
     <span class="icon">✆</span>
     <span><small>Atendimento rápido</small><strong>WhatsApp</strong></span>
@@ -1213,27 +1387,27 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
     {
       title:'Seu futuro não tem fronteiras.',
       mobileTitle:'Seu futuro sem fronteiras.',
-      lead:'Intercâmbio, cursos e planejamento internacional com foco em Portugal, Irlanda e Estados Unidos — da passagem aérea ao suporte para estudar fora com mais segurança.',
-      mobileLead:'Intercâmbio, cursos e passagens para Portugal, Irlanda e EUA.',
-      cardTitle:'Intercâmbio e passagens aéreas para começar a vida acadêmica fora.',
-      cardCopy:'Quando o foco é estudar, a Global Travel organiza destino, tarifa aérea, curso e próximos passos para transformar a decisão em plano real.',
+      lead:'Montamos seu projeto de estudar fora do começo ao fim. Curso, passagem, visto e moradia — com uma pessoa cuidando de tudo.',
+      mobileLead:'Curso, passagem, visto e moradia. A gente cuida.',
+      cardTitle:'Estudar fora sem se perder no caminho.',
+      cardCopy:'Escola, cidade, visto, passagem. A gente organiza na ordem certa pra você chegar pronto — e não descobrir problema na fila do imigração.',
       cta1:'Quero estudar fora',
       cta1href:'https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20atendimento%20para%20interc%C3%A2mbio%20e%20cursos%20fora%20do%20pa%C3%ADs.',
       cta2:'Ver nossos cursos',
       cta2href:'nossos-cursos.html',
       mini:[
-        ['Cursos','Curadoria de opções para começar com mais direção.'],
-        ['Passagens','Busca de rotas e melhores tarifas para embarcar.'],
-        ['Suporte','Orientação clara antes da decisão final.']
+        ['Curso certo','Escola que combina com seu momento e seu orçamento.'],
+        ['Passagem','Tarifa boa, rota que faz sentido, datas flexíveis.'],
+        ['Suporte','Resposta rápida antes, durante e depois do embarque.']
       ]
     },
     {
       title:'Viaje para viver experiências que ficam para sempre.',
       mobileTitle:'Experiências que ficam para sempre.',
-      lead:'Da emissão da passagem ao roteiro internacional, a Global Travel monta viagens de neve, turismo especial e experiências premium com suporte humano.',
-      mobileLead:'Viagens de neve e roteiros especiais com tarifa, planejamento e suporte próximo.',
-      cardTitle:'Passagens aéreas e viagens internacionais com atendimento mais estratégico.',
-      cardCopy:'Para viagens de neve e experiências especiais, a prioridade é combinar tarifa, destino, datas e conforto sem deixar o cliente perdido.',
+      lead:'Neve na Europa, Dubai, safári ou Caribe. Montamos a viagem inteira pra você só chegar e viver.',
+      mobileLead:'Neve, safári, Caribe. A gente monta tudo.',
+      cardTitle:'Sua viagem especial resolvida antes da mala fechar.',
+      cardCopy:'Passagem, hotel, transfer, seguro, roteiro. A gente encaixa tudo no seu orçamento e te manda um plano que cabe em uma página.',
       cta1:'Quero uma viagem de neve',
       mobileCta1:'Quero viagem de neve',
       cta1href:'https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20planejar%20uma%20viagem%20de%20neve%20e%20cotar%20passagens.',
@@ -1241,18 +1415,18 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
       mobileCta2:'Ver serviços',
       cta2href:'#servicos',
       mini:[
-        ['Tarifas','Passagens com foco em custo-benefício e conexão.'],
-        ['Roteiro','Viagem organizada conforme seu estilo e orçamento.'],
-        ['Suporte','Atendimento próximo do orçamento ao embarque.']
+        ['Tarifas','Comparamos rotas, datas e companhias pra achar a melhor.'],
+        ['Roteiro','Dias cheios mas com espaço pra respirar. No seu ritmo.'],
+        ['Suporte','Problema na conexão? Estamos no WhatsApp na hora.']
       ]
     },
     {
       title:'Lisboa pode ser o começo da sua nova fase.',
       mobileTitle:'Lisboa pode ser o começo.',
-      lead:'Portugal e Lisboa aparecem como destinos fortes para quem quer estudar, se reposicionar e construir uma trajetória internacional com mais clareza.',
-      mobileLead:'Curso, passagens e planejamento para começar em Portugal com mais segurança.',
-      cardTitle:'Lisboa, cursos e suporte para uma jornada internacional mais bem pensada.',
-      cardCopy:'Se a ideia é Portugal, o atendimento pode unir curso, passagens aéreas e orientação prática para começar com mais segurança.',
+      lead:'Portugal segue como o destino nº 1 dos brasileiros que querem recomeçar. Estudo, moradia, visto, comunidade — tudo mais simples do que você imagina.',
+      mobileLead:'Portugal: estudo, moradia e visto sem dor de cabeça.',
+      cardTitle:'Lisboa pode ser seu próximo endereço.',
+      cardCopy:'Você escolhe o curso e a data. A gente resolve universidade, NIF, moradia pro primeiro mês e te entrega um checklist do que fazer antes de embarcar.',
       cta1:'Quero estudar em Lisboa',
       mobileCta1:'Quero estudar em Lisboa',
       cta1href:'https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20estudar%20em%20Lisboa%20e%20entender%20curso%2C%20passagem%20e%20planejamento.',
@@ -1260,18 +1434,18 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
       mobileCta2:'Portugal',
       cta2href:'#destinos',
       mini:[
-        ['Lisboa','Destino forte para intercâmbio e novas fases.'],
-        ['Planejamento','Curso, custos e rota organizados juntos.'],
-        ['Direção','Mais clareza para quem quer viver em Portugal.']
+        ['Lisboa','Custo menor que São Paulo, comunidade brasileira grande.'],
+        ['Plano real','Valor do curso, moradia, visto, passagem — tudo em cima da mesa.'],
+        ['Direção','Da decisão pro embarque em menos tempo do que parece.']
       ]
     },
     {
       title:'Sua viagem dos sonhos também pode começar aqui.',
       mobileTitle:'Sua viagem dos sonhos começa aqui.',
-      lead:'Passagens aéreas, suporte e atendimento personalizado para Disney, Paris e viagens em família com planejamento completo e melhores tarifas.',
-      mobileLead:'Disney, Paris e viagens em família com roteiro, tarifa e apoio de ponta a ponta.',
-      cardTitle:'Turismo internacional e pacotes pensados para viajar melhor.',
-      cardCopy:'Para viagens em família, a Global Travel pode organizar passagem, roteiro, parque, datas e atendimento mais humano do começo ao fim.',
+      lead:'Disney com as crianças, Paris na lua de mel ou a viagem que todo mundo posta no Instagram — a gente monta o pacote completo, no seu orçamento.',
+      mobileLead:'Disney, Paris, família. Montamos o pacote.',
+      cardTitle:'Viagem dos sonhos com logística resolvida.',
+      cardCopy:'Passagem, hotel, parque, ingresso, transfer, seguro — tudo cotado junto pra você saber exatamente quanto vai gastar antes de dar qualquer sim.',
       cta1:'Quero um pacote Disney',
       mobileCta1:'Quero pacote Disney',
       cta1href:'https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20montar%20um%20pacote%20Disney%20ou%20Paris%20em%20fam%C3%ADlia.',
@@ -1279,9 +1453,9 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
       mobileCta2:'Especialista',
       cta2href:'#contato',
       mini:[
-        ['Família','Viagens planejadas com mais conforto e clareza.'],
-        ['Pacotes','Suporte para montar a experiência ideal.'],
-        ['Passagens','Busca de melhores tarifas e datas mais estratégicas.']
+        ['Família','Pensamos em criança, idoso e ritmo de grupo grande.'],
+        ['Pacote','Passagem + hotel + parque + seguro em uma proposta só.'],
+        ['Tarifa','Comparação real entre datas pra achar a janela certa.']
       ]
     }
   ];
@@ -1541,7 +1715,11 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
         onEnter: () => {
           gsap.to(obj, {
             v: target, duration: 1.9, ease: 'power3.out',
-            onUpdate: () => { el.textContent = obj.v.toFixed(decimals) + suffix; }
+            onUpdate: () => { el.textContent = obj.v.toFixed(decimals) + suffix; },
+            onComplete: () => {
+              el.classList.add('done');
+              setTimeout(() => el.classList.remove('done'), 600);
+            }
           });
         }
       });
@@ -1634,7 +1812,7 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
 
     // Lenis smooth scroll (desktop only; mobile stays native)
     if (typeof Lenis !== 'undefined' && window.matchMedia('(hover: hover) and (min-width: 861px)').matches) {
-      const lenis = new Lenis({
+      const lenis = window.__lenis = new Lenis({
         duration: 1.1,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
@@ -1715,6 +1893,22 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
     document.querySelectorAll('a, button, .choice, .option-card, .faq-btn, .stat-card, .quote, .destination-card, .service, .path-card, .course-card, .cta-card').forEach(el => {
       el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hot'));
       el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hot'));
+    });
+  }
+
+  // ===== Back to top =====
+  const _toTop = document.getElementById('toTop');
+  if (_toTop) {
+    const threshold = 500;
+    const onScroll = () => _toTop.classList.toggle('visible', window.scrollY > threshold);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    _toTop.addEventListener('click', () => {
+      if (window.__lenis && typeof window.__lenis.scrollTo === 'function') {
+        window.__lenis.scrollTo(0, { duration: 1.2 });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     });
   }
 

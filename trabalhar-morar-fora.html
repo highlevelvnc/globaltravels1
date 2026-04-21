@@ -488,6 +488,179 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
 /* ===== 3D tilt cards ===== */
 .course-card,.path-card,.destination-card{transform-style:preserve-3d;will-change:transform}
 
+
+/* ===== Font display swap (faster first render) ===== */
+
+/* ===== Subtle film grain overlay (desktop only) ===== */
+body::after{
+  content:"";position:fixed;inset:0;z-index:1;
+  pointer-events:none;
+  background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.04;mix-blend-mode:overlay;
+}
+@media (max-width:768px){body::after{display:none}}
+@media (prefers-reduced-motion:reduce){body::after{display:none}}
+
+/* ===== Shimmer sweep on primary buttons (desktop hover) ===== */
+.btn-primary{position:relative;overflow:hidden;isolation:isolate}
+.btn-primary::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(110deg, transparent 34%, rgba(255,255,255,.45) 50%, transparent 66%);
+  transform:translateX(-130%);
+  transition:transform .85s var(--ease);
+  pointer-events:none;z-index:-1;
+}
+@media (hover:hover){
+  .btn-primary:hover::after{transform:translateX(130%)}
+}
+
+/* ===== Header compacts on scroll ===== */
+.site-header.scrolled .nav-shell{min-height:64px}
+.site-header.scrolled .brand-logo{width:clamp(155px,18vw,215px)}
+@media (max-width:860px){
+  .site-header.scrolled .nav-shell{min-height:48px}
+  .site-header.scrolled .brand-logo{width:min(116px,33vw)}
+}
+
+/* ===== Focus-visible (accessibility) ===== */
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--gold-soft);outline-offset:3px;border-radius:10px}
+.btn:focus-visible,.choice:focus-visible,.option-card:focus-visible,.faq-btn:focus-visible{outline-offset:4px}
+
+/* ===== Back to top ===== */
+.to-top{
+  position:fixed;left:18px;bottom:calc(env(safe-area-inset-bottom, 0px) + 16px);
+  z-index:900;
+  width:46px;height:46px;border-radius:999px;
+  background:rgba(4,10,18,.7);border:1px solid rgba(242,212,155,.32);
+  color:var(--gold-soft);font-size:1.15rem;font-weight:600;
+  backdrop-filter:blur(12px);
+  opacity:0;pointer-events:none;
+  transform:translateY(16px) scale(.9);
+  transition:opacity .4s var(--ease), transform .4s var(--ease), background .3s var(--ease), border-color .3s var(--ease);
+  display:grid;place-items:center;
+}
+.to-top.visible{opacity:1;pointer-events:auto;transform:translateY(0) scale(1)}
+.to-top:hover{background:rgba(199,154,74,.14);border-color:rgba(242,212,155,.58)}
+@media (max-width:768px){
+  .to-top{left:14px;bottom:calc(env(safe-area-inset-bottom, 0px) + 14px);width:42px;height:42px}
+}
+
+/* ===== Gold gradient text accent class ===== */
+.gold-text{
+  background:linear-gradient(135deg, var(--gold-soft), var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* ===== Contact list link with chevron on hover ===== */
+.contact-list a{position:relative;transition:padding-right .35s var(--ease), background .3s var(--ease), border-color .3s var(--ease)}
+.contact-list a::after{
+  content:"→";position:absolute;right:18px;top:50%;
+  transform:translateY(-50%) translateX(-6px);opacity:0;
+  color:var(--gold-soft);transition:all .35s var(--ease);
+}
+.contact-list a:hover{padding-right:38px}
+.contact-list a:hover::after{opacity:1;transform:translateY(-50%) translateX(0)}
+
+/* ===== Stat completion pulse ===== */
+@keyframes statPulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.045)}
+  100%{transform:scale(1)}
+}
+.stat-number.done{animation:statPulse .55s var(--ease)}
+
+
+/* ===== Mobile responsive fine-tuning ===== */
+@media (max-width: 768px){
+  /* Slight section padding tightening */
+  .section{padding:clamp(48px, 8vw, 80px) 0}
+  .section.tight{padding:clamp(40px, 6vw, 64px) 0}
+  .section-head{margin-bottom:22px}
+  
+  /* Copy readability */
+  .copy,.lead{font-size:.96rem;line-height:1.66}
+  .small-copy{font-size:.88rem;line-height:1.62}
+  
+  /* Touch targets - bigger tap areas */
+  .btn{min-height:48px;padding:0 20px}
+  .btn-primary,.btn-secondary{min-height:50px}
+  .faq-btn{padding:18px 20px;min-height:56px}
+  
+  /* Safer horizontal breathing room */
+  .container{width:min(1180px, calc(100vw - 24px))}
+  
+  /* Footer tidier */
+  .footer{padding:26px 0 38px}
+  .footer-row{text-align:center;font-size:.82rem;gap:4px}
+  
+  /* FAQ spacing */
+  .faq-item.open .faq-content{max-height:520px}
+  
+  /* Mini stats tighter */
+  .mini-stats{gap:10px;margin-top:14px}
+  
+  /* Better vertical rhythm for service cards */
+  .services-grid,.destination-grid,.quotes-grid,.path-grid,.course-grid,.steps-grid,.cta-grid,.sim-grid{gap:14px}
+  
+  /* Quote on mobile */
+  .quote p{font-size:.96rem;line-height:1.74}
+  
+  /* Contact list readable */
+  .contact-list a,.contact-list span{font-size:.88rem;padding:14px 15px}
+  
+  /* Pills tighter */
+  .pill-row{gap:7px;margin-top:14px}
+  .pill{padding:7px 12px;font-size:.82rem}
+  
+  /* Page transitions/back-to-top don't clash with WhatsApp float */
+  .to-top{left:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 12px)}
+  .floating-wa{right:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 12px)}
+}
+
+@media (max-width: 420px){
+  .container{width:min(1180px, calc(100vw - 20px))}
+  h1{font-size:clamp(1.75rem, 8vw, 2.35rem)}
+  .section{padding:clamp(40px, 7vw, 68px) 0}
+  .btn{font-size:.92rem;padding:0 16px}
+  .faq-btn strong{font-size:.98rem}
+  .pill{font-size:.78rem;padding:6px 10px}
+  .kicker{font-size:.6rem;letter-spacing:.14em}
+  .to-top{width:40px;height:40px;font-size:1.05rem}
+  
+  /* Journey refinements for small screens */
+  .journey-step{padding:18px 16px;min-height:auto}
+  .journey-step h3{font-size:1.2rem;max-width:72%}
+  .journey-step p{font-size:.92rem;line-height:1.6}
+  .journey-index{top:12px;right:16px;font-size:2.6rem}
+  .journey-heading{font-size:clamp(1.7rem, 7.4vw, 2.3rem)}
+  
+  /* Stat card labels don't overflow */
+  .stat-label{font-size:.68rem;letter-spacing:.08em;line-height:1.3}
+  .stat-card{padding:16px 10px}
+  
+  /* Destinations: flag smaller */
+  .destination-card .flag{width:52px;height:52px;font-size:1.8rem}
+  .info-box .flag{width:44px;height:44px;font-size:1.5rem}
+  
+  /* Marquee items smaller */
+  .marquee-item{font-size:clamp(1.05rem, 5vw, 1.4rem)}
+  .marquee{padding:18px 0}
+  
+  /* Reduce story video height on very small */
+  .video-frame{min-height:260px}
+}
+
+/* Super tiny (iPhone SE / 320px) */
+@media (max-width: 360px){
+  .container{width:min(1180px, calc(100vw - 16px))}
+  .nav-shell{gap:6px}
+  .brand-logo{width:min(108px, 32vw)}
+  .hero-title,.hero-copy h1,h1{font-size:clamp(1.6rem, 7.8vw, 2.1rem)}
+  .hero-lead{font-size:.86rem}
+  .stat-number{font-size:clamp(1.8rem, 9vw, 2.6rem)}
+}
+
 </style>
 </head>
 <body>
@@ -531,10 +704,10 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
   <section class="page-hero">
     <div class="container reveal">
       <span class="page-tag">Trabalhar e morar fora</span>
-      <h1 style="margin-top:18px;max-width:11ch">Uma nova vida começa com direção.</h1>
-      <p class="lead" style="max-width:760px;margin-top:20px">Esta página foi criada para posicionar melhor a Global Travel também no tema de mudança internacional. A ideia aqui é mostrar caminhos possíveis, explicar com clareza e transformar um desejo em plano.</p>
+      <h1 style="margin-top:18px;max-width:12ch">Morar fora começa com plano, não com passagem.</h1>
+      <p class="lead" style="max-width:760px;margin-top:20px">Quem quer trocar de país geralmente começa com uma decisão confusa: visto de trabalho? Estudo primeiro? Ir pra Portugal ou pra Irlanda? A gente organiza o puzzle e mostra o caminho que cabe em você.</p>
       <div class="btn-row" style="margin-top:28px">
-        <a class="btn btn-primary" href="https://wa.me/351910346159" target="_blank" rel="noopener">Quero falar sobre meu caso</a>
+        <a class="btn btn-primary" href="https://wa.me/351910346159" target="_blank" rel="noopener">Quero contar meu caso</a>
         <a class="btn btn-secondary" href="index.html">Voltar para a home</a>
       </div>
     </div>
@@ -544,15 +717,15 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
     <div class="container intro-grid">
       <div class="glass reveal">
         <span class="kicker">Visão geral</span>
-        <h2>Nem todo projeto começa da mesma forma.</h2>
-        <p class="copy" style="margin-top:18px">Algumas pessoas começam estudando, outras viajam antes de tomar a decisão definitiva, e outras precisam primeiro entender documentação, custos, prazo e possibilidades reais. O papel da Global Travel é organizar esse início.</p>
+        <h2>Não existe caminho único pra sair do Brasil.</h2>
+        <p class="copy" style="margin-top:18px">Uns começam fazendo intercâmbio e ficam. Outros vão conhecer antes de decidir. Outros já têm visto e só precisam de logística. A gente entende onde você tá e monta o próximo passo real.</p>
       </div>
       <div class="glass reveal">
         <span class="kicker">O que a página comunica</span>
         <div class="feature-list" style="margin-top:0">
-          <div class="feature-item"><span class="badge">1</span><div><h3>Estratégia antes da pressa</h3><p class="small-copy">Você não precisa decidir tudo sozinho logo de cara.</p></div></div>
-          <div class="feature-item"><span class="badge">2</span><div><h3>Mais clareza sobre caminhos</h3><p class="small-copy">Estudo, trabalho, turismo e transição de vida podem se conectar.</p></div></div>
-          <div class="feature-item"><span class="badge">3</span><div><h3>Acompanhamento humano</h3><p class="small-copy">Menos informação solta e mais orientação personalizada.</p></div></div>
+          <div class="feature-item"><span class="badge">1</span><div><h3>Sem pressão de decisão</h3><p class="small-copy">A primeira conversa é pra entender, não pra fechar venda.</p></div></div>
+          <div class="feature-item"><span class="badge">2</span><div><h3>Plano que faz sentido</h3><p class="small-copy">Estudo, trabalho e transição definitiva se conectam — e a gente ordena isso pra você.</p></div></div>
+          <div class="feature-item"><span class="badge">3</span><div><h3>Acompanhamento de verdade</h3><p class="small-copy">Menos info genérica do Google. Mais conversa com quem já passou por isso.</p></div></div>
         </div>
       </div>
     </div>
@@ -562,12 +735,12 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
     <div class="container">
       <div class="section-head reveal">
         <span class="kicker">Possibilidades</span>
-        <h2>Caminhos que podem fazer sentido para quem quer sair do país.</h2>
+        <h2>Três formas de começar a sair.</h2>
       </div>
       <div class="path-grid">
-        <article class="path-card reveal"><h3>Estudo como porta de entrada</h3><p class="copy">Cursos e intercâmbios podem ajudar a estruturar uma mudança com mais previsibilidade e adaptação.</p></article>
-        <article class="path-card reveal"><h3>Viagem de reconhecimento</h3><p class="copy">Antes de decidir, muita gente prefere sentir o destino, entender rotina, clima e estilo de vida.</p></article>
-        <article class="path-card reveal"><h3>Planejamento migratório</h3><p class="copy">Quando o objetivo já está mais claro, entram organização documental, cronograma e próximos passos.</p></article>
+        <article class="path-card reveal"><h3>Estudo como porta de entrada</h3><p class="copy">Curso de idioma na Irlanda, graduação em Portugal, mestrado nos EUA. Visto de estudo abre porta — e em muitos países permite trabalhar.</p></article>
+        <article class="path-card reveal"><h3>Viagem de reconhecimento</h3><p class="copy">Vale a pena sentir o destino antes de decidir. 15 dias em Lisboa te mostram coisa que 1 ano de pesquisa não mostra.</p></article>
+        <article class="path-card reveal"><h3>Planejamento migratório</h3><p class="copy">Quando já tá claro pra onde ir, entra cronograma, documento, visto, reserva financeira. A parte chata, organizada.</p></article>
       </div>
     </div>
   </section>
@@ -576,13 +749,13 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
     <div class="container">
       <div class="section-head reveal">
         <span class="kicker">Países</span>
-        <h2>Foco inicial em Portugal, Irlanda e Estados Unidos.</h2>
+        <h2>Três países que a gente conhece de verdade.</h2>
       </div>
       <div class="steps-grid">
-        <article class="path-card reveal"><strong>Portugal</strong><h3>Boa adaptação cultural</h3><p class="copy">Linguagem, estilo de vida e proximidade cultural fazem de Portugal um dos principais pontos de partida para muitos brasileiros.</p></article>
-        <article class="path-card reveal"><strong>Irlanda</strong><h3>Intercâmbio e experiência internacional</h3><p class="copy">Muito procurada por quem quer estudar, viver uma rotina fora e ampliar repertório profissional.</p></article>
-        <article class="path-card reveal"><strong>Estados Unidos</strong><h3>Projetos mais ambiciosos</h3><p class="copy">Opção forte para experiências acadêmicas, viagens especiais e planos de vida com visão global.</p></article>
-        <article class="path-card reveal"><strong>Atendimento</strong><h3>Orientação antes da decisão</h3><p class="copy">A ideia é entender seu momento e organizar um plano que faça sentido para você agora.</p></article>
+        <article class="path-card reveal"><strong>Portugal</strong><h3>Boa adaptação cultural</h3><p class="copy">Você já fala a língua. Os processos de visto e moradia são mais claros do que parecem. E tem brasileiro pra ajudar em cada esquina.</p></article>
+        <article class="path-card reveal"><strong>Irlanda</strong><h3>Intercâmbio e experiência internacional</h3><p class="copy">Visto de estudo legal pra trabalhar meio período. Muita gente entra por 6 meses e fica por 4 anos.</p></article>
+        <article class="path-card reveal"><strong>Estados Unidos</strong><h3>Projetos mais ambiciosos</h3><p class="copy">Universidade ranqueada, visto J1, OPT depois da graduação. Plano de longo prazo que pede paciência — e funciona.</p></article>
+        <article class="path-card reveal"><strong>Conversar</strong><h3>Vamos entender seu caso</h3><p class="copy">Cada pessoa tem um ponto de partida. A gente escuta primeiro — e depois monta.</p></article>
       </div>
     </div>
   </section>
@@ -591,16 +764,16 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
     <div class="container contact-grid">
       <div class="contact-box reveal">
         <span class="kicker">Processo</span>
-        <h2>Como a Global Travel pode conduzir essa conversa.</h2>
+        <h2>Como essa conversa funciona na prática.</h2>
         <div class="feature-list">
-          <div class="feature-item"><span class="badge">1</span><div><h3>Entendimento de perfil</h3><p class="small-copy">Objetivo, urgência, orçamento e nível de maturidade do plano.</p></div></div>
-          <div class="feature-item"><span class="badge">2</span><div><h3>Leitura do melhor caminho</h3><p class="small-copy">Estudo, viagem, curso, apoio migratório ou combinação dessas etapas.</p></div></div>
-          <div class="feature-item"><span class="badge">3</span><div><h3>Acompanhamento estratégico</h3><p class="small-copy">Mais organização para você decidir e agir com segurança.</p></div></div>
+          <div class="feature-item"><span class="badge">1</span><div><h3>Primeiro, a gente escuta</h3><p class="small-copy">Objetivo, prazo, orçamento, quem vai com você, o que já tentou antes.</p></div></div>
+          <div class="feature-item"><span class="badge">2</span><div><h3>Montamos uma proposta</h3><p class="small-copy">Estudo, trabalho, viagem ou combinação. Com datas, valores e etapas claras.</p></div></div>
+          <div class="feature-item"><span class="badge">3</span><div><h3>A gente caminha junto</h3><p class="small-copy">Você não fica sozinho no processo. Dúvida bateu, manda no WhatsApp.</p></div></div>
         </div>
       </div>
       <div class="contact-box reveal">
-        <h3>Quer conversar sobre o seu projeto?</h3>
-        <p class="copy" style="margin-top:14px">Essa nova página foi pensada para vender melhor esse serviço. Se quiser, na próxima versão eu também posso adicionar depoimentos, perguntas frequentes e um formulário exclusivo só para “trabalhar e morar fora”.</p>
+        <h3>Conta pra gente o seu caso.</h3>
+        <p class="copy" style="margin-top:14px">Sem formulário gigante. Manda um "oi" no WhatsApp, conta em poucas linhas o que você quer, e a gente volta com perguntas certas pra começar o plano.</p>
         <div class="contact-list">
           <a href="https://wa.me/351910346159" target="_blank" rel="noopener">WhatsApp: +351 910 346 159</a>
           <a href="mailto:globaltravelintracambios@gmail.com">globaltravelintracambios@gmail.com</a>
@@ -613,6 +786,7 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
 
 
 
+  <button class="to-top" id="toTop" aria-label="Voltar ao topo" title="Topo">↑</button>
   <a class="floating-wa" href="https://wa.me/351910346159" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
     <span class="icon">✆</span>
     <span><small>Atendimento rápido</small><strong>WhatsApp</strong></span>
@@ -654,6 +828,22 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
     const btn = item.querySelector('.faq-btn');
     btn && btn.addEventListener('click', () => item.classList.toggle('open'));
   });
+  // ===== Back to top =====
+  const _toTop = document.getElementById('toTop');
+  if (_toTop) {
+    const threshold = 500;
+    const onScroll = () => _toTop.classList.toggle('visible', window.scrollY > threshold);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    _toTop.addEventListener('click', () => {
+      if (window.__lenis && typeof window.__lenis.scrollTo === 'function') {
+        window.__lenis.scrollTo(0, { duration: 1.2 });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  }
+
 })();
 </script>
 
@@ -783,7 +973,7 @@ body.page-leaving .page-fade{opacity:1;pointer-events:all}
 
     // Lenis smooth scroll (desktop only)
     if (typeof Lenis !== 'undefined' && window.matchMedia('(hover: hover) and (min-width: 861px)').matches) {
-      const lenis = new Lenis({
+      const lenis = window.__lenis = new Lenis({
         duration: 1.1,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,

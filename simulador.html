@@ -437,93 +437,129 @@ body::after{
 .stat-number.done{animation:statPulse .55s var(--ease)}
 
 
-/* ===== MOBILE-FIRST AGGRESSIVE TIGHTENING (SIMULADOR) ===== */
+/* ===== Simulador mobile ultra-refined ===== */
 @media (max-width: 768px){
-  :root{--container:min(1180px, calc(100vw - 22px))}
-  html{scroll-padding-top:64px}
-  
-  .hero{padding:40px 0 16px}
-  .hero-grid{gap:12px}
-  .hero-copy h1{font-size:clamp(1.75rem, 7.5vw, 2.4rem);line-height:1.02;max-width:14ch}
-  .lead{font-size:.96rem;line-height:1.58}
-  .badge-row{gap:6px;margin-top:12px}
-  .badge{font-size:.78rem;padding:6px 11px}
-  
-  .section{padding:22px 0 56px}
-  .section-head{margin-bottom:18px}
-  .section-head h2{font-size:clamp(1.7rem, 6.8vw, 2.35rem);line-height:1.04}
-  
-  .hero-side,.step-card,.result-box,.tip-card,.mini-card{padding:18px 16px;border-radius:18px}
-  .sim-shell{padding:12px;gap:12px}
-  .step-head{gap:10px;margin-bottom:12px}
-  .step-head h3{font-size:1.1rem;line-height:1.18}
-  .step-head p{font-size:.92rem}
-  .step-number{width:32px;height:32px;font-size:.9rem}
-  
-  .option-grid,.option-grid.two,.chip-grid,.chip-grid.two,.type-tabs,.mini-grid,.tips-grid{grid-template-columns:1fr;gap:8px}
-  .option-card{min-height:auto;padding:12px 14px;border-radius:16px;gap:6px}
-  .option-title{font-size:.96rem}
-  .option-desc{font-size:.88rem;line-height:1.5;margin-top:4px}
-  .chip{min-height:auto;padding:11px 13px;border-radius:14px}
-  .chip strong{font-size:.96rem}
-  .chip span{font-size:.85rem;line-height:1.46}
-  
-  .type-tab{padding:13px 14px;border-radius:16px}
-  .type-tab strong{font-size:.94rem}
-  .type-tab small{font-size:.86rem}
-  
-  .btn{min-height:48px;padding:12px 18px;font-size:.94rem}
-  .cta-row{display:grid;gap:8px;grid-template-columns:1fr}
-  .cta-row .btn,.btn{width:100%;min-width:auto}
-  
-  .budget-input-wrap{padding:12px 14px}
-  .budget-input{font-size:16px}
-  
-  .result-box h3{font-size:1.14rem}
-  .result-price{font-size:clamp(1.85rem, 9vw, 2.7rem);line-height:1}
-  .result-copy{font-size:.94rem;line-height:1.66;margin-bottom:10px}
-  .highlight-card{padding:14px;border-radius:16px;gap:10px}
-  .highlight-icon{font-size:1.5rem}
-  
-  .summary-item,.action-item{padding:10px 12px;font-size:.9rem;border-radius:12px}
-  .mini-card h4{font-size:.92rem}
-  .mini-card p{font-size:.88rem;line-height:1.56}
-  
-  .tip-card h3{font-size:1.08rem}
-  .tip-card p{font-size:.92rem;line-height:1.6}
-  
+  .hero{padding:32px 0 12px !important}
+  .hero-grid{gap:10px !important}
+  .hero-copy h1{font-size:clamp(1.7rem, 7.8vw, 2.35rem) !important;max-width:16ch !important;line-height:1.02 !important}
+  .lead{font-size:.94rem !important;line-height:1.58 !important}
+  .badge-row{gap:6px;margin-top:10px}
+  .badge{padding:6px 10px;font-size:.78rem}
+  .hero-side{padding:16px 14px !important;border-radius:18px !important}
+  .hero-side strong{font-size:clamp(1.25rem, 5.5vw, 1.7rem);line-height:1.1}
+  .hero-side p{margin-top:8px;font-size:.92rem;line-height:1.56}
+
+  .section{padding:12px 0 44px !important}
+  .section-head{margin-bottom:14px !important}
+  .section-head h2{font-size:clamp(1.55rem, 6.5vw, 2.1rem) !important;line-height:1.04}
+  .section-head .copy{font-size:.94rem;line-height:1.6}
+
+  /* Type tabs in 2x2 on mobile, tighter */
+  .type-tabs{grid-template-columns:1fr 1fr !important;gap:8px !important;margin-bottom:12px !important}
+  .type-tab{padding:11px 12px !important;border-radius:14px !important;min-height:auto !important}
+  .type-tab strong{font-size:.9rem !important}
+  .type-tab small{font-size:.8rem !important;line-height:1.45 !important;margin-top:4px !important}
+
+  /* Sim shell tighter */
+  .sim-shell{padding:10px !important;gap:10px !important;border-radius:22px !important}
+  .step-stack{gap:10px !important}
+  .step-card{padding:16px 14px !important;border-radius:18px !important}
+  .step-head{gap:10px !important;margin-bottom:10px !important}
+  .step-number{width:30px !important;height:30px !important;font-size:.88rem !important}
+  .step-head h3{font-size:1.05rem !important;line-height:1.2 !important;margin:0 0 2px !important;font-family:'Cormorant Garamond',Georgia,serif;font-weight:600}
+  .step-head p{font-size:.88rem !important;line-height:1.52 !important}
+
+  /* Choice groups inside step card: visual divider between groups */
+  .choice-group{margin-top:14px !important;gap:6px !important}
+  .choice-group:first-of-type{margin-top:0 !important}
+  .choice-group:not(:first-of-type){padding-top:14px !important;border-top:1px solid rgba(255,255,255,.06) !important}
+  .choice-title{font-size:.98rem !important;margin:0 0 2px !important}
+  .choice-help{font-size:.86rem !important;line-height:1.5 !important;margin:0 0 8px !important}
+
+  /* Options stacked, compact */
+  .option-grid,.option-grid.two{grid-template-columns:1fr !important;gap:7px !important}
+  .option-card{padding:11px 13px !important;border-radius:14px !important;min-height:auto !important;gap:4px !important}
+  .option-top{gap:10px !important}
+  .option-icon{font-size:1.3rem !important}
+  .option-title{font-size:.95rem !important}
+  .option-desc{font-size:.86rem !important;line-height:1.46 !important;margin-top:2px !important}
+  .option-check{width:16px !important;height:16px !important}
+
+  /* Chips */
+  .chip-grid,.chip-grid.two{grid-template-columns:1fr !important;gap:7px !important}
+  .chip{padding:10px 12px !important;border-radius:12px !important;min-height:auto !important}
+  .chip strong{font-size:.94rem !important}
+  .chip span{font-size:.84rem !important;line-height:1.46 !important;margin-top:3px !important}
+
+  /* Budget */
+  .budget-shell{gap:8px !important}
+  .budget-label{font-size:.85rem !important}
+  .budget-input-wrap{padding:11px 13px !important;border-radius:14px !important;gap:10px !important}
+  .budget-prefix{font-size:1rem !important}
+  .budget-input{font-size:16px !important;font-weight:600}
+  .budget-note{font-size:.82rem !important;line-height:1.5 !important}
+
+  /* Result side */
+  .side-stack{gap:10px !important}
+  .result-box{padding:16px 14px !important;border-radius:18px !important}
+  .meter{margin-bottom:14px !important;gap:5px !important}
+  .meter-head{font-size:.86rem !important}
+  .progress-bar{height:7px !important}
+  .result-box h3{font-size:1.04rem !important;margin:0 0 6px !important;font-family:'Outfit',sans-serif;font-weight:700;letter-spacing:.01em;text-transform:uppercase;color:rgba(255,255,255,.66);font-size:.72rem !important;letter-spacing:.15em !important}
+  .result-price{font-size:clamp(1.7rem, 8.5vw, 2.4rem) !important;line-height:1 !important;margin:4px 0 8px !important;font-family:'Cormorant Garamond',Georgia,serif;font-weight:600}
+  .result-copy{font-size:.92rem !important;line-height:1.6 !important;margin-bottom:10px !important}
+  .highlight-card{padding:12px !important;border-radius:14px !important;gap:10px !important}
+  .highlight-icon{font-size:1.4rem !important}
+  .highlight-card strong{font-size:.94rem !important}
+  .highlight-card .small-note{font-size:.82rem !important;line-height:1.5 !important}
+  .summary-list,.action-list{gap:6px !important;margin:12px 0 !important}
+  .summary-item,.action-item{padding:10px 12px !important;font-size:.88rem !important;line-height:1.48 !important;border-radius:11px !important}
+  .result-tags{gap:6px !important;margin:12px 0 !important}
+  .result-tag{padding:5px 10px !important;font-size:.78rem !important}
+  .mini-grid{grid-template-columns:1fr !important;gap:8px !important}
+  .mini-card{padding:12px !important;border-radius:14px !important}
+  .mini-card h4{font-size:.72rem !important;letter-spacing:.14em !important;text-transform:uppercase;color:var(--gold-bright) !important;margin:0 0 5px !important}
+  .mini-card p{font-size:.88rem !important;line-height:1.54 !important}
+  .cta-row{margin-top:12px !important;gap:8px !important}
+  .cta-row .btn{min-height:46px !important;font-size:.92rem !important;padding:0 16px !important}
+  .small-note{font-size:.8rem !important;line-height:1.5 !important}
+
+  /* Tips */
+  .tips-grid{grid-template-columns:1fr !important;gap:8px !important;margin-top:18px !important}
+  .tip-card{padding:14px !important;border-radius:16px !important}
+  .tip-card h3{font-size:1rem !important;margin:0 0 6px !important}
+  .tip-card p{font-size:.9rem !important;line-height:1.56 !important}
+
+  /* Header compact */
   .site-header{background:linear-gradient(180deg, rgba(4,11,18,.82) 0%, rgba(4,11,18,.42) 60%, transparent 100%);backdrop-filter:blur(4px)}
-  .nav-shell{min-height:52px;gap:8px;grid-template-columns:40px 1fr 40px;display:grid}
-  .nav-cta{grid-column:1;justify-self:start}
-  .brand{grid-column:2;justify-self:center;max-width:100%}
-  .brand-logo{width:min(130px, 36vw)}
-  .burger{width:40px;height:40px;border-radius:12px;font-size:1.05rem;display:flex;align-items:center;justify-content:center}
-  .mobile-panel{left:12px;right:12px;top:58px;padding:14px;border-radius:20px;display:grid;gap:2px;background:rgba(5,11,18,.97);border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow);opacity:0;pointer-events:none;transform:translateY(-10px);transition:.28s var(--ease);z-index:998;position:fixed}
-  body.nav-open .mobile-panel{opacity:1;pointer-events:auto;transform:translateY(0)}
-  .mobile-panel a{padding:12px 4px;font-size:1rem;border-bottom:1px solid rgba(255,255,255,.05);font-weight:500;color:#fff}
-  .mobile-panel a:last-child{border-bottom:0}
-  
-  .kicker{font-size:.62rem;letter-spacing:.15em;gap:8px}
-  .kicker::before{width:28px}
-  
-  footer{padding:26px 0 36px}
-  .footer-grid{gap:16px;grid-template-columns:1fr;text-align:center}
-  .footer-grid .brand-logo{margin:0 auto 12px}
-  
-  .floating-wa{right:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 14px);width:50px;height:50px;min-height:auto;padding:0;justify-content:center;border-radius:999px}
-  .floating-wa{font-size:0}
-  .floating-wa::before{content:"\2706";font-size:1.4rem;color:#fff}
-  .to-top{left:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 14px);width:44px;height:44px;font-size:1.05rem}
+  .nav-shell{min-height:52px !important;grid-template-columns:40px 1fr 40px !important;display:grid !important;gap:8px !important}
+  .nav-cta{grid-column:1 !important;justify-self:start !important}
+  .brand{grid-column:2 !important;justify-self:center !important;max-width:100% !important}
+  .brand-logo{width:min(124px, 35vw) !important}
+  .burger{width:40px !important;height:40px !important;border-radius:12px !important;display:flex !important;align-items:center !important;justify-content:center !important}
+
+  .kicker{font-size:.62rem !important;letter-spacing:.15em !important;gap:8px !important}
+  .kicker::before{width:28px !important}
+
+  footer{padding:24px 0 30px !important}
+  .footer-grid{gap:14px !important;grid-template-columns:1fr !important;text-align:center !important}
+  .footer-grid .brand-logo{margin:0 auto 10px !important}
+
+  .floating-wa{right:12px !important;bottom:calc(env(safe-area-inset-bottom, 0px) + 12px) !important;width:48px !important;height:48px !important;min-height:auto !important;padding:0 !important;justify-content:center !important;border-radius:999px !important;font-size:0 !important}
+  .floating-wa::before{content:"\2706" !important;font-size:1.35rem !important;color:#fff !important}
+  .to-top{left:12px !important;bottom:calc(env(safe-area-inset-bottom, 0px) + 12px) !important;width:42px !important;height:42px !important;font-size:1rem !important}
 }
 
-@media (max-width: 420px){
-  :root{--container:min(1180px, calc(100vw - 18px))}
-  .section{padding:20px 0 48px}
-  .hero-copy h1{font-size:clamp(1.6rem, 7.2vw, 2.15rem)}
-  .section-head h2{font-size:clamp(1.5rem, 6.5vw, 2rem)}
-  .hero-side,.step-card,.result-box,.tip-card,.mini-card{padding:16px 14px;border-radius:16px}
-  .floating-wa{width:46px;height:46px}
-  .to-top{width:40px;height:40px;font-size:1rem}
+/* iPhone SE / tiny */
+@media (max-width: 380px){
+  :root{--container:min(1180px, calc(100vw - 16px)) !important}
+  .hero-copy h1{font-size:clamp(1.55rem, 7.4vw, 2.1rem) !important;max-width:15ch !important}
+  .section-head h2{font-size:clamp(1.45rem, 6.6vw, 1.95rem) !important}
+  .type-tab{padding:10px 11px !important}
+  .step-card{padding:14px 12px !important}
+  .step-head h3{font-size:1rem !important}
+  .option-card,.chip{padding:10px 11px !important}
+  .result-price{font-size:clamp(1.55rem, 8vw, 2.2rem) !important}
 }
 
 </style>
@@ -561,7 +597,7 @@ body::after{
     <div class="container hero-grid">
       <div class="hero-copy reveal">
         <span class="kicker">Simulador</span>
-        <h1>Responde três perguntas. A gente volta com um plano.</h1>
+        <h1>Responde 3 perguntas.<br>A gente volta com um plano.</h1>
         <p class="lead">Perfil, destino, investimento. O simulador monta um briefing do seu projeto — e quando você envia, a gente já sabe o que procurar.</p>
         <div class="badge-row">
           <span class="badge">Menos formulário genérico</span>
@@ -635,15 +671,15 @@ body::after{
               <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
             </div>
 
-            <h3 id="resultTitle">Viagem internacional</h3>
-            <div class="result-price" id="resultPrice">Informe seu investimento</div>
-            <p class="result-copy" id="resultCopy">Preencha suas preferências e informe o valor que pretende investir para receber um atendimento mais alinhado ao que você busca.</p>
+            <h3 id="resultTitle">Seu pedido</h3>
+            <div class="result-price" id="resultPrice">Preencha o valor</div>
+            <p class="result-copy" id="resultCopy">Escolhe seu perfil e o valor. A gente vai montando aqui do lado enquanto você preenche.</p>
 
             <div class="highlight-card">
               <div class="highlight-icon" id="highlightIcon">🇵🇹</div>
               <div>
                 <strong id="highlightTitle">Lisboa / Portugal</strong>
-                <div class="small-note" id="highlightText">Boa porta de entrada para quem quer viagem, estudo ou planejamento internacional com idioma próximo.</div>
+                <div class="small-note" id="highlightText">Porta de entrada favorita de quem quer Europa com adaptação rápida.</div>
               </div>
             </div>
 

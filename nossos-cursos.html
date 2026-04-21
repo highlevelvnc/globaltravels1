@@ -760,6 +760,184 @@ body::after{
   .hero-card{display:block}
 }
 
+
+/* ===== CENTERED TEXT TREATMENT ===== */
+.section-head{text-align:center;margin-left:auto;margin-right:auto}
+.section-head .kicker{justify-content:center}
+
+.page-hero .container{text-align:center}
+.page-hero .kicker,.page-hero .page-tag{margin-left:auto;margin-right:auto}
+.page-hero h1{margin-left:auto;margin-right:auto}
+.page-hero .lead{margin-left:auto;margin-right:auto}
+.page-hero .btn-row{justify-content:center}
+
+.hero-copy{text-align:center}
+.hero-copy .kicker,#hero-kicker{justify-content:center;margin-left:auto;margin-right:auto}
+.hero-title,.hero-copy h1{margin-left:auto;margin-right:auto}
+.hero-lead,#hero-lead{margin-left:auto;margin-right:auto}
+.hero-copy .btn-row,.hero-details .btn-row{justify-content:center;margin-left:auto;margin-right:auto}
+.hero-dots{justify-content:center}
+
+/* Glass cards with narrative */
+#mobile-intro-section .glass,#mobile-story-section .glass{text-align:center}
+#mobile-intro-section .glass .kicker,#mobile-story-section .glass .kicker{justify-content:center}
+#mobile-intro-section .glass .pill-row{justify-content:center}
+#mobile-intro-section .glass .btn-row{justify-content:center}
+
+/* Contact section */
+.contact-box{text-align:center}
+.contact-box .kicker{justify-content:center}
+.contact-box .btn-row{justify-content:center}
+.contact-box h3{margin-left:auto;margin-right:auto}
+
+/* Journey side text */
+.journey-side{text-align:center}
+.journey-side .kicker{justify-content:center}
+
+/* Cards with icons at top — center them */
+.path-card,.destination-card,.info-box,.course-card{text-align:center}
+.destination-card .flag,.info-box .flag{margin-left:auto;margin-right:auto}
+.path-card .btn-link{justify-self:center;margin-left:auto;margin-right:auto;display:inline-flex}
+
+/* CTA cards */
+.cta-card{text-align:center}
+.cta-card .tag{margin-left:auto;margin-right:auto}
+.cta-card .btn-row{justify-content:center}
+
+/* Service cards — center the content below the icon */
+.service{text-align:center}
+.service .icon-box{margin-left:auto;margin-right:auto}
+
+/* Quote with author */
+.quote{text-align:center;align-items:center}
+.quote-author{align-items:center;text-align:center}
+
+/* Stats wrap already centered */
+.stats-wrap{text-align:center}
+
+/* Feature list — KEEP left (badge + text grid needs left align for readability) */
+.feature-list{text-align:left}
+.feature-item{text-align:left}
+
+/* FAQ — KEEP left for readability */
+.faq-item,.faq-btn,.faq-content{text-align:left}
+
+/* Contact list — icons on left need alignment */
+.contact-list{text-align:left}
+
+/* Mobile form fields left-aligned for labels */
+.field,.field label{text-align:left}
+
+/* Simulador step cards — keep internal step-head left for number + title block */
+.step-head{text-align:left}
+.step-head h3,.step-head p{text-align:left}
+
+/* Simulador option cards — center */
+.option-card,.chip,.type-tab{text-align:center}
+.option-top{justify-content:center}
+.type-tab strong,.type-tab small{display:block}
+
+/* Simulador result box */
+.result-box{text-align:center}
+.result-box .meter-head{text-align:left}
+.summary-item,.action-item{text-align:left}
+.highlight-card{text-align:left}
+.highlight-card .highlight-icon{flex-shrink:0}
+
+/* Journey step cards — center content */
+.journey-step{text-align:center}
+.journey-step h3{max-width:none;margin-left:auto;margin-right:auto}
+.journey-step .journey-index{top:14px;right:auto;left:50%;transform:translateX(-50%);opacity:.22}
+.journey-step h3,.journey-step p{position:relative;z-index:2}
+
+/* Marquee — natural horizontal, no change */
+
+/* Keep copy max-widths working with auto margins */
+.hero-lead,#hero-lead,.lead,.copy,.page-hero .lead{margin-left:auto;margin-right:auto}
+
+/* Footer row centered already on mobile via existing rules */
+
+
+/* ===== FINAL POLISH PASS ===== */
+
+/* Active/press state on buttons (tactile feedback) */
+.btn:active{transform:translateY(0) scale(.98);transition-duration:.12s}
+.btn-primary:active{box-shadow:0 8px 18px rgba(199,154,74,.2)}
+
+/* Touch feedback on cards */
+.cta-card:active,.service:active,.destination-card:active,.path-card:active,.course-card:active,.option-card:active,.chip:active,.journey-step:active{transform:translateY(0) scale(.99);transition-duration:.12s}
+
+/* Form fields — focus ring more refined */
+.field select:focus,.field input:focus,.field textarea:focus,.budget-input-wrap:focus-within{
+  border-color:rgba(242,212,155,.5) !important;
+  box-shadow:0 0 0 3px rgba(199,154,74,.16) !important;
+}
+
+/* Link underline animation for in-text links */
+a.btn-link{position:relative}
+a.btn-link::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .35s var(--ease)}
+a.btn-link:hover::after{transform:scaleX(1);transform-origin:left}
+
+/* Subtle glow on primary button on scroll-in */
+@keyframes primaryPulse{
+  0%,100%{box-shadow:0 14px 28px rgba(199,154,74,.24)}
+  50%{box-shadow:0 18px 36px rgba(199,154,74,.36), 0 0 40px rgba(242,212,155,.12)}
+}
+
+/* Better visited link styling */
+a:visited{color:inherit}
+
+/* Image placeholder while loading */
+img,video{background:rgba(255,255,255,.03)}
+
+/* Smoother scroll into view for focused elements */
+:focus-visible{scroll-margin-top:100px}
+
+/* Ensure selection in forms */
+.field input,.field textarea,.budget-input{-webkit-user-select:text;user-select:text}
+
+/* Disable pointer events on hero scroll hint so it doesn't block taps */
+.hero-scroll-hint{pointer-events:none}
+
+/* Stat number text-shadow softer */
+.stat-number{text-shadow:0 0 40px rgba(199,154,74,.2)}
+
+/* Hover lift on CTAs more subtle at tap */
+@media (hover: none){
+  .cta-card,.service,.destination-card,.path-card,.course-card,.journey-step{transition:transform .2s var(--ease),border-color .2s var(--ease)}
+}
+
+/* Hide to-top if body is short (nothing to scroll) */
+@media (max-height: 700px) and (max-width: 420px){
+  .to-top{width:38px;height:38px;font-size:.92rem}
+}
+
+/* Prevent layout shifts when images load */
+.hero-slide video,.video-frame video{object-fit:cover;aspect-ratio:16/9}
+
+/* Simulador: progress bar glow when near complete */
+.progress-fill[style*="100%"]{box-shadow:0 0 14px rgba(242,212,155,.5)}
+
+/* Better mobile panel link chevron */
+.mobile-panel a{position:relative;padding-right:22px !important}
+.mobile-panel a::after{content:"›";position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--gold-soft);opacity:.5;font-size:1.2rem;font-weight:300;transition:transform .3s var(--ease), opacity .3s var(--ease)}
+.mobile-panel a:hover::after,.mobile-panel a:active::after{transform:translateY(-50%) translateX(3px);opacity:1}
+
+/* Center title text-shadow (better legibility over video) */
+.hero-title,.hero-copy h1{text-shadow:0 6px 24px rgba(0,0,0,.3)}
+
+/* Consistent border-radius across interactive elements */
+.burger:active{transform:scale(.94)}
+
+/* Back-to-top button active state */
+.to-top:active{transform:translateY(0) scale(.94)}
+
+/* Footer note elegant */
+.footer-row span:first-child{color:rgba(255,255,255,.72)}
+
+/* Spotlight effect enhancement on stat cards */
+.stat-card:hover{box-shadow:0 10px 30px rgba(199,154,74,.1) inset}
+
 </style>
 </head>
 <body>

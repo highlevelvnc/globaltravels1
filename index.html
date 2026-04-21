@@ -630,9 +630,70 @@ body.cursor-hot .cursor-ring{background:rgba(242,212,155,.1);border-color:rgba(2
 .js-ready .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease), transform .7s var(--ease)}
 .js-ready .reveal.revealed{opacity:1;transform:none}
 
+
+/* ===== Journey pinned section ===== */
+.journey{padding:clamp(72px, 10vw, 120px) 0;position:relative}
+.journey-inner{
+  display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;
+  align-items:start;
+}
+.journey-side{position:sticky;top:120px;padding-right:10px}
+.journey-heading{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2.1rem, 4.3vw, 3.6rem);line-height:1.02;letter-spacing:-.02em;margin:16px 0 18px;font-weight:600}
+.journey-side .copy{max-width:44ch}
+.journey-steps{display:grid;gap:22px}
+.journey-step{
+  position:relative;padding:clamp(26px, 3vw, 38px) clamp(24px, 3vw, 34px);
+  background:linear-gradient(180deg, rgba(11,22,35,.82), rgba(7,14,24,.94));
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:28px;
+  backdrop-filter:blur(16px);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  min-height:200px;
+}
+.journey-step::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(400px circle at var(--mx,50%) var(--my,50%), rgba(199,154,74,.14), transparent 42%);
+  opacity:0;transition:opacity .45s var(--ease);pointer-events:none;
+}
+.journey-step:hover::before{opacity:1}
+.journey-step > *{position:relative;z-index:1}
+.journey-index{
+  position:absolute;top:18px;right:28px;
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(3.2rem, 6vw, 5.2rem);
+  line-height:1;font-weight:600;letter-spacing:-.04em;
+  background:linear-gradient(135deg, rgba(242,212,155,.32), rgba(199,154,74,.12));
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;
+  z-index:0;
+}
+.journey-step h3{margin:0 0 12px;max-width:72%;font-size:clamp(1.4rem, 2.2vw, 1.85rem);line-height:1.15}
+.journey-step p{color:var(--muted);line-height:1.72;font-size:.98rem}
+
+@media (max-width: 860px){
+  .journey-inner{grid-template-columns:1fr;gap:30px}
+  .journey-side{position:static;padding-right:0}
+  .journey-step{min-height:auto}
+  .journey-index{top:14px;right:20px}
+  .journey-step h3{max-width:78%}
+}
+
+/* ===== Hero lead word-wrap reveal ===== */
+.hero-lead .lead-word{display:inline-block}
+
+/* ===== Burger morph ===== */
+.burger{transition:transform .35s var(--ease), background .3s var(--ease)}
+body.nav-open .burger{transform:rotate(90deg);background:rgba(199,154,74,.18);border-color:rgba(199,154,74,.4)}
+
+/* ===== Page transition overlay ===== */
+.page-fade{position:fixed;inset:0;z-index:9998;background:#040b12;opacity:0;pointer-events:none;transition:opacity .45s var(--ease)}
+body.page-leaving .page-fade{opacity:1;pointer-events:all}
+
 </style>
 </head>
 <body>
+  <div class="page-fade" aria-hidden="true"></div>
   <div class="cursor-dot" aria-hidden="true"></div>
   <div class="cursor-ring" aria-hidden="true"></div>
   <div class="preloader" id="preloader" aria-hidden="true">
@@ -758,6 +819,38 @@ body.cursor-hot .cursor-ring{background:rgba(242,212,155,.1);border-color:rgba(2
       </div>
     </div>
   </section>
+  <section class="journey" id="journey" aria-label="Como conduzimos sua jornada">
+    <div class="container journey-inner">
+      <div class="journey-side reveal">
+        <span class="kicker">Como acontece</span>
+        <h2 class="journey-heading">Uma jornada em quatro momentos.</h2>
+        <p class="copy">Cada pessoa chega num ponto diferente. A gente caminha junto, do primeiro plano até o primeiro dia fora.</p>
+      </div>
+      <div class="journey-steps">
+        <article class="journey-step">
+          <span class="journey-index" aria-hidden="true">01</span>
+          <h3>O sonho aparece</h3>
+          <p>Você começa a imaginar estudar, viajar ou viver fora. A gente senta pra entender o que é real, o que é desejo e o que cabe agora.</p>
+        </article>
+        <article class="journey-step">
+          <span class="journey-index" aria-hidden="true">02</span>
+          <h3>O plano ganha forma</h3>
+          <p>Curso, passagem, visto, orçamento, rota, janela. Cada peça vai pro lugar com antecedência — sem sustos na última hora.</p>
+        </article>
+        <article class="journey-step">
+          <span class="journey-index" aria-hidden="true">03</span>
+          <h3>Você embarca</h3>
+          <p>No dia do voo você tem a gente no WhatsApp. Acompanhamos conexão, mala, check-in e o primeiro passo no destino.</p>
+        </article>
+        <article class="journey-step">
+          <span class="journey-index" aria-hidden="true">04</span>
+          <h3>Uma nova fase começa</h3>
+          <p>Chegou. E a gente segue junto — pra renovar visto, trocar de curso, trazer família ou planejar a próxima etapa.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section class="section tight" id="mobile-intro-section">
     <div class="container intro-grid">
       <div class="glass reveal">
@@ -1437,6 +1530,27 @@ body.cursor-hot .cursor-ring{background:rgba(242,212,155,.1);border-color:rgba(2
       });
     });
 
+    // Journey step slide-in
+    gsap.utils.toArray('.journey-step').forEach((el) => {
+      gsap.from(el, {
+        opacity: 0, x: 70, duration: 1, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 82%', toggleActions: 'play none none none' }
+      });
+    });
+
+    // Hero lead split-word reveal (initial load only)
+    const heroLead = document.getElementById('hero-lead');
+    if (heroLead && !heroLead.dataset.split) {
+      heroLead.dataset.split = '1';
+      const txt = heroLead.textContent.trim();
+      const words = txt.split(/\s+/);
+      heroLead.innerHTML = words.map(w => '<span class="lead-word">' + w + '</span>').join(' ');
+      gsap.from(heroLead.querySelectorAll('.lead-word'), {
+        opacity: 0, y: 10, duration: 0.5, stagger: 0.018, delay: 1.1, ease: 'power2.out'
+      });
+      // When JS hero slider changes lead text, it resets innerHTML. No re-split needed.
+    }
+
     // Magnetic primary buttons
     if (window.matchMedia('(hover: hover) and (min-width: 861px)').matches) {
       document.querySelectorAll('.btn-primary').forEach(btn => {
@@ -1453,6 +1567,55 @@ body.cursor-hot .cursor-ring{background:rgba(242,212,155,.1);border-color:rgba(2
     }
   }
   initGSAP();
+
+  // ===== Mobile menu stagger =====
+  const _burger = document.getElementById('burger');
+  if (_burger) {
+    _burger.addEventListener('click', () => {
+      setTimeout(() => {
+        if (document.body.classList.contains('nav-open') && typeof gsap !== 'undefined') {
+          gsap.from('.mobile-panel a', {
+            opacity: 0, x: -16, duration: 0.45, stagger: 0.055, ease: 'power2.out'
+          });
+        }
+      }, 50);
+    });
+  }
+
+  // ===== Page transitions =====
+  (function setupPageTransitions(){
+    const pages = new Set(['index.html','nossos-cursos.html','trabalhar-morar-fora.html','simulador.html']);
+    const fadeIn = () => {
+      if (typeof gsap !== 'undefined') {
+        gsap.fromTo(['main','.site-header'], { opacity: 0 }, { opacity: 1, duration: 0.6, ease: 'power2.out' });
+      }
+    };
+    window.addEventListener('pageshow', (e) => { if (e.persisted) document.body.classList.remove('page-leaving'); fadeIn(); });
+    fadeIn();
+    document.querySelectorAll('a').forEach(link => {
+      const href = link.getAttribute('href');
+      if (!href) return;
+      const pageName = href.split('#')[0].split('/').pop();
+      if (!pages.has(pageName)) return;
+      if (link.target === '_blank') return;
+      link.addEventListener('click', (ev) => {
+        if (ev.metaKey || ev.ctrlKey || ev.shiftKey) return;
+        const destPage = pageName;
+        const currentPage = location.pathname.split('/').pop() || 'index.html';
+        if (destPage === currentPage && href.includes('#')) return; // anchor on same page
+        ev.preventDefault();
+        document.body.classList.add('page-leaving');
+        if (typeof gsap !== 'undefined') {
+          gsap.to(['main','.site-header','.floating-wa'], {
+            opacity: 0, duration: 0.42, ease: 'power2.in',
+            onComplete: () => { window.location.href = href; }
+          });
+        } else {
+          setTimeout(() => { window.location.href = href; }, 300);
+        }
+      });
+    });
+  })();
 
   // ===== Cursor follower (desktop only) =====
   const _dot = document.querySelector('.cursor-dot');

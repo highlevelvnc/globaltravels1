@@ -509,9 +509,132 @@ p{margin:0}
   .footer{padding:24px 0 36px}
 }
 
+
+/* ===== Stats band (Nossa jornada em números) ===== */
+.stats-wrap{display:grid;gap:18px;justify-items:center;text-align:center}
+.stats-kicker{justify-content:center}
+.stats-kicker::before{width:54px}
+.stats-grid{
+  width:100%;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  padding:6px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:28px;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(14px);
+  overflow:hidden;
+}
+.stat-card{
+  display:grid;gap:8px;place-items:center;
+  padding:26px 18px;
+  background:linear-gradient(180deg, rgba(11,22,35,.92), rgba(7,14,24,.96));
+  transition:background .4s var(--ease);
+}
+.stat-card:hover{background:linear-gradient(180deg, rgba(18,33,52,.96), rgba(9,19,30,.98))}
+.stat-number{
+  display:block;
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(2.2rem, 4.6vw, 3.8rem);
+  line-height:1;font-weight:600;letter-spacing:-.02em;
+  background:linear-gradient(135deg, var(--gold-soft), var(--gold));
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;
+  text-shadow:0 0 60px rgba(199,154,74,.28);
+}
+.stat-label{
+  font-size:.78rem;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  line-height:1.4;font-weight:500;
+}
+
+/* ===== Card spotlight effect ===== */
+.service,.destination-card,.path-card,.course-card,.cta-card,.stat-card,.info-box,.quote{
+  position:relative;overflow:hidden;
+}
+.service::before,.destination-card::before,.path-card::before,
+.course-card::before,.cta-card::before,.info-box::before,.quote::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(199,154,74,.14), transparent 42%);
+  opacity:0;transition:opacity .45s var(--ease);
+  pointer-events:none;z-index:0;
+}
+.service:hover::before,.destination-card:hover::before,.path-card:hover::before,
+.course-card:hover::before,.cta-card:hover::before,.info-box:hover::before,.quote:hover::before{opacity:1}
+.service > *,.destination-card > *,.path-card > *,
+.course-card > *,.cta-card > *,.info-box > *,.quote > *{position:relative;z-index:1}
+
+/* ===== Stagger reveal (cascade) ===== */
+.services-grid .reveal:nth-child(1),.destination-grid .reveal:nth-child(1),
+.quotes-grid .reveal:nth-child(1),.path-grid .reveal:nth-child(1),
+.course-grid .reveal:nth-child(1),.steps-grid .reveal:nth-child(1),
+.cta-grid .reveal:nth-child(1){transition-delay:0ms}
+.services-grid .reveal:nth-child(2),.destination-grid .reveal:nth-child(2),
+.quotes-grid .reveal:nth-child(2),.path-grid .reveal:nth-child(2),
+.course-grid .reveal:nth-child(2),.steps-grid .reveal:nth-child(2),
+.cta-grid .reveal:nth-child(2){transition-delay:80ms}
+.services-grid .reveal:nth-child(3),.destination-grid .reveal:nth-child(3),
+.quotes-grid .reveal:nth-child(3),.path-grid .reveal:nth-child(3),
+.course-grid .reveal:nth-child(3),.steps-grid .reveal:nth-child(3),
+.cta-grid .reveal:nth-child(3){transition-delay:160ms}
+.services-grid .reveal:nth-child(4),.cta-grid .reveal:nth-child(4),
+.course-grid .reveal:nth-child(4),.steps-grid .reveal:nth-child(4){transition-delay:240ms}
+.services-grid .reveal:nth-child(5){transition-delay:320ms}
+.services-grid .reveal:nth-child(6){transition-delay:400ms}
+
+@media (max-width: 768px){
+  .stats-grid{grid-template-columns:1fr 1fr;border-radius:22px}
+  .stat-card{padding:20px 12px}
+  .stat-number{font-size:clamp(2rem, 10vw, 3rem)}
+  .stat-label{font-size:.72rem;letter-spacing:.1em}
+}
+@media (max-width: 420px){
+  .stat-card{padding:16px 10px}
+  .stat-label{font-size:.66rem}
+}
+
+
+/* ===== SVG icon-box ===== */
+.icon-box svg{width:26px;height:26px;stroke-width:1.5}
+
+/* ===== Quote author ===== */
+.quote{display:flex;flex-direction:column;gap:16px}
+.quote p{font-size:1rem;line-height:1.82;color:var(--muted)}
+.quote-author{display:flex;flex-direction:column;gap:3px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);color:#fff}
+.quote-author strong{font-family:'Outfit',sans-serif;font-weight:600;font-size:.96rem}
+.quote-author em{font-style:normal;font-size:.78rem;color:var(--muted-2);letter-spacing:.1em;text-transform:uppercase}
+
+/* ===== Cursor follower ===== */
+.cursor-dot,.cursor-ring{position:fixed;pointer-events:none;z-index:9999;top:0;left:0;mix-blend-mode:screen;opacity:0;will-change:transform}
+.cursor-dot{width:5px;height:5px;border-radius:999px;background:var(--gold-soft)}
+.cursor-ring{width:36px;height:36px;border-radius:999px;border:1px solid rgba(242,212,155,.42);transition:width .3s var(--ease), height .3s var(--ease), border-color .3s var(--ease), background .3s var(--ease)}
+body.cursor-ready .cursor-dot,body.cursor-ready .cursor-ring{opacity:1}
+body.cursor-hot .cursor-ring{background:rgba(242,212,155,.1);border-color:rgba(242,212,155,.75);width:54px;height:54px}
+@media (hover: none),(max-width:860px){.cursor-dot,.cursor-ring{display:none!important}}
+
+/* ===== Split-text ===== */
+.hero-title .word{display:inline-block;overflow:hidden;vertical-align:top;line-height:1;padding-bottom:.08em}
+.hero-title .word .inner{display:inline-block;will-change:transform}
+
+/* ===== Marquee ===== */
+.marquee{position:relative;overflow:hidden;padding:24px 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);background:linear-gradient(180deg, rgba(7,14,24,.3), rgba(7,14,24,.1));mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);-webkit-mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)}
+.marquee-track{display:flex;gap:42px;width:max-content;animation:marqueeSlide 42s linear infinite}
+.marquee-item{display:inline-flex;align-items:center;gap:12px;font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(1.3rem, 2.4vw, 2rem);color:rgba(255,255,255,.68);letter-spacing:-.01em;white-space:nowrap;font-weight:500}
+.marquee-item span{color:var(--gold-soft);font-size:1.3rem}
+@keyframes marqueeSlide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ===== Progressive enhancement: only hide reveal when JS took over ===== */
+.js-ready .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s var(--ease), transform .7s var(--ease)}
+.js-ready .reveal.revealed{opacity:1;transform:none}
+
 </style>
 </head>
 <body>
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
   <div class="preloader" id="preloader" aria-hidden="true">
     <div class="preloader-inner">
       <div class="preloader-logo"><img src="globaltravel_logo_original_white_v16.png" alt="Global Travel Intercâmbios"></div>
@@ -559,17 +682,17 @@ p{margin:0}
           </video>
         </div>
         <div class="hero-slide">
-          <video muted playsinline loop preload="metadata" style="object-position:center 52%">
+          <video muted playsinline loop preload="none" style="object-position:center 52%">
             <source src="https://www.pexels.com/download/video/6947516/" type="video/mp4">
           </video>
         </div>
         <div class="hero-slide">
-          <video muted playsinline loop preload="metadata" style="object-position:center 48%">
+          <video muted playsinline loop preload="none" style="object-position:center 48%">
             <source src="https://www.pexels.com/download/video/35468424/" type="video/mp4">
           </video>
         </div>
         <div class="hero-slide">
-          <video muted playsinline loop preload="metadata" style="object-position:center 46%">
+          <video muted playsinline loop preload="none" style="object-position:center 46%">
             <source src="https://www.pexels.com/download/video/19542646/" type="video/mp4">
           </video>
         </div>
@@ -609,6 +732,32 @@ p{margin:0}
     </div>
   </section>
 
+
+  <section class="section tight" id="stats" aria-label="Nossa jornada em números">
+    <div class="container">
+      <div class="stats-wrap reveal">
+        <span class="kicker stats-kicker">Nossa jornada em números</span>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <strong class="stat-number" data-target="500" data-suffix="+">0</strong>
+            <span class="stat-label">Sonhos em movimento</span>
+          </div>
+          <div class="stat-card">
+            <strong class="stat-number" data-target="30" data-suffix="+">0</strong>
+            <span class="stat-label">Destinos no mapa</span>
+          </div>
+          <div class="stat-card">
+            <strong class="stat-number" data-target="8" data-suffix="+">0</strong>
+            <span class="stat-label">Anos de estrada</span>
+          </div>
+          <div class="stat-card">
+            <strong class="stat-number" data-target="98" data-suffix="%">0</strong>
+            <span class="stat-label">Famílias que voltam</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   <section class="section tight" id="mobile-intro-section">
     <div class="container intro-grid">
       <div class="glass reveal">
@@ -686,12 +835,12 @@ p{margin:0}
         <p class="copy">Tudo organizado para transformar uma ideia em experiência real, com passagens aéreas, suporte estratégico e mais segurança em cada etapa.</p>
       </div>
       <div class="services-grid">
-        <article class="service reveal"><div class="icon-box">✈</div><h3>Passagens aéreas</h3><p class="copy">Emissão de passagens aéreas com foco nas melhores tarifas, rotas estratégicas, conexões inteligentes e mais tranquilidade do orçamento ao embarque.</p></article>
-        <article class="service reveal"><div class="icon-box">🛡</div><h3>Seguro viagem</h3><p class="copy">Proteção ideal para o destino e para as exigências do seu processo.</p></article>
-        <article class="service reveal"><div class="icon-box">🎓</div><h3>Intercâmbios</h3><p class="copy">Programas de estudo no exterior com suporte antes, durante e depois da decisão.</p></article>
-        <article class="service reveal"><div class="icon-box">🌍</div><h3>Viagens completas</h3><p class="copy">Roteiros internacionais com estética, praticidade e sensação de sonho realizado.</p></article>
-        <article class="service reveal"><div class="icon-box">🧭</div><h3>Assessoria imigratória</h3><p class="copy">Direcionamento para documentos, etapas e caminhos possíveis com visão estratégica.</p></article>
-        <article class="service reveal"><div class="icon-box">💼</div><h3>Projetos de mudança</h3><p class="copy">Para quem quer estudar, morar ou trabalhar fora e precisa de mais clareza para começar.</p></article>
+        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.19a.51.51 0 0 0-.56.13L2.93 7.63a.5.5 0 0 0 .06.73L9 12l-1.8 2.7-3-.3a.5.5 0 0 0-.43.14L2.47 15.84a.5.5 0 0 0 .14.8l3.39 1.5 1.5 3.39a.5.5 0 0 0 .82.14l1.26-1.26a.5.5 0 0 0 .14-.42L9.3 16.5 12 14.5l3.64 6a.5.5 0 0 0 .74.1l1.4-1.4a.5.5 0 0 0 .12-.5Z"/></svg></div><h3>Passagens aéreas</h3><p class="copy">Emissão de passagens aéreas com foco nas melhores tarifas, rotas estratégicas, conexões inteligentes e mais tranquilidade do orçamento ao embarque.</p></article>
+        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div><h3>Seguro viagem</h3><p class="copy">Proteção ideal para o destino e para as exigências do seu processo.</p></article>
+        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><h3>Intercâmbios</h3><p class="copy">Programas de estudo no exterior com suporte antes, durante e depois da decisão.</p></article>
+        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/></svg></div><h3>Viagens completas</h3><p class="copy">Roteiros internacionais com estética, praticidade e sensação de sonho realizado.</p></article>
+        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div><h3>Assessoria imigratória</h3><p class="copy">Direcionamento para documentos, etapas e caminhos possíveis com visão estratégica.</p></article>
+        <article class="service reveal"><div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div><h3>Projetos de mudança</h3><p class="copy">Para quem quer estudar, morar ou trabalhar fora e precisa de mais clareza para começar.</p></article>
       </div>
     </div>
   </section>
@@ -716,6 +865,30 @@ p{margin:0}
       </div>
     </div>
   </section>
+
+
+  <div class="marquee" aria-label="Destinos">
+    <div class="marquee-track" aria-hidden="true">
+      <span class="marquee-item">🇵🇹 Lisboa <span>·</span></span>
+      <span class="marquee-item">🇮🇪 Dublin <span>·</span></span>
+      <span class="marquee-item">🇺🇸 Orlando <span>·</span></span>
+      <span class="marquee-item">🇫🇷 Paris <span>·</span></span>
+      <span class="marquee-item">❄️ Neve <span>·</span></span>
+      <span class="marquee-item">🇵🇹 Porto <span>·</span></span>
+      <span class="marquee-item">🇪🇸 Madrid <span>·</span></span>
+      <span class="marquee-item">🇬🇧 Londres <span>·</span></span>
+      <span class="marquee-item">🇨🇦 Toronto <span>·</span></span>
+      <span class="marquee-item">🇵🇹 Lisboa <span>·</span></span>
+      <span class="marquee-item">🇮🇪 Dublin <span>·</span></span>
+      <span class="marquee-item">🇺🇸 Orlando <span>·</span></span>
+      <span class="marquee-item">🇫🇷 Paris <span>·</span></span>
+      <span class="marquee-item">❄️ Neve <span>·</span></span>
+      <span class="marquee-item">🇵🇹 Porto <span>·</span></span>
+      <span class="marquee-item">🇪🇸 Madrid <span>·</span></span>
+      <span class="marquee-item">🇬🇧 Londres <span>·</span></span>
+      <span class="marquee-item">🇨🇦 Toronto <span>·</span></span>
+    </div>
+  </div>
 
   <section class="section" id="destinos">
     <div class="container">
@@ -822,9 +995,18 @@ p{margin:0}
         <h2>Uma marca que precisa transmitir confiança desde o primeiro olhar.</h2>
       </div>
       <div class="quotes-grid">
-        <article class="quote reveal"><p>“Eu precisava de uma agência que me ajudasse a organizar tudo com calma. Foi exatamente a sensação que tive.”</p><span>Cliente Global Travel</span></article>
-        <article class="quote reveal"><p>“O atendimento foi claro, bonito e profissional. Parece simples, mas isso passa muita confiança para quem está decidindo.”</p><span>Cliente Global Travel</span></article>
-        <article class="quote reveal"><p>“Gostei porque senti que meu plano foi levado a sério, não como mais um atendimento genérico.”</p><span>Cliente Global Travel</span></article>
+        <article class="quote reveal">
+          <p>“Vim pra Lisboa fazer mestrado em setembro. A Global Travel montou tudo: universidade, passagem, visto, primeiro mês de aluguel. Quando cheguei, eu só tive que abrir a porta do apartamento.”</p>
+          <span class="quote-author"><strong>Mariana R.</strong><em>São Paulo → Lisboa</em></span>
+        </article>
+        <article class="quote reveal">
+          <p>“A gente queria fazer Disney em família com orçamento apertado. A equipe achou rota e tarifa que eu não achava em lugar nenhum e explicou cada detalhe antes de eu pagar. Fui com três crianças e voltei sem história de terror.”</p>
+          <span class="quote-author"><strong>Paulo H.</strong><em>Belo Horizonte</em></span>
+        </article>
+        <article class="quote reveal">
+          <p>“Fui seis meses pra Irlanda estudar inglês. Eu estava perdido e a Letícia me ligou antes de cada decisão importante. Voltei falando inglês e com a sensação de que alguém tava junto.”</p>
+          <span class="quote-author"><strong>Thiago M.</strong><em>Curitiba → Dublin</em></span>
+        </article>
       </div>
     </div>
   </section>
@@ -882,12 +1064,16 @@ p{margin:0}
   </footer>
   
 
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
 <script>
 (function(){
   const preloader = document.getElementById('preloader');
   const hidePreloader = () => preloader && preloader.classList.add('hidden');
-  window.addEventListener('load', () => setTimeout(hidePreloader, 650));
-  setTimeout(hidePreloader, 2500);
+  window.addEventListener('load', () => setTimeout(hidePreloader, 200));
+  setTimeout(hidePreloader, 1200);
 
   const header = document.getElementById('site-header');
   const onScroll = () => {
@@ -1029,8 +1215,10 @@ p{margin:0}
       if(dots[i]) dots[i].classList.toggle('active', active);
       const video = videos[i];
       if(video){
-        if(active){ video.play().catch(()=>{}); }
-        else { video.pause(); video.currentTime = 0; }
+        if(active){
+          if (video.preload === 'none') { video.preload = 'auto'; video.load(); }
+          video.play().catch(()=>{});
+        } else { video.pause(); video.currentTime = 0; }
       }
     });
     current = index;
@@ -1148,6 +1336,147 @@ p{margin:0}
   [destino, orcamento, prazo].forEach(el => el && el.addEventListener('change', buildRecommendation));
   updateChoiceState();
   buildRecommendation();
+
+  // Counter animation
+  const counters = document.querySelectorAll('.stat-number');
+  const animateCounter = (el) => {
+    const target = parseFloat(el.dataset.target);
+    const decimals = parseInt(el.dataset.decimals || '0', 10);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1600;
+    const start = performance.now();
+    const tick = (now) => {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = (target * eased).toFixed(decimals) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  if (counters.length) {
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, {threshold: .5});
+    counters.forEach(c => statsObserver.observe(c));
+  }
+
+  // Card spotlight (follows cursor)
+  const spotlightCards = document.querySelectorAll('.service, .destination-card, .path-card, .course-card, .cta-card, .info-box, .quote');
+  spotlightCards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
+      card.style.setProperty('--my', ((e.clientY - rect.top) / rect.height * 100) + '%');
+    });
+  });
+
+
+  // ===== GSAP premium animations =====
+  function initGSAP() {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+      return setTimeout(initGSAP, 80);
+    }
+    gsap.registerPlugin(ScrollTrigger);
+    document.body.classList.add('js-ready');
+
+    // Hero title: split words and reveal
+    const heroTitle = document.getElementById('hero-title');
+    let splitMO = null;
+    function splitHero(){
+      if (!heroTitle) return;
+      const txt = heroTitle.textContent.trim();
+      if (!txt) return;
+      if (splitMO) splitMO.disconnect();
+      const words = txt.split(/\s+/);
+      heroTitle.innerHTML = words.map(w => '<span class="word"><span class="inner">' + w + '</span></span>').join(' ');
+      gsap.from(heroTitle.querySelectorAll('.inner'), {
+        yPercent: 115, duration: 1.1, stagger: 0.09, ease: 'power3.out'
+      });
+      splitMO = new MutationObserver((muts) => {
+        for (const m of muts) {
+          if (m.type === 'characterData') { splitHero(); return; }
+        }
+        if (!heroTitle.querySelector('.word')) splitHero();
+      });
+      splitMO.observe(heroTitle, { childList: true, characterData: true, subtree: true });
+    }
+    splitHero();
+
+    // Hero secondary fade-up
+    gsap.from(['#hero-kicker', '#hero-lead', '.hero-details .btn-row', '.hero-dots'], {
+      opacity: 0, y: 22, duration: 0.9, stagger: 0.12, delay: 0.7, ease: 'power2.out'
+    });
+
+    // Hero video parallax
+    gsap.utils.toArray('.hero-slide video').forEach(v => {
+      gsap.to(v, {
+        yPercent: 14, scale: 1.08, ease: 'none',
+        scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+      });
+    });
+
+    // Counter with GSAP (smoother easing)
+    document.querySelectorAll('.stat-number').forEach(el => {
+      const target = parseFloat(el.dataset.target);
+      const decimals = parseInt(el.dataset.decimals || '0', 10);
+      const suffix = el.dataset.suffix || '';
+      const obj = { v: 0 };
+      ScrollTrigger.create({
+        trigger: el, start: 'top 88%', once: true,
+        onEnter: () => {
+          gsap.to(obj, {
+            v: target, duration: 1.9, ease: 'power3.out',
+            onUpdate: () => { el.textContent = obj.v.toFixed(decimals) + suffix; }
+          });
+        }
+      });
+    });
+
+    // Magnetic primary buttons
+    if (window.matchMedia('(hover: hover) and (min-width: 861px)').matches) {
+      document.querySelectorAll('.btn-primary').forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+          const r = btn.getBoundingClientRect();
+          const x = e.clientX - r.left - r.width / 2;
+          const y = e.clientY - r.top - r.height / 2;
+          gsap.to(btn, { x: x * 0.18, y: y * 0.22, duration: 0.35, ease: 'power2.out' });
+        });
+        btn.addEventListener('mouseleave', () => {
+          gsap.to(btn, { x: 0, y: 0, duration: 0.55, ease: 'elastic.out(1, .45)' });
+        });
+      });
+    }
+  }
+  initGSAP();
+
+  // ===== Cursor follower (desktop only) =====
+  const _dot = document.querySelector('.cursor-dot');
+  const _ring = document.querySelector('.cursor-ring');
+  if (_dot && _ring && window.matchMedia('(hover: hover) and (min-width: 861px)').matches) {
+    document.body.classList.add('cursor-ready');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', (e) => {
+      mx = e.clientX; my = e.clientY;
+      _dot.style.transform = 'translate(' + (mx - 2.5) + 'px, ' + (my - 2.5) + 'px)';
+    });
+    const loop = () => {
+      rx += (mx - rx) * 0.18;
+      ry += (my - ry) * 0.18;
+      _ring.style.transform = 'translate(' + (rx - 18) + 'px, ' + (ry - 18) + 'px)';
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+    document.querySelectorAll('a, button, .choice, .option-card, .faq-btn, .stat-card, .quote, .destination-card, .service, .path-card, .course-card, .cta-card').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hot'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hot'));
+    });
+  }
+
 })();
 </script>
 </body>

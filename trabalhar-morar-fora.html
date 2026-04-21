@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trabalhar e morar fora | Global Travel Intercâmbios</title>
-  <meta name="description" content="Orientação para quem quer estudar, viver e construir uma nova fase internacional com mais clareza." />
+  <meta name="description" content="Organizamos seu plano de morar fora — estudo, trabalho e moradia, na ordem que funciona pra você." />
   <meta property="og:title" content="Trabalhar e morar fora | Global Travel Intercâmbios" />
   <meta property="og:description" content="Orientação para quem quer estudar, viver e construir uma nova fase internacional com mais clareza." />
   <meta property="og:type" content="website" />
@@ -571,94 +571,193 @@ body::after{
 .stat-number.done{animation:statPulse .55s var(--ease)}
 
 
-/* ===== Mobile responsive fine-tuning ===== */
+/* ===== MOBILE-FIRST AGGRESSIVE TIGHTENING ===== */
 @media (max-width: 768px){
-  /* Slight section padding tightening */
-  .section{padding:clamp(48px, 8vw, 80px) 0}
-  .section.tight{padding:clamp(40px, 6vw, 64px) 0}
-  .section-head{margin-bottom:22px}
+  :root{
+    --container:min(1180px, calc(100vw - 22px));
+    --radius-lg:22px;
+    --radius:20px;
+    --radius-sm:14px;
+  }
+  html{scroll-padding-top:70px}
   
-  /* Copy readability */
-  .copy,.lead{font-size:.96rem;line-height:1.66}
-  .small-copy{font-size:.88rem;line-height:1.62}
+  /* Rhythm */
+  .section{padding:44px 0 !important}
+  .section.tight{padding:32px 0 !important}
+  .section-head{gap:12px;margin-bottom:20px}
   
-  /* Touch targets - bigger tap areas */
-  .btn{min-height:48px;padding:0 20px}
-  .btn-primary,.btn-secondary{min-height:50px}
-  .faq-btn{padding:18px 20px;min-height:56px}
+  /* Typography mobile-first */
+  h1{font-size:clamp(1.9rem, 8.2vw, 2.7rem);line-height:1.02;letter-spacing:-.02em}
+  h2,.section-head h2{font-size:clamp(1.7rem, 7vw, 2.4rem);line-height:1.04;text-wrap:balance}
+  h3{font-size:1.22rem;line-height:1.18}
+  .lead{font-size:1rem;line-height:1.58}
+  .copy{font-size:.96rem;line-height:1.68}
+  .small-copy{font-size:.9rem;line-height:1.6}
   
-  /* Safer horizontal breathing room */
-  .container{width:min(1180px, calc(100vw - 24px))}
+  /* Cards: consistent compact padding */
+  .glass,.service,.info-box,.path-card,.course-card,.destination-card,.quote,.cta-card,.contact-box,.hero-card,.mini-card,.faq-item,.sim-card,.result-card{
+    padding:18px 16px !important;
+    border-radius:18px !important;
+  }
+  .glass{padding:22px 18px !important}
+  .contact-box{padding:22px 18px !important}
   
-  /* Footer tidier */
-  .footer{padding:26px 0 38px}
-  .footer-row{text-align:center;font-size:.82rem;gap:4px}
+  /* Buttons: ideal tap target */
+  .btn{min-height:48px;padding:0 18px;font-size:.95rem;border-radius:999px}
+  .btn-primary,.btn-secondary{min-height:50px;font-size:.96rem}
+  .btn-row{gap:10px}
   
-  /* FAQ spacing */
-  .faq-item.open .faq-content{max-height:520px}
+  /* Section head tighter */
+  .section-head{gap:10px}
+  .kicker{font-size:.62rem;letter-spacing:.15em;gap:8px;line-height:1.5}
+  .kicker::before{width:28px}
   
-  /* Mini stats tighter */
-  .mini-stats{gap:10px;margin-top:14px}
+  /* Grid gaps */
+  .services-grid,.destination-grid,.quotes-grid,.path-grid,.course-grid,.steps-grid,.cta-grid,.sim-grid,.mini-stats,.two-col,.choice-grid{gap:12px}
   
-  /* Better vertical rhythm for service cards */
-  .services-grid,.destination-grid,.quotes-grid,.path-grid,.course-grid,.steps-grid,.cta-grid,.sim-grid{gap:14px}
+  /* Navigation compact */
+  .site-header{background:linear-gradient(180deg, rgba(4,10,18,.82) 0%, rgba(4,10,18,.42) 60%, transparent 100%)}
+  .nav-shell{min-height:54px;gap:8px;grid-template-columns:40px 1fr 40px}
+  .brand-logo{width:min(130px, 36vw)}
+  .burger{width:40px;height:40px;border-radius:12px;font-size:1.05rem}
+  .mobile-panel{left:12px;right:12px;top:60px;padding:14px;border-radius:20px}
+  .mobile-panel a{padding:12px 4px;font-size:1rem}
   
-  /* Quote on mobile */
+  /* Footer mobile */
+  .footer{padding:22px 0 34px}
+  .footer-row{flex-direction:column;text-align:center;gap:4px;font-size:.84rem}
+  
+  /* Hero text position refinement */
+  .hero-inner{padding:20px 0 24px}
+  .hero-title,.hero-copy h1,h1{margin-top:0}
+  .hero-lead{font-size:.94rem;line-height:1.58;margin:10px 0 14px}
+  
+  /* Stats */
+  .stats-grid{border-radius:20px}
+  .stat-card{padding:16px 10px;gap:6px}
+  .stat-number{font-size:clamp(1.9rem, 9.2vw, 2.85rem)}
+  .stat-label{font-size:.66rem;letter-spacing:.1em;line-height:1.35}
+  .stats-wrap{gap:14px}
+  
+  /* Journey */
+  .journey{padding:52px 0}
+  .journey-inner{gap:22px}
+  .journey-heading{font-size:clamp(1.7rem, 7.2vw, 2.3rem)}
+  .journey-steps{gap:14px}
+  .journey-step{padding:18px 16px !important;min-height:auto}
+  .journey-step h3{font-size:1.18rem;max-width:74%}
+  .journey-step p{font-size:.93rem;line-height:1.6}
+  .journey-index{top:12px;right:16px;font-size:2.5rem}
+  
+  /* Marquee */
+  .marquee{padding:16px 0}
+  .marquee-item{font-size:clamp(1rem, 4.8vw, 1.4rem);gap:10px}
+  .marquee-track{gap:30px}
+  
+  /* FAQ */
+  .faq-btn{padding:16px 18px;min-height:52px;gap:12px}
+  .faq-btn strong{font-size:.98rem;line-height:1.28}
+  .faq-item.open .faq-content{max-height:520px;padding:0 18px 18px}
+  .faq-content{padding:0 18px}
+  
+  /* Contact list */
+  .contact-list{gap:8px;margin-top:14px}
+  .contact-list a,.contact-list span{padding:12px 14px;font-size:.88rem;border-radius:14px}
+  
+  /* Pills */
+  .pill-row{gap:6px;margin-top:12px}
+  .pill{padding:6px 11px;font-size:.78rem}
+  
+  /* Floating buttons — higher up, less obtrusive */
+  .floating-wa{right:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 14px);width:50px;height:50px;min-height:auto;padding:0;justify-content:center;border-radius:999px;box-shadow:0 12px 28px rgba(37,211,102,.32)}
+  .floating-wa > span:not(.icon){display:none}
+  .floating-wa .icon{font-size:1.4rem;width:auto;height:auto}
+  .to-top{left:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 14px);width:44px;height:44px;font-size:1.08rem}
+  
+  /* Video frame mobile */
+  .video-frame{min-height:300px;border-radius:22px}
+  .video-copy{left:18px;right:18px;bottom:18px;gap:4px}
+  .video-copy strong{font-size:clamp(1.5rem, 6vw, 2rem);line-height:1.12}
+  
+  /* Hero card mobile - already hidden, but just in case */
+  .hero-card{display:none !important}
+  
+  /* Page hero on subpages tighter */
+  .page-hero{padding:90px 0 40px}
+  .page-tag{padding:8px 12px;font-size:.72rem}
+  
+  /* Better touch feedback */
+  .choice,.option-card,.chip{padding:12px 14px !important;min-height:auto !important}
+  
+  /* Feature list */
+  .feature-list{gap:10px;margin-top:18px}
+  .feature-item{padding:14px 0;gap:12px}
+  .feature-item h3{font-size:1.04rem;margin-bottom:4px}
+  .badge{width:32px;height:32px;font-size:.88rem}
+  
+  /* CTA card tag pills */
+  .cta-card .tag{font-size:.64rem;padding:4px 9px;margin-bottom:8px}
+  .cta-card h3{font-size:1.15rem;margin-bottom:6px}
+  .cta-card .copy{font-size:.92rem;line-height:1.56}
+  .cta-card .btn-row{margin-top:10px;gap:8px}
+  .cta-card .btn{min-height:44px;font-size:.92rem}
+  
+  /* Destination flags */
+  .destination-card .flag{width:54px;height:54px;font-size:1.85rem}
+  .info-box .flag{width:44px;height:44px;font-size:1.55rem}
+  
+  /* Forms */
+  .field label{font-size:.88rem}
+  .field select,.field input,.field textarea{padding:12px 14px;min-height:46px;font-size:16px;border-radius:14px}
+  
+  /* Quote reshape */
+  .quote{gap:14px}
   .quote p{font-size:.96rem;line-height:1.74}
+  .quote-author strong{font-size:.92rem}
+  .quote-author em{font-size:.72rem}
   
-  /* Contact list readable */
-  .contact-list a,.contact-list span{font-size:.88rem;padding:14px 15px}
-  
-  /* Pills tighter */
-  .pill-row{gap:7px;margin-top:14px}
-  .pill{padding:7px 12px;font-size:.82rem}
-  
-  /* Page transitions/back-to-top don't clash with WhatsApp float */
-  .to-top{left:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 12px)}
-  .floating-wa{right:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 12px)}
+  /* Hero-scroll-hint slightly smaller */
+  .hero-scroll-hint{width:36px;height:36px;font-size:.95rem}
 }
 
+/* Extra-small phones */
 @media (max-width: 420px){
-  .container{width:min(1180px, calc(100vw - 20px))}
-  h1{font-size:clamp(1.75rem, 8vw, 2.35rem)}
-  .section{padding:clamp(40px, 7vw, 68px) 0}
-  .btn{font-size:.92rem;padding:0 16px}
-  .faq-btn strong{font-size:.98rem}
-  .pill{font-size:.78rem;padding:6px 10px}
-  .kicker{font-size:.6rem;letter-spacing:.14em}
-  .to-top{width:40px;height:40px;font-size:1.05rem}
-  
-  /* Journey refinements for small screens */
-  .journey-step{padding:18px 16px;min-height:auto}
-  .journey-step h3{font-size:1.2rem;max-width:72%}
-  .journey-step p{font-size:.92rem;line-height:1.6}
-  .journey-index{top:12px;right:16px;font-size:2.6rem}
-  .journey-heading{font-size:clamp(1.7rem, 7.4vw, 2.3rem)}
-  
-  /* Stat card labels don't overflow */
-  .stat-label{font-size:.68rem;letter-spacing:.08em;line-height:1.3}
-  .stat-card{padding:16px 10px}
-  
-  /* Destinations: flag smaller */
-  .destination-card .flag{width:52px;height:52px;font-size:1.8rem}
-  .info-box .flag{width:44px;height:44px;font-size:1.5rem}
-  
-  /* Marquee items smaller */
-  .marquee-item{font-size:clamp(1.05rem, 5vw, 1.4rem)}
-  .marquee{padding:18px 0}
-  
-  /* Reduce story video height on very small */
+  :root{--container:min(1180px, calc(100vw - 18px))}
+  .section{padding:36px 0 !important}
+  .section.tight{padding:28px 0 !important}
+  h1{font-size:clamp(1.75rem, 7.8vw, 2.3rem)}
+  h2,.section-head h2{font-size:clamp(1.55rem, 6.8vw, 2.1rem)}
+  .glass,.service,.info-box,.path-card,.course-card,.destination-card,.quote,.cta-card,.contact-box,.hero-card{padding:16px 14px !important;border-radius:16px !important}
+  .stats-grid{border-radius:18px}
+  .stat-number{font-size:clamp(1.75rem, 9vw, 2.5rem)}
+  .journey-step{padding:16px 14px !important}
+  .journey-step h3{font-size:1.08rem}
+  .journey-step p{font-size:.9rem}
+  .journey-index{font-size:2.2rem;top:10px;right:12px}
   .video-frame{min-height:260px}
+  .floating-wa{width:46px;height:46px}
+  .to-top{width:40px;height:40px;font-size:1rem}
+  .marquee-track{gap:22px}
+  .marquee-item{font-size:clamp(.95rem, 4.5vw, 1.25rem)}
 }
 
-/* Super tiny (iPhone SE / 320px) */
+/* iPhone SE / very small */
 @media (max-width: 360px){
-  .container{width:min(1180px, calc(100vw - 16px))}
-  .nav-shell{gap:6px}
-  .brand-logo{width:min(108px, 32vw)}
-  .hero-title,.hero-copy h1,h1{font-size:clamp(1.6rem, 7.8vw, 2.1rem)}
-  .hero-lead{font-size:.86rem}
-  .stat-number{font-size:clamp(1.8rem, 9vw, 2.6rem)}
+  :root{--container:min(1180px, calc(100vw - 14px))}
+  .brand-logo{width:min(110px, 32vw)}
+  .nav-shell{min-height:50px}
+  .hero-title,.hero-copy h1,h1{font-size:clamp(1.55rem, 7.5vw, 2rem)}
+  h2,.section-head h2{font-size:clamp(1.4rem, 6.6vw, 1.9rem)}
+  .copy{font-size:.92rem}
+  .lead,.hero-lead{font-size:.9rem}
+  .btn{font-size:.9rem;padding:0 16px}
+}
+
+/* Desktop polish preserved */
+@media (min-width: 1024px){
+  .section{padding:104px 0}
+  .section.tight{padding:76px 0}
+  .hero-card{display:block}
 }
 
 </style>
@@ -721,7 +820,7 @@ body::after{
         <p class="copy" style="margin-top:18px">Uns começam fazendo intercâmbio e ficam. Outros vão conhecer antes de decidir. Outros já têm visto e só precisam de logística. A gente entende onde você tá e monta o próximo passo real.</p>
       </div>
       <div class="glass reveal">
-        <span class="kicker">O que a página comunica</span>
+        <span class="kicker">Como a gente trabalha</span>
         <div class="feature-list" style="margin-top:0">
           <div class="feature-item"><span class="badge">1</span><div><h3>Sem pressão de decisão</h3><p class="small-copy">A primeira conversa é pra entender, não pra fechar venda.</p></div></div>
           <div class="feature-item"><span class="badge">2</span><div><h3>Plano que faz sentido</h3><p class="small-copy">Estudo, trabalho e transição definitiva se conectam — e a gente ordena isso pra você.</p></div></div>
@@ -734,7 +833,7 @@ body::after{
   <section class="section">
     <div class="container">
       <div class="section-head reveal">
-        <span class="kicker">Possibilidades</span>
+        <span class="kicker">Caminhos</span>
         <h2>Três formas de começar a sair.</h2>
       </div>
       <div class="path-grid">
@@ -748,7 +847,7 @@ body::after{
   <section class="section tight">
     <div class="container">
       <div class="section-head reveal">
-        <span class="kicker">Países</span>
+        <span class="kicker">Destinos</span>
         <h2>Três países que a gente conhece de verdade.</h2>
       </div>
       <div class="steps-grid">
@@ -763,7 +862,7 @@ body::after{
   <section class="section tight">
     <div class="container contact-grid">
       <div class="contact-box reveal">
-        <span class="kicker">Processo</span>
+        <span class="kicker">Como funciona</span>
         <h2>Como essa conversa funciona na prática.</h2>
         <div class="feature-list">
           <div class="feature-item"><span class="badge">1</span><div><h3>Primeiro, a gente escuta</h3><p class="small-copy">Objetivo, prazo, orçamento, quem vai com você, o que já tentou antes.</p></div></div>

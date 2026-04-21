@@ -437,32 +437,93 @@ body::after{
 .stat-number.done{animation:statPulse .55s var(--ease)}
 
 
-/* ===== Mobile responsive fine-tuning ===== */
-@media (max-width: 700px){
-  .section{padding:26px 0 72px}
-  .container{width:min(1180px, calc(100vw - 24px))}
-  .btn{min-height:48px;padding:0 20px}
-  .hero{padding:46px 0 18px}
-  .hero-grid{gap:14px}
-  .option-grid,.option-grid.two,.chip-grid,.chip-grid.two{gap:8px}
-  .option-card,.chip{padding:13px 13px}
-  .step-card{padding:18px 16px}
+/* ===== MOBILE-FIRST AGGRESSIVE TIGHTENING (SIMULADOR) ===== */
+@media (max-width: 768px){
+  :root{--container:min(1180px, calc(100vw - 22px))}
+  html{scroll-padding-top:64px}
+  
+  .hero{padding:40px 0 16px}
+  .hero-grid{gap:12px}
+  .hero-copy h1{font-size:clamp(1.75rem, 7.5vw, 2.4rem);line-height:1.02;max-width:14ch}
+  .lead{font-size:.96rem;line-height:1.58}
+  .badge-row{gap:6px;margin-top:12px}
+  .badge{font-size:.78rem;padding:6px 11px}
+  
+  .section{padding:22px 0 56px}
+  .section-head{margin-bottom:18px}
+  .section-head h2{font-size:clamp(1.7rem, 6.8vw, 2.35rem);line-height:1.04}
+  
+  .hero-side,.step-card,.result-box,.tip-card,.mini-card{padding:18px 16px;border-radius:18px}
+  .sim-shell{padding:12px;gap:12px}
   .step-head{gap:10px;margin-bottom:12px}
-  .step-head h3{font-size:1.1rem}
-  .step-head p{font-size:.9rem}
-  .section-head{margin-bottom:20px}
-  .lead{font-size:.94rem}
-  .badge{font-size:.8rem;padding:7px 11px}
-  .footer-grid{gap:18px}
-  .to-top{left:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 12px)}
-  .floating-wa{right:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 12px)}
+  .step-head h3{font-size:1.1rem;line-height:1.18}
+  .step-head p{font-size:.92rem}
+  .step-number{width:32px;height:32px;font-size:.9rem}
+  
+  .option-grid,.option-grid.two,.chip-grid,.chip-grid.two,.type-tabs,.mini-grid,.tips-grid{grid-template-columns:1fr;gap:8px}
+  .option-card{min-height:auto;padding:12px 14px;border-radius:16px;gap:6px}
+  .option-title{font-size:.96rem}
+  .option-desc{font-size:.88rem;line-height:1.5;margin-top:4px}
+  .chip{min-height:auto;padding:11px 13px;border-radius:14px}
+  .chip strong{font-size:.96rem}
+  .chip span{font-size:.85rem;line-height:1.46}
+  
+  .type-tab{padding:13px 14px;border-radius:16px}
+  .type-tab strong{font-size:.94rem}
+  .type-tab small{font-size:.86rem}
+  
+  .btn{min-height:48px;padding:12px 18px;font-size:.94rem}
+  .cta-row{display:grid;gap:8px;grid-template-columns:1fr}
+  .cta-row .btn,.btn{width:100%;min-width:auto}
+  
+  .budget-input-wrap{padding:12px 14px}
+  .budget-input{font-size:16px}
+  
+  .result-box h3{font-size:1.14rem}
+  .result-price{font-size:clamp(1.85rem, 9vw, 2.7rem);line-height:1}
+  .result-copy{font-size:.94rem;line-height:1.66;margin-bottom:10px}
+  .highlight-card{padding:14px;border-radius:16px;gap:10px}
+  .highlight-icon{font-size:1.5rem}
+  
+  .summary-item,.action-item{padding:10px 12px;font-size:.9rem;border-radius:12px}
+  .mini-card h4{font-size:.92rem}
+  .mini-card p{font-size:.88rem;line-height:1.56}
+  
+  .tip-card h3{font-size:1.08rem}
+  .tip-card p{font-size:.92rem;line-height:1.6}
+  
+  .site-header{background:linear-gradient(180deg, rgba(4,11,18,.82) 0%, rgba(4,11,18,.42) 60%, transparent 100%);backdrop-filter:blur(4px)}
+  .nav-shell{min-height:52px;gap:8px;grid-template-columns:40px 1fr 40px;display:grid}
+  .nav-cta{grid-column:1;justify-self:start}
+  .brand{grid-column:2;justify-self:center;max-width:100%}
+  .brand-logo{width:min(130px, 36vw)}
+  .burger{width:40px;height:40px;border-radius:12px;font-size:1.05rem;display:flex;align-items:center;justify-content:center}
+  .mobile-panel{left:12px;right:12px;top:58px;padding:14px;border-radius:20px;display:grid;gap:2px;background:rgba(5,11,18,.97);border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow);opacity:0;pointer-events:none;transform:translateY(-10px);transition:.28s var(--ease);z-index:998;position:fixed}
+  body.nav-open .mobile-panel{opacity:1;pointer-events:auto;transform:translateY(0)}
+  .mobile-panel a{padding:12px 4px;font-size:1rem;border-bottom:1px solid rgba(255,255,255,.05);font-weight:500;color:#fff}
+  .mobile-panel a:last-child{border-bottom:0}
+  
+  .kicker{font-size:.62rem;letter-spacing:.15em;gap:8px}
+  .kicker::before{width:28px}
+  
+  footer{padding:26px 0 36px}
+  .footer-grid{gap:16px;grid-template-columns:1fr;text-align:center}
+  .footer-grid .brand-logo{margin:0 auto 12px}
+  
+  .floating-wa{right:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 14px);width:50px;height:50px;min-height:auto;padding:0;justify-content:center;border-radius:999px}
+  .floating-wa{font-size:0}
+  .floating-wa::before{content:"\2706";font-size:1.4rem;color:#fff}
+  .to-top{left:12px;bottom:calc(env(safe-area-inset-bottom, 0px) + 14px);width:44px;height:44px;font-size:1.05rem}
 }
-@media (max-width:420px){
-  .container{width:min(1180px, calc(100vw - 20px))}
-  .hero-copy h1{font-size:clamp(1.7rem, 8vw, 2.25rem)}
-  .section-head h2{font-size:clamp(1.65rem, 7.6vw, 2.2rem)}
+
+@media (max-width: 420px){
+  :root{--container:min(1180px, calc(100vw - 18px))}
+  .section{padding:20px 0 48px}
+  .hero-copy h1{font-size:clamp(1.6rem, 7.2vw, 2.15rem)}
+  .section-head h2{font-size:clamp(1.5rem, 6.5vw, 2rem)}
+  .hero-side,.step-card,.result-box,.tip-card,.mini-card{padding:16px 14px;border-radius:16px}
+  .floating-wa{width:46px;height:46px}
   .to-top{width:40px;height:40px;font-size:1rem}
-  .kicker{font-size:.6rem;letter-spacing:.14em}
 }
 
 </style>
@@ -518,7 +579,7 @@ body::after{
   <section class="section" id="painel">
     <div class="container">
       <div class="section-head reveal">
-        <span class="kicker">Simulação guiada</span>
+        <span class="kicker">Em 3 passos</span>
         <h2>Simula seu plano. A gente volta com resposta.</h2>
         <p class="copy">Seu perfil, destino e valor. Em 1 minuto você envia um pedido que a gente já consegue montar opção.</p>
       </div>
@@ -666,61 +727,61 @@ burger?.addEventListener('click',()=>document.body.classList.toggle('nav-open'))
 
 const flows={
   viagem:{
-    label:'Viagem internacional',
-    tabCopy:'Pacotes, hospedagem e roteiro.',
+    label:'Viagem',
+    tabCopy:'Passagem, hotel, roteiro.',
     profile:{
-      title:'Quem vai nessa viagem?',
-      help:'Escolha o perfil principal do grupo para orientar melhor a proposta.',
+      title:'Quem embarca com você?',
+      help:'Isso muda bastante preço e planejamento.',
       options:[
-        {id:'solo',icon:'🧍',title:'1 pessoa',desc:'Viagem individual com mais flexibilidade.'},
-        {id:'casal',icon:'💑',title:'Casal',desc:'Boa leitura para romântico, férias e roteiro a dois.'},
-        {id:'familia',icon:'👨‍👩‍👧',title:'Família',desc:'Mais útil para Disney, neve e férias escolares.'},
-        {id:'grupo',icon:'🧑‍🤝‍🧑',title:'Grupo',desc:'Ideal para amigos e viagens compartilhadas.'}
+        {id:'solo',icon:'🧍',title:'1 pessoa',desc:'Flexibilidade total.'},
+        {id:'casal',icon:'💑',title:'Casal',desc:'Lua de mel, férias, roteiro a dois.'},
+        {id:'familia',icon:'👨‍👩‍👧',title:'Família',desc:'Disney, neve, férias escolares.'},
+        {id:'grupo',icon:'🧑‍🤝‍🧑',title:'Grupo',desc:'Amigos, formatura, bodas.'}
       ]
     },
     timeline:{
-      title:'Quando pretende viajar?',
-      help:'Isso ajuda a equipe a perceber urgência e janela de oportunidade.',
+      title:'Pra quando?',
+      help:'Quanto antes você souber, melhor a tarifa.',
       options:[
-        {id:'30d',title:'Próximos 30 dias',desc:'Preciso resolver logo.'},
-        {id:'90d',title:'Até 3 meses',desc:'Já quero andar com isso.'},
-        {id:'180d',title:'Até 6 meses',desc:'Tenho tempo para planejar.'}
+        {id:'30d',title:'Próximos 30 dias',desc:'É pra ontem.'},
+        {id:'90d',title:'Até 3 meses',desc:'Já quero começar.'},
+        {id:'180d',title:'Até 6 meses',desc:'Tenho tempo pra buscar a janela certa.'}
       ]
     },
     budget:{
-      title:'Quanto pretende investir?',
-      help:'Informe um valor aproximado para a equipe preparar opções mais alinhadas ao seu objetivo.',
+      title:'Quanto cabe agora?',
+      help:'Valor aproximado. A gente encaixa opções reais dentro dele.',
       options:[
-        {id:'baixo',title:'Econômica',desc:'Quero prioridade em custo-benefício.'},
+        {id:'baixo',title:'Econômica',desc:'Prioridade em custo-benefício.'},
         {id:'medio',title:'Intermediária',desc:'Equilíbrio entre preço e conforto.'},
-        {id:'alto',title:'Confortável',desc:'Quero uma experiência mais completa.'}
+        {id:'alto',title:'Confortável',desc:'Experiência mais completa.'}
       ]
     },
     destinations:[
-      {id:'lisboa',icon:'🇵🇹',title:'Lisboa / Portugal',desc:'Europa com adaptação simples e apelo cultural.'},
-      {id:'paris',icon:'🗼',title:'Paris',desc:'Viagem clássica, romântica e com forte valor percebido.'},
-      {id:'disney',icon:'🏰',title:'Disney / Orlando',desc:'Perfeito para férias em família e experiência planejada.'},
-      {id:'neve',icon:'❄️',title:'Destino de neve',desc:'Procura alta para inverno e viagens especiais.'}
+      {id:'lisboa',icon:'🇵🇹',title:'Lisboa / Portugal',desc:'Europa mais acessível e acolhedora.'},
+      {id:'paris',icon:'🗼',title:'Paris',desc:'Clássico que não falha.'},
+      {id:'disney',icon:'🏰',title:'Disney / Orlando',desc:'Férias em família com tudo pensado.'},
+      {id:'neve',icon:'❄️',title:'Destino de neve',desc:'Inverno europeu ou montanha americana.'}
     ],
     specifics:[
       {
         key:'style',
-        title:'Estilo de viagem',
-        help:'Ajuda a equipe a montar o tom certo da proposta.',
+        title:'Estilo da viagem',
+        help:'Muda o tom da proposta.',
         options:[
-          {id:'roteiro-base',title:'Essencial',desc:'Passagem + hotel + base do roteiro.'},
-          {id:'equilibrada',title:'Equilibrada',desc:'Boa relação entre preço e conforto.'},
-          {id:'premium',title:'Mais exclusiva',desc:'Mais comodidade e curadoria.'}
+          {id:'roteiro-base',title:'Essencial',desc:'Passagem + hotel + básico.'},
+          {id:'equilibrada',title:'Equilibrada',desc:'Bom custo-benefício.'},
+          {id:'premium',title:'Mais exclusiva',desc:'Mais conforto, mais curadoria.'}
         ]
       },
       {
         key:'stay',
-        title:'Hospedagem desejada',
-        help:'A hospedagem costuma puxar bastante a percepção de preço.',
+        title:'Onde quer ficar?',
+        help:'Hospedagem é o maior peso no valor final.',
         options:[
-          {id:'smart',title:'Econômica',desc:'Prática e funcional.'},
-          {id:'comfort',title:'Confortável',desc:'Mais segurança e boa localização.'},
-          {id:'premium',title:'Premium',desc:'Mais conforto e experiência.'}
+          {id:'smart',title:'Econômica',desc:'Prático e funcional.'},
+          {id:'comfort',title:'Confortável',desc:'Segurança e boa localização.'},
+          {id:'premium',title:'Premium',desc:'Conforto e experiência.'}
         ]
       }
     ],
@@ -737,67 +798,67 @@ const flows={
       `Prazo da decisão: ${labelFor('timeline',state.timeline)}`,
       `Estilo desejado: ${labelFor('style',state.style)}`
     ],
-    nextStep:'Validar datas, número de passageiros, hotel e estrutura do pacote.',
-    teamAction:'A equipe pode comparar rotas, hospedagem e formato da viagem.',
-    copy:'Faixa inicial para viagem com pacote e estrutura de roteiro. Serve para abrir a conversa certa, não para fechar preço no site.',
-    compare:'Olá, quero comparar opções de viagem internacional com a Global Travel.'
+    nextStep:'Confirmar datas, passageiros, hotel e o que entra no pacote.',
+    teamAction:'Comparamos rotas, hospedagem e formato.',
+    copy:'Faixa inicial. Preço final depende de datas e disponibilidade.',
+    compare:'Oi! Quero comparar opções de viagem internacional.'
   },
   passagem:{
-    label:'Passagens aéreas',
-    tabCopy:'Emissão, rota e bagagem.',
+    label:'Passagem aérea',
+    tabCopy:'Rota, tarifa, bagagem.',
     profile:{
-      title:'Quem embarca?',
-      help:'Aqui o foco é entender a dinâmica da emissão e da tarifa.',
+      title:'Quem vai?',
+      help:'Muda bagagem, tarifa e regra de emissão.',
       options:[
-        {id:'solo',icon:'🧍',title:'1 pessoa',desc:'Compra objetiva e mais simples.'},
-        {id:'casal',icon:'💑',title:'Casal',desc:'Boa para lazer e viagem conjunta.'},
-        {id:'familia',icon:'👨‍👩‍👧',title:'Família',desc:'Mais sensível a bagagem e conexões.'},
-        {id:'grupo',icon:'🧑‍🤝‍🧑',title:'Grupo',desc:'Ideal para viagens compartilhadas.'}
+        {id:'solo',icon:'🧍',title:'1 pessoa',desc:'Compra simples e objetiva.'},
+        {id:'casal',icon:'💑',title:'Casal',desc:'Lazer ou viagem conjunta.'},
+        {id:'familia',icon:'👨‍👩‍👧',title:'Família',desc:'Bagagem extra, conexões curtas.'},
+        {id:'grupo',icon:'🧑‍🤝‍🧑',title:'Grupo',desc:'Viagens compartilhadas.'}
       ]
     },
     timeline:{
-      title:'Quando pretende emitir?',
-      help:'Antecedência faz diferença real em tarifa.',
+      title:'Quando emitir?',
+      help:'Antecedência muda muito o preço.',
       options:[
-        {id:'30d',title:'Urgente',desc:'Preciso emitir logo.'},
-        {id:'90d',title:'Planejando',desc:'Consigo acompanhar boas janelas.'},
-        {id:'180d',title:'Antecedência alta',desc:'Quero comprar com calma.'}
+        {id:'30d',title:'Urgente',desc:'Pra ontem.'},
+        {id:'90d',title:'Planejando',desc:'Posso acompanhar janelas boas.'},
+        {id:'180d',title:'Antecedência alta',desc:'Tenho calma pra comprar.'}
       ]
     },
     budget:{
-      title:'Quanto pretende investir?',
-      help:'Informe um valor aproximado para a equipe preparar opções mais alinhadas ao seu objetivo.',
+      title:'Quanto cabe agora?',
+      help:'Valor aproximado. A gente encaixa opções reais dentro dele.',
       options:[
-        {id:'baixo',title:'Mais econômica',desc:'Buscar menor tarifa possível.'},
-        {id:'medio',title:'Intermediária',desc:'Equilíbrio entre custo e conforto.'},
-        {id:'alto',title:'Mais confortável',desc:'Melhor rota e menos desgaste.'}
+        {id:'baixo',title:'Mais econômica',desc:'Menor tarifa possível.'},
+        {id:'medio',title:'Intermediária',desc:'Custo + conforto.'},
+        {id:'alto',title:'Mais confortável',desc:'Melhor rota, menos desgaste.'}
       ]
     },
     destinations:[
-      {id:'portugal',icon:'🇵🇹',title:'Portugal',desc:'Procura constante para estudo, turismo e mudança.'},
-      {id:'irlanda',icon:'🇮🇪',title:'Irlanda',desc:'Muito buscada para intercâmbio e viagens longas.'},
-      {id:'eua',icon:'🇺🇸',title:'Estados Unidos',desc:'Destino com grande variação de tarifa e rota.'},
-      {id:'outro',icon:'🌍',title:'Outro destino',desc:'Quando o foco é só a melhor emissão possível.'}
+      {id:'portugal',icon:'🇵🇹',title:'Portugal',desc:'Estudo, turismo e mudança.'},
+      {id:'irlanda',icon:'🇮🇪',title:'Irlanda',desc:'Intercâmbio e estadias longas.'},
+      {id:'eua',icon:'🇺🇸',title:'Estados Unidos',desc:'Varia muito em tarifa e rota.'},
+      {id:'outro',icon:'🌍',title:'Outro destino',desc:'Pra outro destino, a gente cota.'}
     ],
     specifics:[
       {
         key:'bag',
         title:'Bagagem',
-        help:'Bagagem muda bastante o comparativo entre tarifas.',
+        help:'Bagagem muda bastante a comparação.',
         options:[
-          {id:'hand',title:'Mala de mão',desc:'Tarifa mais enxuta.'},
-          {id:'checked',title:'1 bagagem',desc:'Boa para viagem média.'},
-          {id:'full',title:'Bagagem completa',desc:'Mais conforto e flexibilidade.'}
+          {id:'hand',title:'Mala de mão',desc:'Tarifa enxuta.'},
+          {id:'checked',title:'1 bagagem',desc:'Boa pra viagem média.'},
+          {id:'full',title:'Bagagem completa',desc:'Mais conforto, mais liberdade.'}
         ]
       },
       {
         key:'route',
-        title:'Prioridade da emissão',
-        help:'Isso orienta o tipo de busca que a equipe deve fazer.',
+        title:'O que importa mais?',
+        help:'Orienta o tipo de busca que vamos fazer.',
         options:[
-          {id:'preco',title:'Menor preço',desc:'Aceito mais ajustes para pagar menos.'},
-          {id:'equilibrio',title:'Equilíbrio',desc:'Quero custo-benefício.'},
-          {id:'comodidade',title:'Mais conforto',desc:'Menos escalas e melhor experiência.'}
+          {id:'preco',title:'Menor preço',desc:'Aceito escala e ajuste pra pagar menos.'},
+          {id:'equilibrio',title:'Equilíbrio',desc:'Custo-benefício em primeiro.'},
+          {id:'comodidade',title:'Mais conforto',desc:'Menos escala, mais conforto.'}
         ]
       }
     ],
@@ -814,66 +875,66 @@ const flows={
       `Bagagem: ${labelFor('bag',state.bag)}`,
       `Prioridade: ${labelFor('route',state.route)}`
     ],
-    nextStep:'Enviar datas aproximadas, cidade de saída e flexibilidade da viagem.',
-    teamAction:'A equipe compara rotas, conexões e melhores tarifas disponíveis.',
-    copy:'Estimativa inicial para emissão aérea. O valor final varia muito conforme datas, cidade de saída, antecedência e regra tarifária.',
-    compare:'Olá, quero comparar opções de passagens aéreas com a Global Travel.'
+    nextStep:'Enviar datas, cidade de saída, flexibilidade.',
+    teamAction:'Comparamos rotas, conexões e tarifas.',
+    copy:'Estimativa inicial. Preço final varia com data e cidade de saída.',
+    compare:'Oi! Quero cotar passagens aéreas.'
   },
   ingles:{
-    label:'Intercâmbio de inglês',
-    tabCopy:'Curso, cidade e acomodação.',
+    label:'Inglês no exterior',
+    tabCopy:'Curso, cidade, acomodação.',
     profile:{
-      title:'Perfil do estudante',
-      help:'Aqui entram perfis compatíveis com intercâmbio de idiomas, sem opções confusas.',
+      title:'Quem vai estudar?',
+      help:'Cada perfil encaixa num tipo de programa.',
       options:[
-        {id:'adulto',icon:'🎓',title:'Adulto',desc:'Busca desenvolvimento pessoal ou profissional.'},
-        {id:'universitario',icon:'📚',title:'Universitário',desc:'Quer fortalecer currículo e experiência internacional.'},
-        {id:'teen',icon:'🧒',title:'Teen',desc:'Programa com apoio e estrutura mais guiada.'},
-        {id:'executivo',icon:'💼',title:'Executivo',desc:'Precisa de formato mais objetivo e eficiente.'}
+        {id:'adulto',icon:'🎓',title:'Adulto',desc:'Desenvolvimento pessoal ou profissional.'},
+        {id:'universitario',icon:'📚',title:'Universitário',desc:'Fortalecer currículo e experiência fora.'},
+        {id:'teen',icon:'🧒',title:'Teen',desc:'Estrutura guiada com apoio.'},
+        {id:'executivo',icon:'💼',title:'Executivo',desc:'Objetivo e eficiente.'}
       ]
     },
     timeline:{
-      title:'Quando pretende começar?',
-      help:'Ajuda a avaliar urgência de matrícula e acomodação.',
+      title:'Quando começar?',
+      help:'Avaliamos matrícula e acomodação.',
       options:[
         {id:'30d',title:'Muito em breve',desc:'Quero sair logo.'},
-        {id:'90d',title:'Nos próximos meses',desc:'Já quero planejar.'},
+        {id:'90d',title:'Nos próximos meses',desc:'Vou planejar.'},
         {id:'180d',title:'Mais para frente',desc:'Ainda estou estruturando.'}
       ]
     },
     budget:{
-      title:'Quanto pretende investir?',
-      help:'Informe um valor aproximado para a equipe preparar opções mais alinhadas ao seu objetivo.',
+      title:'Quanto cabe agora?',
+      help:'Valor aproximado. A gente encaixa opções reais dentro dele.',
       options:[
-        {id:'baixo',title:'Entrada',desc:'Mais foco em acessibilidade.'},
+        {id:'baixo',title:'Entrada',desc:'Foco em acessibilidade.'},
         {id:'medio',title:'Intermediária',desc:'Boa margem de escolha.'},
-        {id:'alto',title:'Mais completa',desc:'Mais conforto e opções melhores.'}
+        {id:'alto',title:'Mais completa',desc:'Mais conforto, mais opção.'}
       ]
     },
     destinations:[
-      {id:'irlanda',icon:'🇮🇪',title:'Irlanda',desc:'Destino forte e clássico para inglês.'},
-      {id:'portugal',icon:'🇵🇹',title:'Portugal',desc:'Mais familiar para brasileiros, com adaptação simples e boa procura.'},
-      {id:'canada',icon:'🍁',title:'Canadá',desc:'Boa imagem de qualidade e experiência internacional.'}
+      {id:'irlanda',icon:'🇮🇪',title:'Irlanda',desc:'Clássico pra inglês.'},
+      {id:'portugal',icon:'🇵🇹',title:'Portugal',desc:'Adaptação fácil pra brasileiro.'},
+      {id:'canada',icon:'🍁',title:'Canadá',desc:'Qualidade de ensino reconhecida.'}
     ],
     specifics:[
       {
         key:'course',
         title:'Formato do curso',
-        help:'O formato interfere diretamente na faixa de investimento.',
+        help:'Muda a carga horária e o investimento.',
         options:[
-          {id:'regular',title:'Regular',desc:'Carga equilibrada e boa base.'},
-          {id:'intensivo',title:'Intensivo',desc:'Ritmo mais acelerado.'},
-          {id:'preparacao',title:'Preparação',desc:'Foco em objetivo acadêmico ou prova.'}
+          {id:'regular',title:'Regular',desc:'Carga equilibrada.'},
+          {id:'intensivo',title:'Intensivo',desc:'Ritmo acelerado.'},
+          {id:'preparacao',title:'Preparação',desc:'Foco em prova ou objetivo acadêmico.'}
         ]
       },
       {
         key:'housing',
-        title:'Acomodação desejada',
-        help:'Acomodação é uma das maiores alavancas de preço nesse produto.',
+        title:'Onde morar?',
+        help:'É o que mais puxa o preço.',
         options:[
-          {id:'familia',title:'Casa de família',desc:'Boa para imersão e rotina assistida.'},
-          {id:'residencia',title:'Residência estudantil',desc:'Mais independência e convivência.'},
-          {id:'privado',title:'Quarto privado',desc:'Mais conforto e privacidade.'}
+          {id:'familia',title:'Casa de família',desc:'Imersão + rotina assistida.'},
+          {id:'residencia',title:'Residência estudantil',desc:'Independência e convivência.'},
+          {id:'privado',title:'Quarto privado',desc:'Conforto e privacidade.'}
         ]
       }
     ],
@@ -890,67 +951,67 @@ const flows={
       `Formato do curso: ${labelFor('course',state.course)}`,
       `Acomodação: ${labelFor('housing',state.housing)}`
     ],
-    nextStep:'Validar cidade, escola, duração e melhor formato de acomodação.',
-    teamAction:'A equipe monta uma direção com escola, cidade e estrutura mais compatíveis.',
-    copy:'Faixa inicial para intercâmbio de inglês considerando destino, curso e acomodação. A proposta final depende de escola, carga horária e época.',
-    compare:'Olá, quero comparar opções de intercâmbio de inglês com a Global Travel.'
+    nextStep:'Definir cidade, escola, duração e acomodação.',
+    teamAction:'Montamos uma direção com escola e cidade.',
+    copy:'Faixa inicial. Proposta final depende de escola, carga e época.',
+    compare:'Oi! Quero intercâmbio de inglês.'
   },
   estudos:{
-    label:'Graduação / mestrado',
-    tabCopy:'Curso, instituição e plano acadêmico.',
+    label:'Graduação/Mestrado',
+    tabCopy:'Curso, universidade, projeto.',
     profile:{
-      title:'Objetivo acadêmico',
-      help:'Aqui a conversa muda de viagem para projeto de vida, então o perfil precisa refletir isso.',
+      title:'Qual o objetivo?',
+      help:'Aqui a conversa muda pra projeto de vida.',
       options:[
-        {id:'graduacao',icon:'🎓',title:'Graduação',desc:'Primeira formação internacional.'},
-        {id:'pos',icon:'📘',title:'Pós-graduação',desc:'Especialização com foco profissional.'},
-        {id:'mestrado',icon:'🏛️',title:'Mestrado',desc:'Projeto acadêmico mais robusto.'},
-        {id:'transicao',icon:'🚀',title:'Mudança de área',desc:'Quero recomeçar com estratégia.'}
+        {id:'graduacao',icon:'🎓',title:'Graduação',desc:'Primeira graduação fora.'},
+        {id:'pos',icon:'📘',title:'Pós-graduação',desc:'Especialização profissional.'},
+        {id:'mestrado',icon:'🏛️',title:'Mestrado',desc:'Projeto acadêmico robusto.'},
+        {id:'transicao',icon:'🚀',title:'Mudança de área',desc:'Recomeço com estratégia.'}
       ]
     },
     timeline:{
-      title:'Janela de início',
-      help:'Quanto antes a equipe souber disso, melhor para documentos e candidatura.',
+      title:'Quando começar?',
+      help:'Antecedência importa pra documentos e candidatura.',
       options:[
         {id:'30d',title:'Urgente',desc:'Quero começar o quanto antes.'},
-        {id:'90d',title:'Próxima intake',desc:'Estou mirando a próxima entrada.'},
-        {id:'180d',title:'Planejamento longo',desc:'Ainda estruturando o projeto.'}
+        {id:'90d',title:'Próxima intake',desc:'Miro na próxima intake.'},
+        {id:'180d',title:'Planejamento longo',desc:'Ainda estruturando.'}
       ]
     },
     budget:{
-      title:'Quanto pretende investir?',
-      help:'Informe um valor aproximado para a equipe preparar opções mais alinhadas ao seu objetivo.',
+      title:'Quanto cabe agora?',
+      help:'Valor aproximado. A gente encaixa opções reais dentro dele.',
       options:[
-        {id:'baixo',title:'Mais acessível',desc:'Quero prioridade em custo e viabilidade.'},
-        {id:'medio',title:'Equilibrada',desc:'Quero boas opções sem exagerar.'},
-        {id:'alto',title:'Mais competitiva',desc:'Busco estrutura mais forte e premium.'}
+        {id:'baixo',title:'Mais acessível',desc:'Prioridade em custo e viabilidade.'},
+        {id:'medio',title:'Equilibrada',desc:'Boas opções sem exagero.'},
+        {id:'alto',title:'Mais competitiva',desc:'Estrutura mais forte e premium.'}
       ]
     },
     destinations:[
-      {id:'portugal',icon:'🇵🇹',title:'Portugal',desc:'Caminho natural para brasileiros e forte apelo acadêmico.'},
-      {id:'irlanda',icon:'🇮🇪',title:'Irlanda',desc:'Combina estudo e experiência internacional.'},
-      {id:'eua',icon:'🇺🇸',title:'Estados Unidos',desc:'Ticket maior e alta percepção de valor.'},
-      {id:'espanha',icon:'🇪🇸',title:'Espanha',desc:'Boa alternativa europeia para formação.'}
+      {id:'portugal',icon:'🇵🇹',title:'Portugal',desc:'Caminho natural pra brasileiro.'},
+      {id:'irlanda',icon:'🇮🇪',title:'Irlanda',desc:'Estudo + experiência fora.'},
+      {id:'eua',icon:'🇺🇸',title:'Estados Unidos',desc:'Ticket alto, valor alto.'},
+      {id:'espanha',icon:'🇪🇸',title:'Espanha',desc:'Alternativa europeia.'}
     ],
     specifics:[
       {
         key:'institution',
-        title:'Perfil da instituição',
-        help:'A percepção de valor muda muito conforme o nível da instituição.',
+        title:'Que tipo de universidade?',
+        help:'Muda bastante o investimento total.',
         options:[
-          {id:'acessivel',title:'Mais acessível',desc:'Prioridade em entrada e custo.'},
-          {id:'privada',title:'Privada',desc:'Combina suporte e estrutura.'},
-          {id:'premium',title:'Mais competitiva',desc:'Busca instituição de maior peso.'}
+          {id:'acessivel',title:'Mais acessível',desc:'Entrada mais acessível.'},
+          {id:'privada',title:'Privada',desc:'Suporte e estrutura.'},
+          {id:'premium',title:'Mais competitiva',desc:'Peso acadêmico forte.'}
         ]
       },
       {
         key:'support',
-        title:'Nível de apoio desejado',
-        help:'Define se a conversa deve começar por admissão, documentos ou projeto completo.',
+        title:'Quanto apoio você quer?',
+        help:'Define por onde a gente começa.',
         options:[
-          {id:'curso',title:'Só curso',desc:'Quero entender a parte acadêmica.'},
-          {id:'curso-documentos',title:'Curso + documentos',desc:'Preciso de apoio mais completo.'},
-          {id:'projeto-total',title:'Projeto completo',desc:'Quero visão de ponta a ponta.'}
+          {id:'curso',title:'Só curso',desc:'Só a parte acadêmica.'},
+          {id:'curso-documentos',title:'Curso + documentos',desc:'Curso + documentos, completo.'},
+          {id:'projeto-total',title:'Projeto completo',desc:'Projeto de ponta a ponta.'}
         ]
       }
     ],
@@ -967,10 +1028,10 @@ const flows={
       `Instituição: ${labelFor('institution',state.institution)}`,
       `Apoio desejado: ${labelFor('support',state.support)}`
     ],
-    nextStep:'Definir curso, intake, instituição e escopo do suporte desejado.',
-    teamAction:'A equipe pode alinhar curso, candidatura, documentos e visão de investimento.',
-    copy:'Faixa inicial para graduação e estudos avançados. É uma triagem comercial útil para separar interesse superficial de projeto realmente maduro.',
-    compare:'Olá, quero comparar opções de graduação ou mestrado com a Global Travel.'
+    nextStep:'Definir curso, intake, instituição e escopo do apoio.',
+    teamAction:'Alinhamos curso, candidatura, docs e investimento.',
+    copy:'Faixa inicial. Depende muito de curso e universidade.',
+    compare:'Oi! Quero estudar fora (graduação ou mestrado).'
   }
 };
 

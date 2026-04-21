@@ -398,26 +398,43 @@ p{margin:0}
 }
 
 @media (max-width: 768px){
-  .hero{padding:72px 0 24px;min-height:auto;align-items:end}
-  .hero-inner{grid-template-columns:1fr;align-items:end;gap:14px;justify-items:center}
-  .hero-copy{max-width:100%;text-align:center}
+  /* Hero stacked on mobile: video top, content below */
+  .hero{padding:0;min-height:auto;display:block;align-items:initial;overflow:visible}
+  .hero-bg{position:relative;inset:auto;width:100%;height:min(58vh, 520px);overflow:hidden}
+  .hero-slides{position:absolute;inset:0}
+  .hero-slide video{filter:brightness(.82) saturate(1.08) contrast(1.04)}
+  .hero-overlay{
+    background:
+      linear-gradient(180deg, rgba(5,10,16,.36) 0%, rgba(5,10,16,0) 22%, rgba(5,10,16,0) 60%, rgba(5,10,16,.62) 92%, rgba(5,10,16,.96) 100%);
+  }
+  .hero-inner{
+    position:relative;z-index:2;
+    width:var(--container);margin:0 auto;
+    display:block;gap:0;padding:24px 0 32px;
+    text-align:center;
+  }
+  .hero-copy{max-width:100%;text-align:center;margin:0 auto;padding:0}
   .hero-card{display:none}
   .hero-details{
-    width:100%;max-width:min(92vw, 360px);margin:4px auto 0;padding:14px 16px 12px;
-    border-radius:18px;
-    background:linear-gradient(180deg,rgba(7,14,24,.3),rgba(7,14,24,.5));
-    border:1px solid rgba(255,255,255,.06);
-    backdrop-filter:blur(8px);
-    box-shadow:0 8px 24px rgba(0,0,0,.18);
+    background:none;border:0;backdrop-filter:none;box-shadow:none;
+    padding:0;margin:14px auto 0;
+    width:100%;max-width:360px;
+    border-radius:0;
   }
-  .kicker{justify-content:center;margin:0 auto;font-size:.6rem;letter-spacing:.14em;gap:8px}
-  .kicker::before{width:24px;flex-shrink:0}
-  .hero-title,.hero-copy h1,h1{text-align:center;max-width:10ch;margin:8px auto 0;font-size:clamp(1.75rem, 7vw, 2.45rem);line-height:1.02}
-  .hero-lead,.lead{max-width:32ch;margin:6px auto 10px;text-align:center;font-size:.88rem;line-height:1.5}
+  .kicker{
+    display:inline-flex;justify-content:center;align-items:center;
+    margin:0 auto 8px;font-size:.6rem;letter-spacing:.16em;gap:8px;
+  }
+  .kicker::before{width:26px;flex-shrink:0}
+  .hero-title,.hero-copy h1,h1{
+    text-align:center;max-width:11ch;margin:0 auto;
+    font-size:clamp(1.9rem, 7.8vw, 2.65rem);line-height:1.02;
+  }
+  .hero-lead,.lead{max-width:32ch;margin:8px auto 14px;text-align:center;font-size:.92rem;line-height:1.52;color:rgba(247,251,255,.84)}
   .hero-details .btn-row,.btn-row{display:grid;grid-template-columns:1fr;gap:8px;max-width:280px;margin:0 auto}
-  .hero-details .btn-row .btn,.btn{width:100%;min-height:44px;font-size:.94rem;padding:0 14px}
-  .hero-dots{justify-content:center;margin-top:8px;gap:7px}
-  .hero-dots button{width:7px;height:7px}
+  .hero-details .btn-row .btn,.btn{width:100%;min-height:46px;font-size:.95rem;padding:0 14px}
+  .hero-dots{justify-content:center;margin-top:14px;gap:8px}
+  .hero-dots button{width:8px;height:8px}
 
   /* Section sizing */
   h2,.section-head h2{font-size:clamp(1.85rem, 6.6vw, 2.6rem);line-height:1.06;text-wrap:balance}
@@ -457,10 +474,12 @@ p{margin:0}
   .nav-shell{min-height:50px;grid-template-columns:38px 1fr 38px}
   .burger{width:38px;height:38px;font-size:1rem;border-radius:10px}
   .mobile-panel{top:54px;left:10px;right:10px}
-  .hero{padding:66px 0 20px}
-  .hero-title,.hero-copy h1,h1{font-size:clamp(1.65rem, 7.6vw, 2.2rem);max-width:9ch;margin-top:6px}
-  .hero-lead,.lead{font-size:.85rem;max-width:28ch;margin:6px auto 8px}
-  .hero-details{padding:12px 14px 10px;border-radius:16px;max-width:min(92vw, 330px)}
+  .hero{padding:0}
+  .hero-bg{height:min(52vh, 440px)}
+  .hero-inner{padding:18px 0 26px}
+  .hero-title,.hero-copy h1,h1{font-size:clamp(1.7rem, 7.4vw, 2.25rem);max-width:10ch;margin-top:4px}
+  .hero-lead,.lead{font-size:.88rem;max-width:28ch;margin:6px auto 12px}
+  .hero-details{max-width:min(92vw, 330px)}
   h2,.section-head h2{font-size:clamp(1.65rem, 7.6vw, 2.3rem)}
   .glass,.contact-box,.info-box,.path-card,.service,.course-card,.destination-card,.quote,.cta-card,.sim-card,.result-card{padding:18px;border-radius:20px}
   .kicker{font-size:.62rem;letter-spacing:.15em}

@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Seu Plano · Global Travel Intercâmbios</title>
-<meta name="description" content="Descubra em 2 minutos o seu caminho ideal para morar, estudar ou viajar no exterior. Plano personalizado e gamificado." />
+<meta name="description" content="Descubra em 2 minutos o seu caminho ideal para morar, estudar ou viajar no exterior." />
 <meta name="robots" content="noindex,nofollow" />
 <link rel="icon" type="image/png" href="favicon_original_mark_v16.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +27,6 @@
   --success:#4ADE80;
   --warning:#FBBF24;
   --danger:#F87171;
-  /* Rarities */
   --common:#94A3B8;
   --rare:#60A5FA;
   --epic:#C084FC;
@@ -38,21 +37,21 @@
   --radius-lg:28px;
   --radius-sm:18px;
   --ease:cubic-bezier(.22,1,.36,1);
+  --bouncy:cubic-bezier(.34,1.56,.64,1);
 }
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{
   margin:0;overflow-x:hidden;min-height:100vh;
   font-family:'Outfit',system-ui,-apple-system,sans-serif;
-  color:var(--text);
-  background:var(--bg);
+  color:var(--text);background:var(--bg);
   -webkit-font-smoothing:antialiased;
 }
 a{color:inherit;text-decoration:none}
 button{cursor:pointer;border:0;background:none;color:inherit;font:inherit}
 ::selection{background:rgba(199,154,74,.28);color:#fff}
 
-/* Animated mesh background — "fora da curva" */
+/* ANIMATED MESH BG */
 .mesh-bg{
   position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
@@ -62,48 +61,84 @@ button{cursor:pointer;border:0;background:none;color:inherit;font:inherit}
     linear-gradient(180deg,#040b12 0%,#08121d 50%,#091421 100%);
   animation:meshDrift 22s ease-in-out infinite alternate;
 }
-@keyframes meshDrift{
-  0%{filter:hue-rotate(0deg)}
-  100%{filter:hue-rotate(8deg)}
-}
-.shell{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column}
+@keyframes meshDrift{0%{filter:hue-rotate(0deg) saturate(1)}100%{filter:hue-rotate(8deg) saturate(1.1)}}
 
-/* Typography */
+/* FLOATING PARTICLES */
+.particles{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.particle{
+  position:absolute;width:3px;height:3px;border-radius:50%;
+  background:var(--gold-soft);opacity:0;
+  animation:particleFloat linear infinite;
+  box-shadow:0 0 6px var(--gold),0 0 12px rgba(199,154,74,.4);
+}
+@keyframes particleFloat{
+  0%{opacity:0;transform:translateY(10vh) translateX(0) scale(.5)}
+  10%{opacity:.6}
+  90%{opacity:.6}
+  100%{opacity:0;transform:translateY(-110vh) translateX(var(--drift,20px)) scale(1)}
+}
+
+.shell{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column}
+
+/* TYPOGRAPHY */
 h1,h2,h3,.serif{font-family:'Cormorant Garamond',Georgia,serif;line-height:1.03;letter-spacing:-.025em;margin:0;font-weight:600}
 h1{font-size:clamp(2.2rem, 6vw, 4.2rem)}
 h2{font-size:clamp(1.7rem, 4.2vw, 2.8rem)}
 h3{font-size:clamp(1.2rem, 2.4vw, 1.65rem)}
 p{margin:0;line-height:1.6}
 
-/* TOPBAR + XP */
+/* TOPBAR + XP + RANK */
 .topbar{
   display:flex;align-items:center;justify-content:space-between;gap:16px;
-  padding:16px clamp(16px, 4vw, 40px);
+  padding:14px clamp(16px, 4vw, 40px);
   border-bottom:1px solid var(--line);
   backdrop-filter:blur(14px);
   background:rgba(5,13,22,.7);
-  position:sticky;top:0;z-index:10;
+  position:sticky;top:0;z-index:20;
 }
 .brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
 .brand img{height:30px;width:auto}
 .brand-text{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.1rem;letter-spacing:-.01em}
 .brand-text span{color:var(--gold)}
 
-.xp-cluster{display:flex;align-items:center;gap:10px}
+.xp-cluster{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
+
 .live-dot{
   display:flex;align-items:center;gap:6px;
   padding:6px 10px;border-radius:999px;
   background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.22);
-  color:var(--success);font-size:.72rem;font-weight:600;
+  color:var(--success);font-size:.7rem;font-weight:600;
   text-transform:uppercase;letter-spacing:.12em;
 }
 .live-dot::before{
   content:"";width:6px;height:6px;border-radius:50%;background:var(--success);
-  box-shadow:0 0 10px var(--success);
-  animation:livePulse 1.8s ease-in-out infinite;
+  box-shadow:0 0 10px var(--success);animation:livePulse 1.8s ease-in-out infinite;
 }
 @keyframes livePulse{0%,100%{opacity:.4;transform:scale(.9)}50%{opacity:1;transform:scale(1.15)}}
-@media(max-width:640px){.live-dot{display:none}}
+@media(max-width:760px){.live-dot{display:none}}
+
+.rank-badge{
+  display:flex;align-items:center;gap:8px;
+  padding:6px 12px;border-radius:999px;
+  background:linear-gradient(135deg,rgba(96,165,250,.14),rgba(192,132,252,.1));
+  border:1px solid rgba(96,165,250,.3);
+  font-size:.76rem;font-weight:700;white-space:nowrap;
+  letter-spacing:.05em;
+  transition:all .4s var(--bouncy);
+  position:relative;overflow:hidden;
+}
+.rank-badge.promoted{
+  animation:rankPromo .9s var(--bouncy);
+  box-shadow:0 0 32px rgba(199,154,74,.6);
+}
+@keyframes rankPromo{
+  0%{transform:scale(1)}
+  40%{transform:scale(1.3) rotate(-3deg)}
+  70%{transform:scale(.95) rotate(2deg)}
+  100%{transform:scale(1) rotate(0)}
+}
+.rank-icon{font-size:1rem;filter:drop-shadow(0 0 4px rgba(255,255,255,.4))}
+@media(max-width:520px){.rank-label{display:none}}
 
 .xp-badge{
   display:flex;align-items:center;gap:8px;
@@ -113,25 +148,45 @@ p{margin:0;line-height:1.6}
   font-weight:700;
   transition:transform .3s var(--ease), box-shadow .3s var(--ease);
 }
-.xp-badge.pulse{
-  transform:scale(1.08);
-  box-shadow:0 0 24px rgba(199,154,74,.55);
-}
-.xp-bolt{color:var(--gold);font-size:1.1em;filter:drop-shadow(0 0 6px rgba(199,154,74,.6))}
-.xp-value{font-family:'Outfit',sans-serif;font-size:1.02rem;color:var(--gold-soft);min-width:28px;text-align:center;font-variant-numeric:tabular-nums}
-.xp-label{font-size:.68rem;color:var(--muted-2);text-transform:uppercase;letter-spacing:.14em;font-weight:600}
+.xp-badge.pulse{transform:scale(1.1);box-shadow:0 0 28px rgba(199,154,74,.6)}
+.xp-bolt{color:var(--gold);font-size:1.05em;filter:drop-shadow(0 0 6px rgba(199,154,74,.6))}
+.xp-value{font-family:'Outfit',sans-serif;font-size:.98rem;color:var(--gold-soft);min-width:32px;text-align:center;font-variant-numeric:tabular-nums}
+.xp-label{font-size:.64rem;color:var(--muted-2);text-transform:uppercase;letter-spacing:.14em;font-weight:600}
 @media(max-width:420px){.xp-label{display:none}}
 
-/* Progress rail — dual (phase dots + fill) */
+.sound-toggle{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.04);border:1px solid var(--line);
+  display:grid;place-items:center;color:var(--muted);
+  transition:all .2s var(--ease);
+}
+.sound-toggle:hover{border-color:var(--line-strong);color:var(--text)}
+.sound-toggle.muted{opacity:.5}
+
+/* STREAK INDICATOR */
+.streak-bar{
+  position:fixed;top:64px;left:50%;transform:translate(-50%,-100%);
+  padding:8px 18px;border-radius:999px;
+  background:linear-gradient(135deg,rgba(251,191,36,.95),rgba(249,115,22,.95));
+  color:#422006;font-weight:800;font-size:.9rem;
+  box-shadow:0 12px 40px rgba(251,191,36,.45);
+  z-index:19;opacity:0;
+  transition:all .4s var(--bouncy);
+  display:flex;align-items:center;gap:8px;
+  white-space:nowrap;
+}
+.streak-bar.show{opacity:1;transform:translate(-50%,0)}
+.streak-fire{font-size:1.2em;animation:fireShake .4s ease-in-out infinite alternate}
+@keyframes fireShake{0%{transform:scale(1) rotate(-3deg)}100%{transform:scale(1.1) rotate(3deg)}}
+
+/* PHASE DOTS */
 .progress-wrap{
-  padding:14px clamp(16px, 4vw, 40px);
+  padding:12px clamp(16px, 4vw, 40px);
   border-bottom:1px solid var(--line);
   background:rgba(5,13,22,.55);
   backdrop-filter:blur(10px);
 }
-.phase-track{
-  display:flex;align-items:center;gap:6px;max-width:640px;margin:0 auto;
-}
+.phase-track{display:flex;align-items:center;gap:6px;max-width:640px;margin:0 auto}
 .phase-dot{
   flex:1;height:4px;border-radius:999px;
   background:rgba(255,255,255,.06);position:relative;overflow:hidden;
@@ -147,26 +202,16 @@ p{margin:0;line-height:1.6}
 .phase-dot.done{background:var(--gold)}
 @keyframes phaseFill{from{transform:scaleX(0);transform-origin:left}to{transform:scaleX(1);transform-origin:left}}
 
-/* Main content */
+/* MAIN */
 main{
   flex:1;display:flex;align-items:flex-start;justify-content:center;
   padding:clamp(32px,6vw,72px) clamp(16px,4vw,40px) 80px;
 }
-.screen{
-  width:100%;max-width:780px;
-  display:none;
-  animation:screenIn .55s var(--ease);
-}
+.screen{width:100%;max-width:780px;display:none;animation:screenIn .55s var(--ease)}
 .screen.active{display:block}
-@keyframes screenIn{
-  from{opacity:0;transform:translateY(18px) scale(.99)}
-  to{opacity:1;transform:translateY(0) scale(1)}
-}
+@keyframes screenIn{from{opacity:0;transform:translateY(18px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
 
-/* Phase header (was step-label) */
-.phase-head{
-  display:flex;align-items:baseline;gap:12px;margin-bottom:20px;
-}
+.phase-head{display:flex;align-items:baseline;gap:12px;margin-bottom:20px}
 .phase-num{
   font-family:'Cormorant Garamond',serif;
   font-size:2.4rem;font-weight:600;line-height:1;
@@ -174,10 +219,7 @@ main{
   -webkit-background-clip:text;background-clip:text;color:transparent;
   letter-spacing:-.04em;
 }
-.phase-title{
-  text-transform:uppercase;letter-spacing:.26em;font-size:.78rem;
-  color:var(--muted-2);font-weight:600;
-}
+.phase-title{text-transform:uppercase;letter-spacing:.26em;font-size:.78rem;color:var(--muted-2);font-weight:600}
 .phase-of{color:var(--muted-2);font-size:.78rem;letter-spacing:.12em;margin-left:auto;text-transform:uppercase;font-weight:500}
 
 .question{
@@ -188,7 +230,7 @@ main{
 }
 .helper{color:var(--muted);font-size:1.02rem;margin-bottom:36px;line-height:1.6;max-width:600px}
 
-/* Buttons */
+/* BUTTONS */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:10px;
   min-height:54px;padding:0 28px;border-radius:999px;
@@ -201,13 +243,12 @@ main{
 .btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
 .btn-primary{
   background:linear-gradient(135deg,var(--gold-soft),var(--gold));
-  color:#13253A;
-  box-shadow:0 14px 28px rgba(199,154,74,.24);
+  color:#13253A;box-shadow:0 14px 28px rgba(199,154,74,.24);
 }
 .btn-primary:hover:not(:disabled){box-shadow:0 18px 40px rgba(199,154,74,.4)}
 .btn-primary::after{
   content:"";position:absolute;inset:0;
-  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.35),transparent 70%);
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.4),transparent 70%);
   transform:translateX(-100%);transition:transform .7s var(--ease);
 }
 .btn-primary:hover::after{transform:translateX(100%)}
@@ -226,14 +267,10 @@ main{
 .opt{
   display:flex;align-items:center;gap:18px;
   padding:20px 22px;
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  cursor:pointer;
-  transition:all .35s var(--ease);
-  text-align:left;width:100%;
-  backdrop-filter:blur(8px);
-  position:relative;overflow:hidden;
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--radius);cursor:pointer;
+  transition:all .35s var(--ease);text-align:left;width:100%;
+  backdrop-filter:blur(8px);position:relative;overflow:hidden;
 }
 .opt::before{
   content:"";position:absolute;inset:0;pointer-events:none;
@@ -248,40 +285,44 @@ main{
 .opt:hover{border-color:var(--line-strong);transform:translateY(-3px);box-shadow:var(--shadow)}
 .opt:hover::before{opacity:1}
 .opt:hover::after{left:140%}
-.opt.selected{border-color:var(--gold);background:rgba(199,154,74,.1);box-shadow:0 0 0 3px rgba(199,154,74,.1)}
+.opt.selected{
+  border-color:var(--gold);background:rgba(199,154,74,.1);
+  box-shadow:0 0 0 3px rgba(199,154,74,.1),var(--shadow-gold);
+  animation:selectPulse .55s var(--bouncy);
+}
+@keyframes selectPulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.025)}
+  100%{transform:scale(1)}
+}
 .opt.selected::before{opacity:1}
-.opt.selected .opt-check{opacity:1;transform:scale(1)}
+.opt.selected .opt-check{opacity:1;transform:scale(1) rotate(0)}
 .opt-icon{
   font-size:1.85rem;flex-shrink:0;
   width:54px;height:54px;display:grid;place-items:center;
   background:rgba(255,255,255,.04);border-radius:14px;
-  border:1px solid var(--line);
-  transition:transform .4s var(--ease);
+  border:1px solid var(--line);transition:transform .4s var(--bouncy);
 }
-.opt:hover .opt-icon{transform:rotate(-5deg) scale(1.05)}
+.opt:hover .opt-icon{transform:rotate(-5deg) scale(1.1)}
+.opt.selected .opt-icon{transform:rotate(0) scale(1.15);background:rgba(199,154,74,.12);border-color:var(--gold)}
 .opt-body{flex:1}
 .opt-title{font-weight:600;font-size:1.08rem;margin-bottom:4px;letter-spacing:-.01em}
 .opt-desc{color:var(--muted-2);font-size:.9rem;line-height:1.5}
 .opt-check{
-  width:24px;height:24px;border-radius:50%;
+  width:26px;height:26px;border-radius:50%;
   background:var(--gold);color:#13253A;
-  display:grid;place-items:center;flex-shrink:0;
-  opacity:0;transform:scale(.5);transition:all .3s var(--ease);
-  box-shadow:0 0 18px rgba(199,154,74,.5);
-}
-.opt-xp{
-  font-size:.7rem;color:var(--gold);font-weight:700;
-  padding:3px 8px;border-radius:999px;background:rgba(199,154,74,.1);
-  letter-spacing:.08em;
+  display:grid;place-items:center;flex-shrink:0;font-weight:800;
+  opacity:0;transform:scale(.3) rotate(-20deg);
+  transition:all .4s var(--bouncy);
+  box-shadow:0 0 18px rgba(199,154,74,.6);
 }
 
 /* INTRO */
-.intro-hero{text-align:center;padding:clamp(28px,7vw,64px) 0 30px}
+.intro-hero{text-align:center;padding:clamp(28px,7vw,64px) 0 30px;position:relative}
 .intro-kicker{
   display:inline-flex;align-items:center;gap:8px;
   padding:9px 16px;border-radius:999px;
-  background:rgba(199,154,74,.08);
-  border:1px solid var(--line-strong);
+  background:rgba(199,154,74,.08);border:1px solid var(--line-strong);
   font-size:.76rem;color:var(--gold-soft);font-weight:600;
   text-transform:uppercase;letter-spacing:.18em;
   margin-bottom:26px;
@@ -303,7 +344,6 @@ main{
 .intro-meta-item{display:flex;align-items:center;gap:6px}
 .intro-meta-item svg{width:14px;height:14px;color:var(--gold)}
 
-/* Live stats widget (social proof gamificado) */
 .live-stats{
   display:flex;gap:14px;max-width:520px;margin:40px auto 0;
   justify-content:center;flex-wrap:wrap;
@@ -312,25 +352,22 @@ main{
   display:flex;align-items:center;gap:10px;
   padding:12px 18px;border-radius:16px;
   background:var(--panel);border:1px solid var(--line);
-  backdrop-filter:blur(10px);
-  min-width:150px;
+  backdrop-filter:blur(10px);min-width:150px;
+  transition:transform .3s var(--ease),border-color .3s var(--ease);
 }
+.live-stat:hover{transform:translateY(-3px);border-color:var(--line-strong)}
 .live-stat-num{
   font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.5rem;
   color:var(--gold-soft);letter-spacing:-.02em;font-variant-numeric:tabular-nums;
 }
 .live-stat-label{color:var(--muted-2);font-size:.78rem;line-height:1.3;text-align:left}
 
-/* Form inputs */
+/* FORM */
 .field{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
 .field label{font-size:.88rem;font-weight:500;color:var(--muted)}
 .input{
-  appearance:none;
-  background:var(--panel-2);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:14px 16px;
-  font-family:inherit;font-size:1rem;color:var(--text);
+  appearance:none;background:var(--panel-2);border:1px solid var(--line);
+  border-radius:14px;padding:14px 16px;font-family:inherit;font-size:1rem;color:var(--text);
   transition:border-color .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
 }
 .input:focus{outline:0;border-color:var(--gold);background:rgba(11,22,35,.92);box-shadow:0 0 0 4px rgba(199,154,74,.1)}
@@ -339,12 +376,11 @@ main{
 .chk span{font-size:.88rem;color:var(--muted);line-height:1.5}
 .chk a{color:var(--gold);text-decoration:underline}
 
-/* Gate screen */
+/* GATE */
 .gate-wrapper{
   background:var(--panel);border:1px solid var(--line);
   border-radius:var(--radius-lg);padding:clamp(24px,4vw,40px);
-  backdrop-filter:blur(12px);
-  box-shadow:var(--shadow);
+  backdrop-filter:blur(12px);box-shadow:var(--shadow);
   position:relative;overflow:hidden;
 }
 .gate-wrapper::before{
@@ -365,14 +401,12 @@ main{
   box-shadow:0 0 10px var(--success);animation:livePulse 1.5s infinite;
 }
 
-/* LOADING SCREEN */
+/* LOADING */
 .loading-core{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   padding:clamp(48px,10vw,120px) 20px;text-align:center;min-height:60vh;
 }
-.loading-orb{
-  width:120px;height:120px;margin-bottom:36px;position:relative;
-}
+.loading-orb{width:120px;height:120px;margin-bottom:36px;position:relative}
 .loading-orb::before{
   content:"";position:absolute;inset:0;border-radius:50%;
   background:conic-gradient(from 0deg,var(--gold),var(--gold-soft),var(--gold));
@@ -387,56 +421,49 @@ main{
 }
 @keyframes orbSpin{to{transform:rotate(360deg)}}
 @keyframes orbPulse{0%,100%{opacity:.5;transform:scale(.85)}50%{opacity:1;transform:scale(1.05)}}
-
 .loading-title{
   font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3.6vw,2.3rem);
   font-weight:600;margin-bottom:10px;letter-spacing:-.02em;
 }
-.loading-messages{
-  height:28px;position:relative;width:100%;max-width:440px;
-  color:var(--muted);font-size:1rem;
-}
-.loading-msg{
-  position:absolute;inset:0;text-align:center;
-  opacity:0;transform:translateY(10px);
-  transition:all .5s var(--ease);
-}
+.loading-messages{height:28px;position:relative;width:100%;max-width:440px;color:var(--muted);font-size:1rem}
+.loading-msg{position:absolute;inset:0;text-align:center;opacity:0;transform:translateY(10px);transition:all .5s var(--ease)}
 .loading-msg.show{opacity:1;transform:translateY(0)}
-.loading-hint{
-  margin-top:36px;padding:14px 20px;border-radius:16px;
-  background:var(--panel);border:1px solid var(--line);
-  color:var(--muted-2);font-size:.88rem;
+.loading-hint{margin-top:36px;padding:14px 20px;border-radius:16px;background:var(--panel);border:1px solid var(--line);color:var(--muted-2);font-size:.88rem}
+.loading-meter{
+  width:100%;max-width:320px;height:4px;margin-top:24px;
+  background:rgba(255,255,255,.05);border-radius:999px;overflow:hidden;
+}
+.loading-meter-fill{
+  height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-soft));
+  box-shadow:0 0 14px rgba(199,154,74,.6);
+  width:0%;transition:width .6s var(--ease);
 }
 
 /* RESULT */
 .score-hero{
-  text-align:center;margin-bottom:40px;
-  padding:36px 24px;position:relative;
+  text-align:center;margin-bottom:40px;padding:36px 24px;position:relative;
   background:radial-gradient(ellipse at center,rgba(199,154,74,.18),transparent 70%);
   border-radius:var(--radius-lg);
 }
 .score-num{
   font-family:'Cormorant Garamond',serif;
-  font-size:clamp(4.5rem,14vw,8rem);
-  font-weight:600;line-height:1;
+  font-size:clamp(4.5rem,14vw,8rem);font-weight:600;line-height:1;
   background:linear-gradient(135deg,var(--gold-soft),var(--gold));
   -webkit-background-clip:text;background-clip:text;color:transparent;
-  letter-spacing:-.05em;
-  animation:scoreReveal 1.2s var(--ease) both;
-  text-shadow:0 0 80px rgba(199,154,74,.25);
-  font-variant-numeric:tabular-nums;
+  letter-spacing:-.05em;animation:scoreReveal 1.4s var(--bouncy) both;
+  text-shadow:0 0 80px rgba(199,154,74,.25);font-variant-numeric:tabular-nums;
 }
 @keyframes scoreReveal{
-  0%{opacity:0;transform:scale(.3) rotate(-8deg)}
-  60%{opacity:1;transform:scale(1.08) rotate(1deg)}
+  0%{opacity:0;transform:scale(.2) rotate(-12deg)}
+  50%{opacity:1;transform:scale(1.18) rotate(2deg)}
+  80%{transform:scale(.96) rotate(-1deg)}
   100%{opacity:1;transform:scale(1) rotate(0)}
 }
 .score-rays{
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
   width:360px;height:360px;pointer-events:none;
-  background:conic-gradient(from 0deg,transparent 60%,rgba(199,154,74,.12),transparent 65%,transparent 80%,rgba(199,154,74,.08),transparent 85%);
-  animation:raysSpin 8s linear infinite;
-  opacity:.6;
+  background:conic-gradient(from 0deg,transparent 60%,rgba(199,154,74,.14),transparent 65%,transparent 80%,rgba(199,154,74,.1),transparent 85%);
+  animation:raysSpin 8s linear infinite;opacity:.6;
 }
 @keyframes raysSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
 .score-label{color:var(--muted);font-size:1rem;margin-top:6px;letter-spacing:.04em}
@@ -445,10 +472,12 @@ main{
 
 .path-card{
   background:var(--panel);border:1px solid var(--line);
-  border-radius:var(--radius-lg);padding:28px;
-  margin-bottom:16px;
+  border-radius:var(--radius-lg);padding:28px;margin-bottom:16px;
   transition:all .3s var(--ease);position:relative;overflow:hidden;
+  opacity:0;transform:translateY(24px) scale(.97);
+  animation:cardIn .7s var(--bouncy) forwards;
 }
+@keyframes cardIn{to{opacity:1;transform:translateY(0) scale(1)}}
 .path-card.primary{
   border-color:var(--gold);
   background:linear-gradient(135deg,rgba(199,154,74,.14),var(--panel) 55%);
@@ -485,8 +514,7 @@ main{
 .path-description{color:var(--muted);font-size:.96rem;line-height:1.6;margin-bottom:18px;position:relative}
 .path-stats{
   display:grid;gap:12px;grid-template-columns:repeat(3,1fr);
-  padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:16px;
-  position:relative;
+  padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:16px;position:relative;
 }
 @media(max-width:520px){.path-stats{grid-template-columns:1fr 1fr;gap:10px}}
 .stat{display:flex;flex-direction:column;gap:3px}
@@ -503,6 +531,7 @@ main{
   margin-top:28px;padding:26px;
   background:var(--panel);border:1px solid var(--line);
   border-radius:var(--radius);position:relative;overflow:hidden;
+  opacity:0;animation:cardIn .7s var(--bouncy) .6s forwards;
 }
 .steps-block h3{margin-bottom:18px;font-size:1.3rem}
 .step-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
@@ -522,6 +551,7 @@ main{
   background:linear-gradient(135deg,rgba(37,211,102,.12),rgba(37,211,102,.02));
   border:1px solid rgba(37,211,102,.22);
   border-radius:var(--radius-lg);text-align:center;position:relative;overflow:hidden;
+  opacity:0;animation:cardIn .7s var(--bouncy) .8s forwards;
 }
 .final-cta::before{
   content:"";position:absolute;top:-30%;right:-10%;width:300px;height:300px;
@@ -537,7 +567,6 @@ main{
   color:var(--muted-2);font-size:.78rem;line-height:1.55;
 }
 
-/* Question scale */
 .question-scale{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
 .scale-btn{
   padding:18px 10px;border-radius:16px;
@@ -551,20 +580,17 @@ main{
   opacity:0;transition:opacity .3s;
 }
 .scale-btn:hover{border-color:var(--line-strong);transform:translateY(-2px)}
-.scale-btn.selected{background:rgba(199,154,74,.12);border-color:var(--gold);color:var(--gold-soft)}
+.scale-btn.selected{background:rgba(199,154,74,.12);border-color:var(--gold);color:var(--gold-soft);animation:selectPulse .55s var(--bouncy)}
 .scale-btn.selected::after{opacity:1}
 .scale-btn div{font-weight:700;font-size:1.02rem;position:relative}
 
 /* ACHIEVEMENT TOAST */
 .achievement{
-  position:fixed;top:86px;right:-420px;z-index:50;
-  max-width:360px;padding:16px 20px;
+  position:fixed;top:86px;right:-420px;z-index:50;max-width:360px;padding:16px 20px;
   background:linear-gradient(135deg,rgba(11,22,35,.96),rgba(7,14,24,.96));
-  border:1px solid var(--gold);
-  border-radius:16px;
+  border:1px solid var(--gold);border-radius:16px;
   box-shadow:0 20px 50px rgba(0,0,0,.5), 0 0 40px rgba(199,154,74,.3);
-  backdrop-filter:blur(20px);
-  transition:right .55s cubic-bezier(.34,1.56,.64,1);
+  backdrop-filter:blur(20px);transition:right .55s var(--bouncy);
   display:flex;align-items:center;gap:14px;
 }
 .achievement.show{right:20px}
@@ -577,14 +603,10 @@ main{
   width:48px;height:48px;display:grid;place-items:center;
   background:linear-gradient(135deg,var(--gold),var(--gold-soft));
   border-radius:12px;color:#13253A;
-  animation:achievementBounce .6s var(--ease);
+  animation:achievementBounce .6s var(--bouncy);
   box-shadow:0 0 20px rgba(199,154,74,.5);
 }
-@keyframes achievementBounce{
-  0%{transform:scale(0) rotate(-20deg)}
-  70%{transform:scale(1.15) rotate(5deg)}
-  100%{transform:scale(1) rotate(0)}
-}
+@keyframes achievementBounce{0%{transform:scale(0) rotate(-20deg)}70%{transform:scale(1.15) rotate(5deg)}100%{transform:scale(1) rotate(0)}}
 .achievement-label{color:var(--gold);font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.16em;margin-bottom:2px}
 .achievement-title{font-weight:600;font-size:1rem;color:var(--text)}
 
@@ -601,23 +623,85 @@ main{
   100%{opacity:0;transform:translateY(-80px) scale(1)}
 }
 
-/* Confetti */
-.confetti-wrap{
-  position:fixed;inset:0;pointer-events:none;z-index:30;overflow:hidden;
+/* PASSPORT STAMP OVERLAY (DRAMATIC COUNTRY SELECT MOMENT) */
+.stamp-overlay{
+  position:fixed;inset:0;z-index:45;pointer-events:none;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle,rgba(5,13,22,.7),transparent 60%);
+  opacity:0;transition:opacity .3s var(--ease);
 }
+.stamp-overlay.active{opacity:1}
+.stamp{
+  padding:40px 60px;border:6px solid currentColor;border-radius:20px;
+  font-family:'Cormorant Garamond',serif;text-align:center;
+  transform:scale(0) rotate(-30deg);
+  animation:stampHit .8s var(--bouncy) forwards;
+  color:#F2D49B;
+  box-shadow:0 0 60px rgba(199,154,74,.5),inset 0 0 40px rgba(199,154,74,.2);
+  position:relative;
+}
+.stamp::before,.stamp::after{
+  content:"";position:absolute;width:100%;height:4px;background:currentColor;
+  left:0;opacity:.3;
+}
+.stamp::before{top:-16px}
+.stamp::after{bottom:-16px}
+@keyframes stampHit{
+  0%{transform:scale(3) rotate(-45deg);opacity:0}
+  50%{transform:scale(1.15) rotate(-8deg);opacity:1}
+  80%{transform:scale(.9) rotate(-4deg)}
+  100%{transform:scale(1) rotate(-4deg);opacity:1}
+}
+.stamp-flag{font-size:3.5rem;line-height:1;margin-bottom:8px}
+.stamp-label{
+  font-family:'Outfit',sans-serif;text-transform:uppercase;font-size:.78rem;
+  letter-spacing:.32em;margin-bottom:6px;opacity:.8;font-weight:700;
+}
+.stamp-name{font-size:2.4rem;font-weight:600;letter-spacing:-.02em;line-height:1}
+.stamp-sub{font-size:.9rem;color:rgba(242,212,155,.7);margin-top:8px;letter-spacing:.1em;text-transform:uppercase;font-family:'Outfit',sans-serif;font-weight:600}
+
+/* LEVEL-UP OVERLAY */
+.level-up{
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:55;
+  padding:36px 48px;border-radius:28px;
+  background:linear-gradient(135deg,rgba(11,22,35,.98),rgba(7,14,24,.98));
+  border:2px solid var(--gold);
+  box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 80px rgba(199,154,74,.5);
+  backdrop-filter:blur(20px);text-align:center;
+  transition:transform .7s var(--bouncy),opacity .4s;
+  opacity:0;pointer-events:none;
+}
+.level-up.show{transform:translate(-50%,-50%) scale(1);opacity:1}
+.level-up-title{
+  font-size:.76rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--gold);font-weight:700;margin-bottom:10px;
+}
+.level-up-rank{
+  font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.2rem);
+  font-weight:600;letter-spacing:-.02em;
+  background:linear-gradient(135deg,var(--gold-soft),var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  display:flex;align-items:center;gap:14px;justify-content:center;
+  margin-bottom:10px;
+}
+.level-up-rank-icon{font-size:1.2em;filter:drop-shadow(0 0 20px rgba(199,154,74,.8))}
+.level-up-desc{color:var(--muted);font-size:.98rem;max-width:340px;margin:0 auto}
+
+/* CONFETTI (physics-based) */
+.confetti-wrap{position:fixed;inset:0;pointer-events:none;z-index:30;overflow:hidden}
 .confetti-piece{
-  position:absolute;width:10px;height:14px;top:-20px;
-  animation:confettiFall 3s ease-out forwards;
+  position:absolute;width:10px;height:16px;top:-30px;border-radius:2px;
+  animation:confettiFall linear forwards;
+  will-change:transform,opacity;
 }
 @keyframes confettiFall{
-  0%{transform:translateY(0) rotate(0);opacity:1}
-  100%{transform:translateY(110vh) rotate(720deg);opacity:0}
+  0%{transform:translate3d(0,0,0) rotate(0deg);opacity:1}
+  100%{transform:translate3d(var(--x,0),115vh,0) rotate(var(--r,720deg));opacity:0}
 }
 
-/* Hint */
+/* HINT */
 .hint{
-  display:flex;gap:10px;align-items:flex-start;
-  padding:12px 14px;border-radius:14px;
+  display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:14px;
   background:rgba(199,154,74,.05);border:1px solid rgba(199,154,74,.14);
   margin-top:14px;color:var(--muted);font-size:.86rem;line-height:1.5;
 }
@@ -626,6 +710,7 @@ main{
 </head>
 <body>
 <div class="mesh-bg"></div>
+<div class="particles" id="particles"></div>
 
 <!-- Achievement toast -->
 <div class="achievement" id="achievement">
@@ -636,6 +721,32 @@ main{
   </div>
 </div>
 
+<!-- Streak indicator -->
+<div class="streak-bar" id="streak-bar">
+  <span class="streak-fire">🔥</span>
+  <span id="streak-text">Streak x2!</span>
+</div>
+
+<!-- Passport stamp overlay -->
+<div class="stamp-overlay" id="stamp-overlay">
+  <div class="stamp" id="stamp">
+    <div class="stamp-flag" id="stamp-flag">🇵🇹</div>
+    <div class="stamp-label">Destino confirmado</div>
+    <div class="stamp-name" id="stamp-name">Portugal</div>
+    <div class="stamp-sub" id="stamp-sub">APROVADO · FASE 02</div>
+  </div>
+</div>
+
+<!-- Level-up overlay -->
+<div class="level-up" id="level-up">
+  <div class="level-up-title">Você subiu de nível</div>
+  <div class="level-up-rank">
+    <span class="level-up-rank-icon" id="level-up-icon">🧭</span>
+    <span id="level-up-name">Explorador</span>
+  </div>
+  <div class="level-up-desc" id="level-up-desc">Continue respondendo — novos desbloqueios vêm aí.</div>
+</div>
+
 <div class="shell">
   <header class="topbar">
     <div class="brand">
@@ -643,14 +754,22 @@ main{
       <span class="brand-text">Global <span>Travel</span></span>
     </div>
     <div class="xp-cluster">
-      <div class="live-dot">
-        <span id="live-count">312</span>&nbsp;online
+      <div class="live-dot"><span id="live-count">312</span>&nbsp;online</div>
+      <div class="rank-badge" id="rank-badge">
+        <span class="rank-icon" id="rank-icon">🧭</span>
+        <span class="rank-label" id="rank-label">Novato</span>
       </div>
       <div class="xp-badge" id="xp-badge">
         <span class="xp-bolt">⚡</span>
         <span class="xp-value" id="xp-value">0</span>
         <span class="xp-label">XP</span>
       </div>
+      <button class="sound-toggle" id="sound-toggle" aria-label="Som" title="Ativar/desativar som">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="sound-icon">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        </svg>
+      </button>
     </div>
   </header>
 
@@ -666,7 +785,6 @@ main{
 
   <main>
 
-    <!-- TELA 1: INTRO -->
     <section class="screen active" data-screen="intro">
       <div class="intro-hero">
         <div class="intro-kicker">
@@ -681,27 +799,18 @@ main{
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
           <div class="intro-meta">
-            <div class="intro-meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-              Sem cadastro pra começar
-            </div>
-            <div class="intro-meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-              ~2 minutos
-            </div>
-            <div class="intro-meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3 7h7l-6 4 2 7-6-4-6 4 2-7-6-4h7z"/></svg>
-              100% grátis
-            </div>
+            <div class="intro-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Sem cadastro pra começar</div>
+            <div class="intro-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>~2 minutos</div>
+            <div class="intro-meta-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2l3 7h7l-6 4 2 7-6-4-6 4 2-7-6-4h7z"/></svg>100% grátis</div>
           </div>
         </div>
         <div class="live-stats">
           <div class="live-stat">
-            <span class="live-stat-num" id="stat-week">412</span>
+            <span class="live-stat-num" id="stat-week">0</span>
             <span class="live-stat-label">simulações<br>esta semana</span>
           </div>
           <div class="live-stat">
-            <span class="live-stat-num" id="stat-matched">89<span style="font-size:.7em">%</span></span>
+            <span class="live-stat-num" id="stat-matched">0<span style="font-size:.7em">%</span></span>
             <span class="live-stat-label">encontram<br>caminho viável</span>
           </div>
           <div class="live-stat">
@@ -712,14 +821,13 @@ main{
       </div>
     </section>
 
-    <!-- TELA 2: INTENT -->
     <section class="screen" data-screen="intent">
       <div class="phase-head">
         <span class="phase-num">01</span>
         <span class="phase-title">Objetivo</span>
         <span class="phase-of">Fase 01 de 05</span>
       </div>
-      <h2 class="question">O que te move para o exterior?</h2>
+      <h2 class="question">O que te move pro exterior?</h2>
       <p class="helper">Escolha o objetivo principal. Não precisa ser definitivo — você pode refinar depois.</p>
       <div class="options" id="intent-options"></div>
       <div class="nav-row">
@@ -728,7 +836,6 @@ main{
       </div>
     </section>
 
-    <!-- TELA 3: COUNTRY -->
     <section class="screen" data-screen="country">
       <div class="phase-head">
         <span class="phase-num">02</span>
@@ -736,7 +843,7 @@ main{
         <span class="phase-of">Fase 02 de 05</span>
       </div>
       <h2 class="question">Para onde você está olhando?</h2>
-      <p class="helper">Cobrimos 4 países em profundidade. Outros destinos atendemos via rede de parceiros.</p>
+      <p class="helper">Cobrimos 4 países em profundidade. Outros destinos, atendemos via rede de parceiros.</p>
       <div class="options cols-2" id="country-options"></div>
       <div class="nav-row">
         <button class="btn btn-ghost" onclick="nav('intent')">← Voltar</button>
@@ -744,7 +851,6 @@ main{
       </div>
     </section>
 
-    <!-- TELA 4: QUESTIONS -->
     <section class="screen" data-screen="questions">
       <div class="phase-head">
         <span class="phase-num">03</span>
@@ -758,7 +864,6 @@ main{
       </div>
     </section>
 
-    <!-- TELA 5: GATE -->
     <section class="screen" data-screen="gate">
       <div class="phase-head">
         <span class="phase-num">04</span>
@@ -766,11 +871,9 @@ main{
         <span class="phase-of">Fase 04 de 05</span>
       </div>
       <div class="gate-wrapper">
-        <div class="gate-badge">
-          <span>Plano pronto · aguardando acesso</span>
-        </div>
-        <h2 class="question" style="font-size:clamp(1.55rem,3.6vw,2.3rem)">Falta só um passo pra desbloquear seu plano.</h2>
-        <p class="helper">Liberamos o plano personalizado e reservamos espaço na consultoria gratuita com especialista.</p>
+        <div class="gate-badge"><span>Plano pronto · aguardando acesso</span></div>
+        <h2 class="question" style="font-size:clamp(1.55rem,3.6vw,2.3rem)">Falta só um passo pra desbloquear.</h2>
+        <p class="helper">Liberamos o plano personalizado e reservamos espaço na consultoria gratuita.</p>
         <div class="field">
           <label for="lead-nome">Primeiro nome</label>
           <input class="input" type="text" id="lead-nome" placeholder="Como podemos te chamar?">
@@ -794,21 +897,16 @@ main{
       </div>
     </section>
 
-    <!-- TELA LOADING -->
     <section class="screen" data-screen="loading">
       <div class="loading-core">
         <div class="loading-orb"></div>
         <h2 class="loading-title">Revelando seu plano</h2>
-        <div class="loading-messages" id="loading-messages">
-          <div class="loading-msg show">Cruzando 147 vistos possíveis…</div>
-        </div>
-        <div class="loading-hint">
-          ⚡ Você está a poucos segundos do seu plano personalizado
-        </div>
+        <div class="loading-messages" id="loading-messages"></div>
+        <div class="loading-meter"><div class="loading-meter-fill" id="loading-meter-fill"></div></div>
+        <div class="loading-hint">⚡ Você está a poucos segundos do seu plano personalizado</div>
       </div>
     </section>
 
-    <!-- TELA RESULT -->
     <section class="screen" data-screen="result">
       <div class="phase-head">
         <span class="phase-num" style="color:var(--success);-webkit-text-fill-color:var(--success);background:none">05</span>
@@ -847,7 +945,7 @@ main{
 
 <script>
 // ============================================================
-// DADOS (v0.2 — gamificado)
+// DATA
 // ============================================================
 const INTENTS = [
   {id:'turismo',     icon:'✈️', title:'Turismo / Viagem',           desc:'Férias ou só passagem — estadias curtas (até 90 dias)', xp:20},
@@ -856,14 +954,22 @@ const INTENTS = [
   {id:'trabalhar',   icon:'💼', title:'Trabalhar e morar',          desc:'Mudança definitiva via trabalho, renda ou empresa',     xp:25},
   {id:'cidadania',   icon:'🛂', title:'Cidadania por descendência', desc:'Reconhecer cidadania europeia já existente',            xp:20}
 ];
-
 const COUNTRIES = [
-  {id:'pt',     flag:'🇵🇹', name:'Portugal',      hook:'Caminho mais flexível e amplo da UE',         xp:30},
-  {id:'ie',     flag:'🇮🇪', name:'Irlanda',       hook:'Estude inglês trabalhando legal (20h/sem)',   xp:30},
-  {id:'es',     flag:'🇪🇸', name:'Espanha',       hook:'⭐ Cidadania europeia em apenas 2 anos',      xp:35},
-  {id:'us',     flag:'🇺🇸', name:'EUA',           hook:'Turismo, F-1/J-1 e E-2 (tratado BR-EUA)',     xp:30},
-  {id:'other',  flag:'🌍', name:'Outro país',     hook:'Atendemos via rede de parceiros',             xp:15},
-  {id:'unsure', flag:'❓', name:'Ainda não sei',  hook:'Deixa com a gente descobrir com você',        xp:15}
+  {id:'pt',     flag:'🇵🇹', name:'Portugal',      hook:'Caminho mais flexível da UE',                   xp:30},
+  {id:'ie',     flag:'🇮🇪', name:'Irlanda',       hook:'Estude inglês trabalhando (20h/sem)',           xp:30},
+  {id:'es',     flag:'🇪🇸', name:'Espanha',       hook:'⭐ Cidadania europeia em apenas 2 anos',        xp:35},
+  {id:'us',     flag:'🇺🇸', name:'EUA',           hook:'Turismo, F-1/J-1 e E-2 (tratado BR-EUA)',       xp:30},
+  {id:'other',  flag:'🌍', name:'Outro país',     hook:'Atendemos via rede de parceiros',               xp:15},
+  {id:'unsure', flag:'❓', name:'Ainda não sei',  hook:'Deixa com a gente descobrir com você',          xp:15}
+];
+
+// RANKS (leveling system)
+const RANKS = [
+  {min:0,   name:'Novato',        icon:'🧭', desc:'Começando a jornada. Cada resposta desbloqueia mais.'},
+  {min:100, name:'Explorador',    icon:'🌍', desc:'Você já mapeou objetivo e destino. Bora aprofundar.'},
+  {min:250, name:'Aventureiro',   icon:'🚀', desc:'Perfil definido. Você está perto do plano completo.'},
+  {min:500, name:'Nômade Global', icon:'✨', desc:'Acesso liberado. Seu plano personalizado chegou.'},
+  {min:800, name:'Cidadão Global',icon:'👑', desc:'Jornada completa. Chegou a hora de agir.'}
 ];
 
 const QUESTIONS = {
@@ -877,9 +983,9 @@ const QUESTIONS = {
       {value:'outro',    label:'Outra área'}
     ]},
     {id:'remoto', type:'options', title:'Você pode trabalhar remoto pra uma empresa fora do país de destino?', helper:'Ex: CLT remoto no Brasil, PJ com clientes no exterior.', options:[
-      {value:'sim',      label:'Sim, já trabalho remoto'},
-      {value:'poderia',  label:'Poderia negociar isso'},
-      {value:'nao',      label:'Não — preciso de emprego local'}
+      {value:'sim',     label:'Sim, já trabalho remoto'},
+      {value:'poderia', label:'Poderia negociar isso'},
+      {value:'nao',     label:'Não — preciso de emprego local'}
     ]},
     {id:'renda', type:'scale', title:'Qual a sua renda mensal bruta hoje?', helper:'Converta pra real se receber em outra moeda. Ninguém checa — seja honesto.', options:[
       {value:'1', label:'Até R$ 5k'},
@@ -914,34 +1020,26 @@ const QUESTIONS = {
 };
 
 const VISAS = {
-  'pt-d8': {
-    country:'pt', code:'D8', title:'D8 — Nómada Digital', subtitle:'Trabalhador Remoto', rarity:'rare',
+  'pt-d8': {country:'pt', code:'D8', title:'D8 — Nómada Digital', subtitle:'Trabalhador Remoto', rarity:'rare',
     description:'Visto pra quem trabalha remoto pra empresas fora de Portugal. O mais acessível pra classe média brasileira com boa renda em reais.',
-    prazo:'3–5 meses',      custo:'R$ 45k-80k',  dificuldade:2,
-    trabalho:'✓ Só empregador externo',  cidadania:'5 anos',
-    why:(a)=>`Sua renda remota equivale a mais de €3.480/mês (mínimo D8). É o caminho mais direto pro seu perfil.`
-  },
-  'pt-d7': {
-    country:'pt', code:'D7', title:'D7 — Rendimento Próprio', subtitle:'Renda Passiva / Aposentadoria', rarity:'rare',
+    prazo:'3–5 meses', custo:'R$ 45k-80k', dificuldade:2,
+    trabalho:'✓ Só empregador externo', cidadania:'5 anos',
+    why:(a)=>`Sua renda remota equivale a mais de €3.480/mês (mínimo D8). É o caminho mais direto pro seu perfil.`},
+  'pt-d7': {country:'pt', code:'D7', title:'D7 — Rendimento Próprio', subtitle:'Renda Passiva / Aposentadoria', rarity:'rare',
     description:'Visto pra quem tem renda passiva (aluguéis, dividendos, aposentadoria). Permite trabalhar livremente em Portugal depois de chegar.',
-    prazo:'3–4 meses',     custo:'R$ 40k-70k',  dificuldade:2,
-    trabalho:'✓ Pode trabalhar em PT',  cidadania:'5 anos',
-    why:(a)=>`Sua renda passiva cobre o mínimo (≥€870/mês). Mais flexível que o D8 — você pode trabalhar em PT também.`
-  },
-  'pt-d3': {
-    country:'pt', code:'D3', title:'D3 — Altamente Qualificada', subtitle:'Contrato de trabalho em PT', rarity:'common',
+    prazo:'3–4 meses', custo:'R$ 40k-70k', dificuldade:2,
+    trabalho:'✓ Pode trabalhar em PT', cidadania:'5 anos',
+    why:(a)=>`Sua renda passiva cobre o mínimo (≥€870/mês). Mais flexível que o D8.`},
+  'pt-d3': {country:'pt', code:'D3', title:'D3 — Altamente Qualificada', subtitle:'Contrato de trabalho em PT', rarity:'common',
     description:'Pra quem vai com contrato de trabalho assinado em Portugal em cargo de alta qualificação. Salário mín. ~€2.200/mês.',
-    prazo:'3–5 meses',    custo:'R$ 30k-50k',  dificuldade:3,
-    trabalho:'✓ No empregador',  cidadania:'5 anos',
-    why:(a)=>`Sua área está na lista de qualificação alta. O gargalo é conseguir o contrato antes — vamos te ajudar a procurar.`
-  },
-  'pt-cidadania': {
-    country:'pt', code:'NAT', title:'Nacionalidade Portuguesa', subtitle:'Por descendência direta', rarity:'legendary',
+    prazo:'3–5 meses', custo:'R$ 30k-50k', dificuldade:3,
+    trabalho:'✓ No empregador', cidadania:'5 anos',
+    why:(a)=>`Sua área está na lista de qualificação alta. O gargalo é conseguir o contrato antes.`},
+  'pt-cidadania': {country:'pt', code:'NAT', title:'Nacionalidade Portuguesa', subtitle:'Por descendência direta', rarity:'legendary',
     description:'Se você tem pai, mãe, avô ou avó português — tem direito direto, sem precisar morar em PT primeiro.',
-    prazo:'12–24 meses',  custo:'R$ 2k-8k',    dificuldade:2,
-    trabalho:'✓ Cidadão europeu',  cidadania:'Imediata',
-    why:(a)=>`Você marcou descendência portuguesa — esse é o **caminho mais forte possível**: cidadania europeia direto, sem depender de visto.`
-  }
+    prazo:'12–24 meses', custo:'R$ 2k-8k', dificuldade:2,
+    trabalho:'✓ Cidadão europeu', cidadania:'Imediata',
+    why:(a)=>`Você marcou descendência portuguesa — esse é o <strong>caminho mais forte possível</strong>: cidadania europeia direto, sem depender de visto.`}
 };
 
 const LOADING_MESSAGES = [
@@ -953,38 +1051,68 @@ const LOADING_MESSAGES = [
 ];
 
 // ============================================================
-// STATE + XP SYSTEM
+// STATE
 // ============================================================
 const state = {
   intent:null, country:null,
   answers:{}, qIndex:0,
-  lead:{}, xp:0,
-  achievements:new Set()
+  lead:{}, xp:0, rank:0,
+  achievements:new Set(),
+  lastAnswerTime:0, streak:0,
+  soundOn:true
 };
 
-function setXP(n, source){
-  state.xp = Math.max(0, n);
-  const el = document.getElementById('xp-value');
-  const badge = document.getElementById('xp-badge');
-  animateNumber(el, state.xp, 600);
-  badge.classList.remove('pulse');
-  void badge.offsetWidth;
-  badge.classList.add('pulse');
-  setTimeout(()=>badge.classList.remove('pulse'), 800);
-}
-function addXP(amount, clickEvent){
-  state.xp += amount;
-  setXP(state.xp);
-  if(clickEvent){
-    const float = document.createElement('div');
-    float.className = 'xp-float';
-    float.textContent = '+' + amount + ' XP';
-    float.style.left = clickEvent.clientX + 'px';
-    float.style.top  = clickEvent.clientY + 'px';
-    document.body.appendChild(float);
-    setTimeout(()=>float.remove(), 1400);
+// ============================================================
+// SOUND (Web Audio, no external files)
+// ============================================================
+let audioCtx = null;
+function getAudio(){
+  if(!audioCtx){
+    try{ audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+    catch(e){ audioCtx = null; }
   }
+  return audioCtx;
 }
+function beep(freq=440, duration=0.1, type='sine', volume=0.04){
+  if(!state.soundOn) return;
+  const ctx = getAudio();
+  if(!ctx) return;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = type;
+  osc.frequency.value = freq;
+  gain.gain.value = volume;
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.start(ctx.currentTime);
+  osc.stop(ctx.currentTime + duration);
+}
+const SFX = {
+  select: ()=>{ beep(660,0.08,'triangle',0.04); setTimeout(()=>beep(880,0.1,'triangle',0.03),60); },
+  xp:     ()=>{ beep(1200,0.06,'sine',0.025); },
+  unlock: ()=>{ beep(440,0.1,'square',0.04); setTimeout(()=>beep(660,0.1,'square',0.04),100); setTimeout(()=>beep(880,0.18,'square',0.04),200); },
+  level:  ()=>{ beep(523,0.1,'triangle',0.05); setTimeout(()=>beep(659,0.1,'triangle',0.05),90); setTimeout(()=>beep(784,0.1,'triangle',0.05),180); setTimeout(()=>beep(1047,0.22,'triangle',0.06),270); },
+  stamp:  ()=>{ beep(110,0.2,'square',0.1); }
+};
+function toggleSound(){
+  state.soundOn = !state.soundOn;
+  const tog = document.getElementById('sound-toggle');
+  tog.classList.toggle('muted', !state.soundOn);
+  tog.innerHTML = state.soundOn ? `
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+      <path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+    </svg>` : `
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+      <line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>
+    </svg>`;
+}
+
+// ============================================================
+// XP + RANK SYSTEM
+// ============================================================
 function animateNumber(el, target, duration=800){
   const start = parseInt(el.textContent,10) || 0;
   const delta = target - start;
@@ -997,9 +1125,70 @@ function animateNumber(el, target, duration=800){
   }
   requestAnimationFrame(tick);
 }
+function getRank(xp){
+  let r = 0;
+  for(let i=0;i<RANKS.length;i++){ if(xp >= RANKS[i].min) r = i; }
+  return r;
+}
+function updateRank(){
+  const newRank = getRank(state.xp);
+  const label = document.getElementById('rank-label');
+  const icon = document.getElementById('rank-icon');
+  if(newRank > state.rank){
+    state.rank = newRank;
+    const rk = RANKS[newRank];
+    label.textContent = rk.name;
+    icon.textContent  = rk.icon;
+    document.getElementById('rank-badge').classList.add('promoted');
+    setTimeout(()=>document.getElementById('rank-badge').classList.remove('promoted'),1000);
+    showLevelUp(rk);
+  } else {
+    const rk = RANKS[newRank];
+    label.textContent = rk.name;
+    icon.textContent  = rk.icon;
+  }
+}
+function showLevelUp(rk){
+  SFX.level();
+  const el = document.getElementById('level-up');
+  document.getElementById('level-up-icon').textContent = rk.icon;
+  document.getElementById('level-up-name').textContent = rk.name;
+  document.getElementById('level-up-desc').textContent = rk.desc;
+  el.classList.add('show');
+  fireConfettiBurst(30);
+  setTimeout(()=>el.classList.remove('show'), 2400);
+}
+function addXP(amount, clickEvent){
+  state.xp += amount;
+  const el = document.getElementById('xp-value');
+  const badge = document.getElementById('xp-badge');
+  animateNumber(el, state.xp, 600);
+  badge.classList.remove('pulse');
+  void badge.offsetWidth;
+  badge.classList.add('pulse');
+  setTimeout(()=>badge.classList.remove('pulse'), 800);
+  SFX.xp();
+  if(clickEvent){
+    const float = document.createElement('div');
+    float.className = 'xp-float';
+    float.textContent = '+' + amount + ' XP';
+    float.style.left = clickEvent.clientX + 'px';
+    float.style.top  = clickEvent.clientY + 'px';
+    document.body.appendChild(float);
+    setTimeout(()=>float.remove(), 1400);
+  }
+  updateRank();
+  updateTabTitle();
+}
+function updateTabTitle(){
+  const rk = RANKS[state.rank];
+  document.title = `⚡ ${state.xp} XP · ${rk.name} · Global Travel`;
+}
+
 function showAchievement(title, icon='🏆'){
   if(state.achievements.has(title)) return;
   state.achievements.add(title);
+  SFX.unlock();
   document.getElementById('ach-title').textContent = title;
   document.getElementById('ach-icon').textContent  = icon;
   const el = document.getElementById('achievement');
@@ -1007,7 +1196,29 @@ function showAchievement(title, icon='🏆'){
   setTimeout(()=>el.classList.remove('show'), 3400);
 }
 
-// Phase track
+// STREAK
+function registerAnswer(){
+  const now = Date.now();
+  const delta = now - state.lastAnswerTime;
+  if(state.lastAnswerTime && delta < 6000){
+    state.streak++;
+    if(state.streak >= 2){
+      showStreak(state.streak);
+      addXP(state.streak * 5);
+    }
+  } else {
+    state.streak = 1;
+  }
+  state.lastAnswerTime = now;
+}
+function showStreak(n){
+  const el = document.getElementById('streak-bar');
+  document.getElementById('streak-text').textContent = `Streak x${n}! +${n*5} XP`;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 1800);
+}
+
+// PHASE DOTS
 function setPhase(n){
   document.querySelectorAll('.phase-dot').forEach((d,i)=>{
     d.classList.remove('active','done');
@@ -1017,7 +1228,7 @@ function setPhase(n){
 }
 
 // ============================================================
-// NAVIGATION
+// NAV
 // ============================================================
 function nav(screen){
   const el = document.querySelector('.screen.active');
@@ -1035,7 +1246,7 @@ function goCountry(){ nav('country'); }
 function goQuestions(){ state.qIndex = 0; nav('questions'); }
 
 // ============================================================
-// INTENT + COUNTRY
+// INTENTS
 // ============================================================
 function renderIntents(){
   const c = document.getElementById('intent-options');
@@ -1055,6 +1266,7 @@ function selectIntent(id, ev){
   state.intent = id;
   document.querySelectorAll('#intent-options .opt').forEach(o=>o.classList.toggle('selected', o.dataset.id===id));
   document.getElementById('intent-next').disabled = false;
+  SFX.select();
   if(!prev){
     const intent = INTENTS.find(i=>i.id===id);
     addXP(intent.xp, ev);
@@ -1062,6 +1274,7 @@ function selectIntent(id, ev){
   }
 }
 
+// COUNTRY + PASSPORT STAMP
 function renderCountries(){
   const c = document.getElementById('country-options');
   c.innerHTML = COUNTRIES.map(co=>`
@@ -1080,17 +1293,29 @@ function selectCountry(id, ev){
   state.country = id;
   document.querySelectorAll('#country-options .opt').forEach(o=>o.classList.toggle('selected', o.dataset.id===id));
   document.getElementById('country-next').disabled = false;
+  SFX.select();
   if(!prev){
     const country = COUNTRIES.find(c=>c.id===id);
     addXP(country.xp, ev);
-    const achName = country.flag + ' ' + country.name + ' selecionado';
-    showAchievement(achName, country.flag);
+    showAchievement(`${country.flag} ${country.name}`, country.flag);
+    showPassportStamp(country);
   }
 }
+function showPassportStamp(country){
+  const overlay = document.getElementById('stamp-overlay');
+  const stamp = document.getElementById('stamp');
+  document.getElementById('stamp-flag').textContent = country.flag;
+  document.getElementById('stamp-name').textContent = country.name;
+  document.getElementById('stamp-sub').textContent  = 'APROVADO · FASE 02';
+  overlay.classList.add('active');
+  stamp.style.animation = 'none';
+  void stamp.offsetWidth;
+  stamp.style.animation = '';
+  SFX.stamp();
+  setTimeout(()=>overlay.classList.remove('active'), 1300);
+}
 
-// ============================================================
 // QUESTIONS
-// ============================================================
 function getQuestions(){ return QUESTIONS[state.intent] || []; }
 function renderQuestion(){
   const qs = getQuestions();
@@ -1101,10 +1326,10 @@ function renderQuestion(){
   if(!q || q.type === 'placeholder'){
     c.innerHTML = `
       <h2 class="question">Esse caminho está em desenvolvimento</h2>
-      <p class="helper">O protótipo atual implementa o caminho <strong>Trabalhar e morar → Portugal</strong> ponta-a-ponta. Outros intents/países já estão mapeados na matriz — vão entrar em rodadas seguintes.</p>
+      <p class="helper">O protótipo atual implementa <strong>Trabalhar e morar → Portugal</strong> ponta-a-ponta. Outros caminhos já estão mapeados na matriz, vão entrar nas próximas rodadas.</p>
       <div class="hint">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-        <div>Pra ver o quiz completo em ação, reinicie e escolha <strong>Trabalhar e morar → Portugal</strong>.</div>
+        <div>Pra ver o quiz completo, reinicie e escolha <strong>Trabalhar e morar → Portugal</strong>.</div>
       </div>
     `;
     document.getElementById('q-next').disabled = false;
@@ -1113,10 +1338,7 @@ function renderQuestion(){
     return;
   }
 
-  let body = `
-    <h2 class="question">${q.title}</h2>
-    ${q.helper ? `<p class="helper">${q.helper}</p>`:''}
-  `;
+  let body = `<h2 class="question">${q.title}</h2>${q.helper ? `<p class="helper">${q.helper}</p>`:''}`;
   if(q.type === 'options'){
     body += `<div class="options">${q.options.map(opt=>`
       <button class="opt" data-val="${opt.value}" onclick="answer('${q.id}','${opt.value}',event)">
@@ -1144,8 +1366,10 @@ function answer(qid, val, ev){
     el.classList.toggle('selected', el.dataset.val===val);
   });
   document.getElementById('q-next').disabled = false;
+  SFX.select();
   if(!wasAnswered){
     addXP(15, ev);
+    registerAnswer();
     const answered = Object.keys(state.answers).length;
     const total = getQuestions().length;
     if(answered === Math.ceil(total/2)){
@@ -1165,32 +1389,21 @@ function restoreAnswer(qid){
 }
 function nextQuestion(){
   const qs = getQuestions();
-  if(state.qIndex < qs.length-1){
-    state.qIndex++;
-    renderQuestion();
-  } else {
-    nav('gate');
-  }
+  if(state.qIndex < qs.length-1){ state.qIndex++; renderQuestion(); }
+  else nav('gate');
 }
 function prevQuestion(){
-  if(state.qIndex > 0){
-    state.qIndex--;
-    renderQuestion();
-  } else {
-    nav('country');
-  }
+  if(state.qIndex > 0){ state.qIndex--; renderQuestion(); }
+  else nav('country');
 }
 
-// ============================================================
 // GATE
-// ============================================================
 function validateGate(){
   const nome = document.getElementById('lead-nome').value.trim();
   const email = document.getElementById('lead-email').value.trim();
   const wpp = document.getElementById('lead-wpp').value.trim();
   const lgpd = document.getElementById('lead-lgpd').checked;
-  const ok = nome.length >= 2 && /.+@.+\..+/.test(email) && wpp.length >= 10 && lgpd;
-  document.getElementById('gate-next').disabled = !ok;
+  document.getElementById('gate-next').disabled = !(nome.length >= 2 && /.+@.+\..+/.test(email) && wpp.length >= 10 && lgpd);
 }
 function submitLead(){
   state.lead = {
@@ -1206,54 +1419,90 @@ function submitLead(){
   nav('loading');
 }
 
-// ============================================================
-// LOADING SEQUENCE
-// ============================================================
+// LOADING
 function runLoadingSequence(){
   const container = document.getElementById('loading-messages');
-  container.innerHTML = LOADING_MESSAGES.map((m,i)=>`
-    <div class="loading-msg${i===0?' show':''}" data-i="${i}">${m}</div>
-  `).join('');
+  const meterFill = document.getElementById('loading-meter-fill');
+  container.innerHTML = LOADING_MESSAGES.map((m,i)=>`<div class="loading-msg${i===0?' show':''}" data-i="${i}">${m}</div>`).join('');
   let idx = 0;
   const total = LOADING_MESSAGES.length;
+  meterFill.style.width = `${((idx+1)/total)*100}%`;
   const interval = setInterval(()=>{
     const current = container.querySelector(`[data-i="${idx}"]`);
     if(current) current.classList.remove('show');
     idx++;
     if(idx >= total){
       clearInterval(interval);
+      meterFill.style.width = '100%';
       setTimeout(()=>{ addXP(200); showAchievement('Plano desbloqueado', '✨'); nav('result'); fireConfetti(); }, 400);
       return;
     }
     const next = container.querySelector(`[data-i="${idx}"]`);
     if(next) next.classList.add('show');
+    meterFill.style.width = `${((idx+1)/total)*100}%`;
   }, 620);
 }
 
-// ============================================================
-// CONFETTI
-// ============================================================
+// CONFETTI (physics-based)
 function fireConfetti(){
   const wrap = document.createElement('div');
   wrap.className = 'confetti-wrap';
   document.body.appendChild(wrap);
-  const colors = ['#C79A4A','#F2D49B','#4ADE80','#60A5FA','#F9A8D4'];
-  for(let i=0;i<80;i++){
+  const colors = ['#C79A4A','#F2D49B','#4ADE80','#60A5FA','#F9A8D4','#FBBF24'];
+  for(let i=0;i<120;i++){
     const p = document.createElement('div');
     p.className = 'confetti-piece';
     p.style.left = Math.random()*100 + '%';
     p.style.background = colors[Math.floor(Math.random()*colors.length)];
-    p.style.animationDelay = (Math.random()*0.5) + 's';
-    p.style.animationDuration = (2.5 + Math.random()*1.5) + 's';
-    p.style.transform = `rotate(${Math.random()*360}deg)`;
+    const driftX = (Math.random() - 0.5) * 400;
+    const rotation = 360 + Math.random()*1440;
+    p.style.setProperty('--x', driftX + 'px');
+    p.style.setProperty('--r', rotation + 'deg');
+    p.style.animationDelay = (Math.random()*0.8) + 's';
+    p.style.animationDuration = (2.8 + Math.random()*2) + 's';
+    p.style.width = (6 + Math.random()*8) + 'px';
+    p.style.height = (10 + Math.random()*10) + 'px';
     wrap.appendChild(p);
   }
-  setTimeout(()=>wrap.remove(), 4200);
+  setTimeout(()=>wrap.remove(), 5200);
+}
+function fireConfettiBurst(n=30){
+  const wrap = document.createElement('div');
+  wrap.className = 'confetti-wrap';
+  document.body.appendChild(wrap);
+  const colors = ['#C79A4A','#F2D49B','#60A5FA','#FBBF24'];
+  for(let i=0;i<n;i++){
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.left = (40 + Math.random()*20) + '%';
+    p.style.top = '40%';
+    p.style.background = colors[Math.floor(Math.random()*colors.length)];
+    const driftX = (Math.random() - 0.5) * 700;
+    p.style.setProperty('--x', driftX + 'px');
+    p.style.setProperty('--r', (360+Math.random()*720) + 'deg');
+    p.style.animationDuration = (2 + Math.random()*1) + 's';
+    wrap.appendChild(p);
+  }
+  setTimeout(()=>wrap.remove(), 3500);
 }
 
-// ============================================================
+// PARTICLES (ambient)
+function spawnParticles(count=18){
+  const wrap = document.getElementById('particles');
+  for(let i=0;i<count;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random()*100 + 'vw';
+    p.style.top = (100 + Math.random()*30) + 'vh';
+    p.style.setProperty('--drift', ((Math.random()-0.5)*120) + 'px');
+    p.style.animationDuration = (12 + Math.random()*18) + 's';
+    p.style.animationDelay = (-Math.random()*20) + 's';
+    p.style.opacity = (0.3 + Math.random()*0.4);
+    wrap.appendChild(p);
+  }
+}
+
 // ENGINE
-// ============================================================
 function scorePath(visaKey, a){
   const v = VISAS[visaKey];
   if(!v) return 0;
@@ -1293,10 +1542,9 @@ function pickBestPaths(){
   const scored = candidates.map(k=>({k, score:scorePath(k,a)})).sort((a,b)=>b.score-a.score);
   return scored.filter(s=>s.score>=40).slice(0,3);
 }
-
 function animateScore(el, target){
   const t0 = performance.now();
-  const duration = 1600;
+  const duration = 1800;
   function tick(now){
     const p = Math.min(1, (now-t0)/duration);
     const eased = 1 - Math.pow(1-p, 4);
@@ -1305,9 +1553,7 @@ function animateScore(el, target){
   }
   requestAnimationFrame(tick);
 }
-function rarityLabel(r){
-  return ({common:'Comum', rare:'Raro', epic:'Épico', legendary:'Lendário'})[r] || 'Comum';
-}
+function rarityLabel(r){ return ({common:'Comum', rare:'Raro', epic:'Épico', legendary:'Lendário'})[r] || 'Comum'; }
 
 function renderResult(){
   const paths = pickBestPaths();
@@ -1320,23 +1566,23 @@ function renderResult(){
   if(!paths){
     scoreEl.textContent = '—';
     leadEl.innerHTML = `<strong>${nomeGreet}</strong>, esse protótipo aprofunda apenas <strong>Portugal · Trabalhar e morar</strong>. Pra seu caminho, nosso especialista monta o plano completo pra você.`;
-    c.innerHTML = `<div class="path-card"><div class="path-head"><div class="path-title-wrap"><div class="path-subtitle">Próximo passo</div><div class="path-title">Consultoria gratuita personalizada</div></div><span class="rarity rarity-rare">Recomendado</span></div><div class="path-description">Baseado nas suas respostas, montamos um plano detalhado com visto, prazos, custos e checklist completo.</div></div>`;
+    c.innerHTML = `<div class="path-card" style="animation-delay:.2s"><div class="path-head"><div class="path-title-wrap"><div class="path-subtitle">Próximo passo</div><div class="path-title">Consultoria gratuita personalizada</div></div><span class="rarity rarity-rare">Recomendado</span></div><div class="path-description">Baseado nas suas respostas, montamos um plano detalhado com visto, prazos, custos e checklist completo.</div></div>`;
     stepsEl.innerHTML = '<h3>O que preparamos</h3><div class="step-item"><div class="step-num">1</div><div class="step-text"><strong>Análise personalizada</strong> do seu perfil</div></div><div class="step-item"><div class="step-num">2</div><div class="step-text"><strong>Plano com 3 alternativas</strong> de caminho</div></div><div class="step-item"><div class="step-num">3</div><div class="step-text"><strong>Orçamento transparente</strong> do processo completo</div></div>';
   } else if(paths.length === 0){
     scoreEl.textContent = 'Único';
-    leadEl.innerHTML = `<strong>${nomeGreet}</strong>, seu perfil é muito específico — nenhum caminho padrão se encaixou 100%. Pede análise de especialista.`;
+    leadEl.innerHTML = `<strong>${nomeGreet}</strong>, seu perfil é muito específico — pede análise de especialista.`;
     c.innerHTML = `<div class="path-card"><div class="path-description">Nossa consultoria analisa em profundidade e indica caminhos menos óbvios.</div></div>`;
     stepsEl.innerHTML = '';
   } else {
     const best = paths[0];
-    animateScore(scoreEl, best.score);
+    setTimeout(()=>animateScore(scoreEl, best.score), 300);
     const v0 = VISAS[best.k];
     leadEl.innerHTML = `<strong>${nomeGreet}</strong>, baseado no seu perfil, o caminho mais indicado em <strong>Portugal</strong> é o <strong>${v0.title}</strong>.`;
 
     c.innerHTML = paths.map((p,i)=>{
       const v = VISAS[p.k];
       return `
-      <div class="path-card ${i===0?'primary':''}">
+      <div class="path-card ${i===0?'primary':''}" style="animation-delay:${0.2 + i*0.18}s">
         <div class="path-head">
           <div class="path-title-wrap">
             <div class="path-subtitle">${i===0?'Caminho principal':`Alternativa ${i}`} · 🇵🇹 ${v.code}</div>
@@ -1360,36 +1606,36 @@ function renderResult(){
       <h3>Seus próximos passos</h3>
       <div class="step-item"><div class="step-num">1</div><div class="step-text"><strong>Agende sua consultoria gratuita</strong> pra validar o plano e tirar dúvidas</div></div>
       <div class="step-item"><div class="step-num">2</div><div class="step-text"><strong>Reunir documentação-chave</strong>: passaporte, antecedentes, comprovante de renda</div></div>
-      <div class="step-item"><div class="step-num">3</div><div class="step-text"><strong>Abrir processos paralelos</strong>: NIF português, seguro saúde, organização financeira</div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-text"><strong>Abrir processos paralelos</strong>: NIF, seguro saúde, organização financeira</div></div>
       <div class="step-item"><div class="step-num">4</div><div class="step-text"><strong>Solicitar o visto</strong> com acompanhamento da nossa equipe</div></div>
     `;
   }
 
-  const greet = state.lead.nome || 'Olá';
   const intent = INTENTS.find(i=>i.id===state.intent);
   const country = COUNTRIES.find(c=>c.id===state.country);
   const msg = `Olá! Sou ${state.lead.nome || '(seu nome)'}, fiz o simulador.\n\n` +
     `▸ Objetivo: ${intent?intent.title:'—'}\n` +
     `▸ Destino: ${country?country.name:'—'}\n` +
     (paths && paths.length ? `▸ Caminho sugerido: ${VISAS[paths[0].k].title}\n` : '') +
-    `▸ XP: ${state.xp}\n\n` +
+    `▸ XP: ${state.xp} (${RANKS[state.rank].name} ${RANKS[state.rank].icon})\n\n` +
     `Gostaria de agendar a consultoria gratuita.`;
   const tel = '351000000000'; // placeholder
   document.getElementById('wpp-cta').href = `https://wa.me/${tel}?text=${encodeURIComponent(msg)}`;
 }
 
 function restart(){
-  state.intent=null;state.country=null;state.answers={};state.qIndex=0;state.lead={};state.xp=0;state.achievements.clear();
+  state.intent=null;state.country=null;state.answers={};state.qIndex=0;state.lead={};state.xp=0;state.rank=0;state.achievements.clear();state.lastAnswerTime=0;state.streak=0;
   document.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
   document.getElementById('intent-next').disabled = true;
   document.getElementById('country-next').disabled = true;
-  setXP(0);
+  document.getElementById('xp-value').textContent = '0';
+  document.getElementById('rank-label').textContent = 'Novato';
+  document.getElementById('rank-icon').textContent = '🧭';
+  updateTabTitle();
   nav('intro');
 }
 
-// ============================================================
-// LIVE STATS (fake real-time counter on intro)
-// ============================================================
+// LIVE COUNTER
 function bumpLiveCount(){
   const el = document.getElementById('live-count');
   const current = parseInt(el.textContent,10) || 312;
@@ -1398,19 +1644,29 @@ function bumpLiveCount(){
 }
 setInterval(bumpLiveCount, 4200);
 
-// ============================================================
 // INIT
-// ============================================================
 renderIntents();
 renderCountries();
+spawnParticles(14);
 ['lead-nome','lead-email','lead-wpp','lead-lgpd'].forEach(id=>{
   document.getElementById(id).addEventListener('input',validateGate);
   document.getElementById(id).addEventListener('change',validateGate);
 });
 document.getElementById('gate-back').addEventListener('click',()=>nav('questions'));
+document.getElementById('sound-toggle').addEventListener('click',toggleSound);
 
-// Animate live stats on intro load
+// Animate live stats on intro
 animateNumber(document.getElementById('stat-week'), 412, 1800);
+setTimeout(()=>{
+  const s = document.getElementById('stat-matched');
+  let n = 0;
+  const int = setInterval(()=>{
+    n++;
+    s.innerHTML = n + '<span style="font-size:.7em">%</span>';
+    if(n >= 89){ clearInterval(int); }
+  }, 20);
+}, 600);
+updateTabTitle();
 </script>
 </body>
 </html>

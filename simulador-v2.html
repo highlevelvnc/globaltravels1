@@ -846,6 +846,180 @@ main{
 .hint svg{flex-shrink:0;color:var(--gold);width:16px;height:16px;margin-top:2px}
 
 /* =============================================================
+   POLISH LAYER v2
+   ============================================================= */
+
+/* 3D tilt container */
+.opt{transform-style:preserve-3d;transition:transform .25s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease), background .35s var(--ease)}
+.opt:hover{transform:translateY(-3px) perspective(800px) rotateX(var(--ty,0deg)) rotateY(var(--tx,0deg))}
+.opt .opt-icon,.opt .opt-body,.opt .opt-check{transform:translateZ(8px)}
+
+/* Primary CTA breathing when idle */
+.btn-primary.btn-xl{animation:ctaBreath 3.2s ease-in-out infinite}
+.btn-primary.btn-xl:hover{animation:none}
+@keyframes ctaBreath{
+  0%,100%{box-shadow:0 14px 28px rgba(199,154,74,.24)}
+  50%{box-shadow:0 18px 40px rgba(199,154,74,.45),0 0 0 6px rgba(199,154,74,.08)}
+}
+
+/* Legendary shimmer */
+.rarity-legendary{position:relative;overflow:hidden}
+.rarity-legendary::before{
+  content:"";position:absolute;top:0;left:-120%;width:80%;height:100%;
+  background:linear-gradient(120deg,transparent 20%,rgba(255,255,255,.6) 50%,transparent 80%);
+  animation:legendaryShimmer 3s ease-in-out infinite;
+}
+@keyframes legendaryShimmer{
+  0%,60%{left:-120%}
+  100%{left:160%}
+}
+.path-card.primary{position:relative}
+.path-card.primary::after{
+  content:"";position:absolute;top:0;left:-100%;width:50%;height:100%;
+  background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.06) 50%,transparent 70%);
+  pointer-events:none;
+  animation:cardShimmer 5s ease-in-out 2s infinite;
+}
+@keyframes cardShimmer{
+  0%,80%{left:-100%}
+  100%{left:200%}
+}
+
+/* Staggered intro entrance */
+.intro-hero > *{opacity:0;transform:translateY(18px);animation:introFadeUp .9s var(--bouncy) forwards}
+.intro-hero > .hero-orbit{animation-delay:.05s}
+.intro-hero > .intro-kicker{animation-delay:.25s}
+.intro-hero > .intro-title{animation-delay:.4s}
+.intro-hero > .intro-sub{animation-delay:.55s}
+.intro-hero > .intro-cta{animation-delay:.7s}
+.intro-hero > .live-stats{animation-delay:.85s}
+@keyframes introFadeUp{to{opacity:1;transform:translateY(0)}}
+
+/* Stat hover glow in result */
+.path-stats .stat{padding:6px 10px;border-radius:10px;transition:background .3s var(--ease)}
+.path-stats .stat:hover{background:rgba(199,154,74,.06)}
+
+/* Input focus gold underline */
+.input{position:relative}
+.field{position:relative}
+.field::after{
+  content:"";position:absolute;left:16px;right:16px;bottom:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-soft));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .5s var(--ease);
+  border-radius:999px;pointer-events:none;opacity:0;
+}
+.field:focus-within::after{transform:scaleX(1);opacity:1}
+
+/* Phase number flowing gradient */
+@keyframes phaseNumFlow{
+  0%{background-position:0% 50%}
+  100%{background-position:200% 50%}
+}
+.phase-num{
+  background:linear-gradient(120deg,var(--gold) 0%,var(--gold-soft) 50%,var(--gold) 100%);
+  background-size:200% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:phaseNumFlow 4s linear infinite;
+}
+
+/* Multi-layer depth on elevated panels */
+.path-card.primary{
+  box-shadow:
+    0 1px 0 rgba(199,154,74,.4) inset,
+    0 20px 40px rgba(199,154,74,.12),
+    0 8px 20px rgba(0,0,0,.3);
+}
+.gate-wrapper{
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.04) inset,
+    0 24px 50px rgba(0,0,0,.3),
+    0 8px 24px rgba(0,0,0,.2);
+}
+
+/* Rank progress pulse on increase */
+.rank-progress-fill{position:relative;overflow:hidden}
+.rank-progress-fill::after{
+  content:"";position:absolute;top:0;left:-40%;width:40%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent);
+  animation:progressSheen 3s ease-in-out infinite;
+}
+@keyframes progressSheen{
+  0%,60%{left:-40%}
+  100%{left:110%}
+}
+
+/* Compass labels */
+.compass-labels{
+  position:absolute;inset:0;pointer-events:none;
+  font-family:'Cormorant Garamond',serif;font-size:.78rem;color:var(--muted-2);
+  letter-spacing:.2em;font-weight:600;text-transform:uppercase;
+}
+.compass-labels span{position:absolute;left:50%;top:50%;transform-origin:center}
+.compass-labels .n{transform:translate(-50%,-125px)}
+.compass-labels .s{transform:translate(-50%,110px)}
+.compass-labels .l{transform:translate(112px,-50%)}
+.compass-labels .o{transform:translate(-132px,-50%)}
+
+/* Smooth screen transition with blur */
+.screen{filter:blur(0)}
+.screen.leaving{animation:screenOut .35s ease forwards}
+@keyframes screenOut{
+  to{opacity:0;transform:translateY(-12px) scale(.99);filter:blur(4px)}
+}
+
+/* Subtle touch feedback */
+@media (hover:none){
+  .opt:active{transform:scale(.98)}
+  .btn:active{transform:scale(.97)}
+}
+
+/* Quest tracker mobile tweak: smaller and more discrete */
+@media(max-width:640px){
+  .quest-tracker{padding:10px 14px}
+  .quest-text{font-size:.78rem}
+  .quest-label{display:none}
+  .quest-icon{width:30px;height:30px;font-size:1rem}
+}
+
+/* Legendary rank icon aura — stronger */
+.rank-badge.promoted .rank-icon-wrap::before{animation-duration:2s;opacity:1}
+
+/* Mesh reactive — slight warm shift when rank is high */
+body[data-rank="3"] .mesh-bg,body[data-rank="4"] .mesh-bg{filter:hue-rotate(-5deg) saturate(1.25) brightness(1.05)}
+
+/* Options glow pulse on first visit to screen */
+.screen.active .options .opt{animation:optEnter .6s var(--bouncy) backwards}
+.screen.active .options .opt:nth-child(1){animation-delay:.05s}
+.screen.active .options .opt:nth-child(2){animation-delay:.12s}
+.screen.active .options .opt:nth-child(3){animation-delay:.19s}
+.screen.active .options .opt:nth-child(4){animation-delay:.26s}
+.screen.active .options .opt:nth-child(5){animation-delay:.33s}
+.screen.active .options .opt:nth-child(6){animation-delay:.4s}
+@keyframes optEnter{
+  from{opacity:0;transform:translateX(-12px)}
+  to{opacity:1;transform:translateX(0)}
+}
+
+/* Extra gloss on xp badge */
+.xp-badge::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.15),transparent 50%);
+}
+.xp-badge{position:relative;overflow:hidden}
+
+/* Check-mark bloom */
+.opt-check{box-shadow:0 0 0 0 rgba(199,154,74,.5)}
+.opt.selected .opt-check{animation:checkBloom .8s ease-out}
+@keyframes checkBloom{
+  0%{box-shadow:0 0 0 0 rgba(199,154,74,.7)}
+  100%{box-shadow:0 0 0 18px rgba(199,154,74,0)}
+}
+
+/* Smooth scroll for compass center */
+.compass-center{user-select:none}
+
+/* =============================================================
    PDF COVER (hidden on screen, visible on print)
    ============================================================= */
 .pdf-doc{display:none}
@@ -1189,6 +1363,7 @@ main{
             <div class="score-num" id="score-num">0%</div>
             <div class="score-label">compatibilidade</div>
           </div>
+          <div class="compass-labels"><span class="n">N</span><span class="s">S</span><span class="l">L</span><span class="o">O</span></div>
           <span class="compass-star">✦</span>
         </div>
         <p class="result-lead" id="result-lead"></p>
@@ -1444,13 +1619,18 @@ function beep(freq=440, duration=0.1, type='sine', volume=0.04){
   osc.start(ctx.currentTime);
   osc.stop(ctx.currentTime + duration);
 }
+// Musical palette (A minor pentatonic, warm, non-annoying)
+function chord(freqs, duration=0.18, type='triangle', volume=0.035){
+  freqs.forEach(f=>beep(f,duration,type,volume));
+}
 const SFX = {
-  select: ()=>{ beep(660,0.08,'triangle',0.04); setTimeout(()=>beep(880,0.1,'triangle',0.03),60); },
-  xp:     ()=>{ beep(1200,0.06,'sine',0.025); },
-  unlock: ()=>{ beep(440,0.1,'square',0.04); setTimeout(()=>beep(660,0.1,'square',0.04),100); setTimeout(()=>beep(880,0.18,'square',0.04),200); },
-  level:  ()=>{ beep(523,0.1,'triangle',0.05); setTimeout(()=>beep(659,0.1,'triangle',0.05),90); setTimeout(()=>beep(784,0.1,'triangle',0.05),180); setTimeout(()=>beep(1047,0.22,'triangle',0.06),270); },
-  stamp:  ()=>{ beep(110,0.2,'square',0.1); },
-  milestone:()=>{beep(880,0.08,'sine',0.04);setTimeout(()=>beep(1047,0.14,'sine',0.04),90)}
+  // C E G (major-third stacked) — a tiny 3-note chord
+  select: ()=>{ chord([523.25, 659.25], 0.08, 'triangle', 0.028); setTimeout(()=>beep(783.99,0.1,'triangle',0.022),60); },
+  xp:     ()=>{ beep(1318.5, 0.06, 'sine', 0.022); },
+  unlock: ()=>{ chord([523.25, 659.25, 783.99], 0.14, 'triangle', 0.03); setTimeout(()=>beep(1046.5,0.2,'triangle',0.035),140); },
+  level:  ()=>{ beep(523.25,0.1,'triangle',0.045); setTimeout(()=>beep(659.25,0.1,'triangle',0.045),90); setTimeout(()=>beep(783.99,0.1,'triangle',0.045),180); setTimeout(()=>chord([1046.5, 1318.5],0.28,'triangle',0.05),270); },
+  stamp:  ()=>{ beep(98, 0.22, 'square', 0.09); setTimeout(()=>beep(147,0.1,'square',0.05),40); },
+  milestone:()=>{ chord([880, 1108.7], 0.1, 'sine', 0.035); setTimeout(()=>beep(1318.5,0.16,'sine',0.035),100); }
 };
 function toggleSound(){
   state.soundOn = !state.soundOn;
@@ -2168,6 +2348,42 @@ spawnParticles(14);
 document.getElementById('gate-back').addEventListener('click',()=>nav('questions'));
 document.getElementById('sound-toggle').addEventListener('click',toggleSound);
 
+// 3D tilt on option cards (desktop only)
+function bindTilt(){
+  if(window.matchMedia('(hover:none)').matches) return; // skip on touch
+  document.querySelectorAll('.opt').forEach(el=>{
+    if(el._tiltBound) return;
+    el._tiltBound = true;
+    el.addEventListener('mousemove', e=>{
+      const rect = el.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      const ty = (0.5 - y) * 7;
+      const tx = (x - 0.5) * 7;
+      el.style.setProperty('--ty', ty + 'deg');
+      el.style.setProperty('--tx', tx + 'deg');
+    });
+    el.addEventListener('mouseleave', ()=>{
+      el.style.setProperty('--ty','0deg');
+      el.style.setProperty('--tx','0deg');
+    });
+  });
+}
+// Wrap render funcs to rebind tilt after DOM updates
+const _origRenderIntents = renderIntents;
+renderIntents = function(){ _origRenderIntents(); bindTilt(); };
+const _origRenderCountries = renderCountries;
+renderCountries = function(){ _origRenderCountries(); bindTilt(); };
+const _origRenderQuestion = renderQuestion;
+renderQuestion = function(){ _origRenderQuestion(); bindTilt(); };
+
+// Update body data-rank for mesh reactivity
+const _origUpdateRankAndProgress = updateRankAndProgress;
+updateRankAndProgress = function(){
+  _origUpdateRankAndProgress();
+  document.body.setAttribute('data-rank', state.rank);
+};
+
 animateNumber(document.getElementById('stat-week'), 412, 1800);
 setTimeout(()=>{
   const s = document.getElementById('stat-matched');
@@ -2179,6 +2395,8 @@ setTimeout(()=>{
   }, 20);
 }, 600);
 updateTabTitle();
+bindTilt();
+document.body.setAttribute('data-rank', '0');
 </script>
 </body>
 </html>

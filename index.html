@@ -1651,67 +1651,47 @@ img,video{background:rgba(255,255,255,.03)}
   <section class="section" id="simulador">
     <div class="container">
       <div class="section-head reveal">
-        <span class="kicker">Simulador</span>
-        <h2>Simula seu projeto em um minuto.</h2>
-        <p class="copy">Escolhe objetivo, destino, orçamento e prazo. A gente recebe um briefing pronto — e já responde com opções reais.</p>
+        <span class="kicker">Simulador interativo · 2 minutos</span>
+        <h2>Descubra seu próximo passaporte.</h2>
+        <p class="copy">Em 5 fases interativas, descubra o visto certo, o prazo real e o custo fundamentado pra morar, estudar ou viajar no exterior. Plano personalizado baseado no seu perfil — com pontuação de compatibilidade e plano em PDF pra baixar.</p>
       </div>
       <div class="sim-wrap">
         <div class="sim-card reveal">
-          <h3>Monta seu perfil</h3>
-          <div class="form-grid">
-            <div class="field">
-              <label>Qual seu objetivo?</label>
-              <div class="choice-grid" id="goal-choices">
-                <label class="choice active"><input type="radio" name="goal" value="estudar" checked> Estudar</label>
-                <label class="choice"><input type="radio" name="goal" value="viajar"> Viajar</label>
-                <label class="choice"><input type="radio" name="goal" value="morar"> Morar fora</label>
-              </div>
-            </div>
-            <div class="field">
-              <label for="destino">Destino de maior interesse</label>
-              <select id="destino">
-                <option value="portugal">Portugal / Lisboa</option>
-                <option value="irlanda">Irlanda</option>
-                <option value="eua">Estados Unidos</option>
-                <option value="disney">Disney / Paris</option>
-                <option value="neve">Viagem de neve</option>
-                <option value="outro">Outro destino</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="orcamento">Faixa de orçamento</label>
-              <select id="orcamento">
-                <option value="ate2">Até €2.000</option>
-                <option value="2a5">€2.000 a €5.000</option>
-                <option value="5a10">€5.000 a €10.000</option>
-                <option value="acima10">Acima de €10.000</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="prazo">Quando pretende começar?</label>
-              <select id="prazo">
-                <option value="agora">Nos próximos 30 dias</option>
-                <option value="90">Nos próximos 3 meses</option>
-                <option value="180">Nos próximos 6 meses</option>
-                <option value="planejando">Ainda estou planejando</option>
-              </select>
-            </div>
+          <h3>O que você recebe ao final</h3>
+          <ul class="checklist" style="list-style:none;padding:0;margin:0;display:grid;gap:14px">
+            <li style="display:flex;gap:12px;align-items:flex-start"><span style="color:#4ADE80;font-weight:800;flex-shrink:0">✓</span><span class="copy" style="margin:0"><strong style="color:inherit">Visto principal recomendado</strong> + 2 alternativas ranqueadas por match %</span></li>
+            <li style="display:flex;gap:12px;align-items:flex-start"><span style="color:#4ADE80;font-weight:800;flex-shrink:0">✓</span><span class="copy" style="margin:0"><strong style="color:inherit">Prazo realista</strong> em meses pra você estar lá</span></li>
+            <li style="display:flex;gap:12px;align-items:flex-start"><span style="color:#4ADE80;font-weight:800;flex-shrink:0">✓</span><span class="copy" style="margin:0"><strong style="color:inherit">Faixa de custo</strong> fundamentada (R$) do processo completo</span></li>
+            <li style="display:flex;gap:12px;align-items:flex-start"><span style="color:#4ADE80;font-weight:800;flex-shrink:0">✓</span><span class="copy" style="margin:0"><strong style="color:inherit">Checklist de próximos passos</strong> personalizado</span></li>
+            <li style="display:flex;gap:12px;align-items:flex-start"><span style="color:#4ADE80;font-weight:800;flex-shrink:0">✓</span><span class="copy" style="margin:0"><strong style="color:inherit">PDF profissional</strong> pra baixar e revisar</span></li>
+            <li style="display:flex;gap:12px;align-items:flex-start"><span style="color:#4ADE80;font-weight:800;flex-shrink:0">✓</span><span class="copy" style="margin:0"><strong style="color:inherit">Briefing pronto</strong> pra falar com especialista</span></li>
+          </ul>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px">
+            <span style="padding:6px 12px;border-radius:999px;background:rgba(96,165,250,.14);color:#60A5FA;border:1px solid rgba(96,165,250,.3);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase">🇵🇹 Portugal</span>
+            <span style="padding:6px 12px;border-radius:999px;background:rgba(96,165,250,.14);color:#60A5FA;border:1px solid rgba(96,165,250,.3);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase">🇮🇪 Irlanda</span>
+            <span style="padding:6px 12px;border-radius:999px;background:rgba(96,165,250,.14);color:#60A5FA;border:1px solid rgba(96,165,250,.3);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase">🇪🇸 Espanha</span>
+            <span style="padding:6px 12px;border-radius:999px;background:rgba(96,165,250,.14);color:#60A5FA;border:1px solid rgba(96,165,250,.3);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase">🇺🇸 EUA</span>
           </div>
         </div>
 
-        <div class="result-card reveal">
-          <h3>Sugestão pra você</h3>
-          <div class="result-highlight" id="result-badge">Perfil sugerido: Intercâmbio em Lisboa</div>
-          <p class="copy" id="result-copy">Para quem quer estudar fora com mais segurança, Portugal aparece como caminho forte por idioma, adaptação e organização do projeto acadêmico.</p>
-          <div class="result-box">
-            <ul id="result-list">
-              <li>Melhor começar definindo curso, duração e cidade.</li>
-              <li>Depois disso, a equipe monta rota, custos e próximos documentos.</li>
-              <li>O atendimento por WhatsApp já pode seguir com uma mensagem pronta.</li>
-            </ul>
-            <a class="btn btn-primary" id="sim-wa" target="_blank" rel="noopener" href="https://wa.me/351910346159?text=Ol%C3%A1%2C%20quero%20simular%20meu%20plano%20internacional.">Enviar meu briefing no WhatsApp</a>
-            <p class="small-note">Esse simulador é um preview de solução comercial para o site. Depois, se você gostar, dá para evoluir com orçamento estimado, pacotes e perguntas condicionais.</p>
+        <div class="result-card reveal" style="text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;overflow:hidden">
+          <div class="result-highlight" style="display:inline-flex;align-items:center;gap:8px">
+            <span style="font-size:1em">⚡</span>
+            <span>5 fases · gamificado · PDF</span>
           </div>
+          <h3 style="font-size:clamp(1.7rem,3.2vw,2.4rem);margin:18px 0 14px;line-height:1.05;letter-spacing:-.02em">Seu caminho<br><em style="color:#C79A4A;font-weight:500">para o exterior</em></h3>
+          <p class="copy" style="margin-bottom:24px;max-width:340px">Responda sobre perfil, destino e prazo. Destrave um plano com match %, raridade de visto, próximos passos e PDF personalizado.</p>
+          <div style="display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;justify-content:center">
+            <span style="padding:4px 10px;border-radius:999px;background:rgba(148,163,184,.14);color:#94A3B8;border:1px solid rgba(148,163,184,.3);font-size:.66rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase">Comum</span>
+            <span style="padding:4px 10px;border-radius:999px;background:rgba(96,165,250,.14);color:#60A5FA;border:1px solid rgba(96,165,250,.3);font-size:.66rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase">Raro</span>
+            <span style="padding:4px 10px;border-radius:999px;background:rgba(192,132,252,.14);color:#C084FC;border:1px solid rgba(192,132,252,.3);font-size:.66rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase">Épico</span>
+            <span style="padding:4px 10px;border-radius:999px;background:linear-gradient(135deg,rgba(199,154,74,.2),rgba(242,212,155,.25));color:#F2D49B;border:1px solid #C79A4A;font-size:.66rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;box-shadow:0 0 16px rgba(199,154,74,.3)">Lendário</span>
+          </div>
+          <a class="btn btn-primary" href="simulador.html" style="min-height:60px;padding:0 38px;font-size:1.05rem;gap:10px">
+            Começar minha jornada
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <p class="small-note" style="margin-top:14px">100% grátis · sem cadastro pra começar · leva 2 minutos</p>
         </div>
       </div>
     </div>
@@ -2128,85 +2108,7 @@ img,video{background:rgba(255,255,255,.03)}
   activate(0);
   setInterval(() => activate((current + 1) % slides.length), 6200);
 
-  const goalChoices = Array.from(document.querySelectorAll('input[name="goal"]'));
-  const goalLabels = Array.from(document.querySelectorAll('#goal-choices .choice'));
-  const destino = document.getElementById('destino');
-  const orcamento = document.getElementById('orcamento');
-  const prazo = document.getElementById('prazo');
-  const resultBadge = document.getElementById('result-badge');
-  const resultCopy = document.getElementById('result-copy');
-  const resultList = document.getElementById('result-list');
-  const simWa = document.getElementById('sim-wa');
-
-  const goalMap = {
-    estudar:'intercâmbio e cursos',
-    viajar:'viagem internacional',
-    morar:'morar fora'
-  };
-  const destinationMap = {
-    portugal:'Portugal / Lisboa',
-    irlanda:'Irlanda',
-    eua:'Estados Unidos',
-    disney:'Disney / Paris',
-    neve:'viagem de neve',
-    outro:'outro destino'
-  };
-  function updateChoiceState(){
-    goalLabels.forEach(label => {
-      const input = label.querySelector('input');
-      label.classList.toggle('active', !!input.checked);
-    });
-  }
-  function buildRecommendation(){
-    const goal = document.querySelector('input[name="goal"]:checked')?.value || 'estudar';
-    const dest = destino.value;
-    const budget = orcamento.value;
-    const when = prazo.value;
-
-    let badge = 'Perfil sugerido: ';
-    let copy = '';
-    let bullets = [];
-    if(goal === 'estudar'){
-      badge += dest === 'portugal' ? 'Intercâmbio em Lisboa' : 'Planejamento acadêmico internacional';
-      copy = dest === 'portugal'
-        ? 'Para quem quer estudar fora com idioma mais acessível e boa adaptação, Portugal e Lisboa aparecem como caminho forte.'
-        : 'O melhor primeiro passo é combinar curso, cidade, passagens aéreas e timing de aplicação.';
-      bullets = [
-        'Definir curso, duração e cidade antes de fechar o embarque.',
-        'Organizar passagens, orçamento e documentação em conjunto.',
-        'Seguir para o WhatsApp já com briefing de estudo mais claro.'
-      ];
-    } else if(goal === 'viajar'){
-      badge += dest === 'disney' ? 'Pacote Disney / Paris' : dest === 'neve' ? 'Viagem de neve com roteiro' : 'Viagem internacional personalizada';
-      copy = 'Quando o objetivo é viajar, o ideal é montar destino, datas e passagem aérea já pensando no melhor custo-benefício e no estilo da viagem.';
-      bullets = [
-        'Cotar passagens com melhores tarifas e datas mais estratégicas.',
-        'Definir hotel, roteiro e perfil da viagem antes do fechamento.',
-        'Levar o pedido pronto para o WhatsApp agiliza muito o atendimento.'
-      ];
-    } else {
-      badge += dest === 'portugal' ? 'Mudança para Portugal' : 'Plano inicial para morar fora';
-      copy = 'Projetos de imigração pedem clareza sobre país, custo inicial, prazo e próximos passos. O objetivo aqui é organizar a conversa certa desde o início.';
-      bullets = [
-        'Avaliar destino, orçamento e momento de vida antes de avançar.',
-        'Separar projeto de estudo, trabalho ou mudança definitiva.',
-        'Usar o WhatsApp para receber direcionamento mais individual.'
-      ];
-    }
-
-    resultBadge.textContent = badge;
-    resultCopy.textContent = copy;
-    resultList.innerHTML = bullets.map(item => `<li>${item}</li>`).join('');
-
-    const budgetLabel = orcamento.options[orcamento.selectedIndex].text;
-    const whenLabel = prazo.options[prazo.selectedIndex].text;
-    const msg = `Olá, usei o simulador do site. Meu objetivo é ${goalMap[goal]}, com interesse em ${destinationMap[dest]}. Meu orçamento estimado é ${budgetLabel} e pretendo começar ${whenLabel}. Quero receber orientação da Global Travel.`;
-    simWa.href = 'https://wa.me/351910346159?text=' + encodeURIComponent(msg);
-  }
-  goalChoices.forEach(input => input.addEventListener('change', () => {updateChoiceState(); buildRecommendation();}));
-  [destino, orcamento, prazo].forEach(el => el && el.addEventListener('change', buildRecommendation));
-  updateChoiceState();
-  buildRecommendation();
+  // (Embedded simulator removed — quiz experience now lives at /simulador.html)
 
   // Counter animation
   const counters = document.querySelectorAll('.stat-number');

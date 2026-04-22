@@ -110,10 +110,10 @@ p{margin:0;line-height:1.6}
   background:rgba(5,13,22,.7);
   position:sticky;top:0;z-index:20;
 }
-.brand{display:flex;align-items:center;gap:12px;flex-shrink:0}
-.brand img{height:30px;width:auto}
-.brand-text{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:1.1rem;letter-spacing:-.01em}
-.brand-text span{color:var(--gold)}
+.brand{display:flex;align-items:center;flex-shrink:0;transition:transform .3s var(--ease)}
+.brand:hover{transform:translateY(-1px)}
+.brand-logo{height:34px;width:auto;display:block;filter:drop-shadow(0 4px 14px rgba(0,0,0,.3))}
+@media(max-width:520px){.brand-logo{height:28px}}
 
 .xp-cluster{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
 
@@ -1173,10 +1173,9 @@ body[data-rank="3"] .mesh-bg,body[data-rank="4"] .mesh-bg{filter:hue-rotate(-5de
 
 <div class="shell">
   <header class="topbar">
-    <div class="brand">
-      <img src="globaltravel_logo_mark.webp" alt="" onerror="this.style.display='none'">
-      <span class="brand-text">Global <span>Travel</span></span>
-    </div>
+    <a class="brand" href="index.html" aria-label="Global Travel — voltar ao site">
+      <img class="brand-logo" src="globaltravel_logo_original_white_v16.png" alt="Global Travel Intercâmbios">
+    </a>
     <div class="xp-cluster">
       <div class="live-dot"><span id="live-count">312</span>&nbsp;online</div>
       <div class="rank-badge" id="rank-badge">

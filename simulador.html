@@ -112,8 +112,8 @@ p{margin:0;line-height:1.6}
 }
 .brand{display:flex;align-items:center;flex-shrink:0;transition:transform .3s var(--ease)}
 .brand:hover{transform:translateY(-1px)}
-.brand-logo{height:34px;width:auto;display:block;filter:drop-shadow(0 4px 14px rgba(0,0,0,.3))}
-@media(max-width:520px){.brand-logo{height:28px}}
+.brand-logo{height:38px;width:auto;display:block;object-fit:contain;background:transparent;mix-blend-mode:screen;filter:drop-shadow(0 4px 14px rgba(0,0,0,.35))}
+@media(max-width:520px){.brand-logo{height:30px}}
 
 .xp-cluster{display:flex;align-items:center;gap:8px;flex-wrap:nowrap}
 
@@ -398,11 +398,24 @@ main{
 .hero-orbit::after{inset:14px;border-color:rgba(199,154,74,.18);animation-duration:16s;animation-direction:reverse}
 @keyframes heroOrbit{to{transform:rotate(360deg)}}
 .hero-orb{
-  width:70px;height:70px;border-radius:50%;position:relative;z-index:2;
-  background:radial-gradient(circle at 30% 30%, var(--gold-soft), var(--gold) 60%, #7A5A24);
-  box-shadow:0 0 50px rgba(199,154,74,.6),inset -8px -8px 20px rgba(0,0,0,.35);
-  display:grid;place-items:center;font-size:2rem;
+  width:80px;height:80px;border-radius:50%;position:relative;z-index:2;
+  box-shadow:0 0 50px rgba(199,154,74,.6),0 12px 32px rgba(0,0,0,.4);
+  display:grid;place-items:center;
   animation:heroBob 4s ease-in-out infinite;
+  overflow:hidden;
+}
+.hero-orb svg{width:100%;height:100%;display:block}
+.hero-orb .globe-grid{animation:globeSpin 14s linear infinite;transform-origin:40px 40px}
+@keyframes globeSpin{
+  0%{transform:translateX(0)}
+  50%{transform:translateX(-4px)}
+  100%{transform:translateX(0)}
+}
+.hero-orb .globe-land{animation:globeLand 14s linear infinite;transform-origin:40px 40px}
+@keyframes globeLand{
+  0%{transform:translateX(6px)}
+  50%{transform:translateX(-6px)}
+  100%{transform:translateX(6px)}
 }
 @keyframes heroBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 .hero-dot{
@@ -1026,98 +1039,118 @@ body[data-rank="3"] .mesh-bg,body[data-rank="4"] .mesh-bg{filter:hue-rotate(-5de
 .compass-center{user-select:none}
 
 /* =============================================================
+   SVG ICON SIZING (for intents, ranks, achievements, quests)
+   ============================================================= */
+.opt-icon{color:var(--gold-soft)}
+.opt-icon svg{width:28px;height:28px;display:block;stroke-width:1.7}
+.opt.selected .opt-icon{color:var(--gold)}
+.rank-icon{display:grid;place-items:center}
+.rank-icon svg{width:16px;height:16px;display:block;stroke:var(--gold-soft)}
+.achievement-icon svg{width:24px;height:24px;display:block}
+.level-up-rank-icon{display:inline-grid;place-items:center;width:1.2em;height:1.2em}
+.level-up-rank-icon svg{width:100%;height:100%;display:block;stroke:currentColor}
+.quest-icon{color:var(--gold)}
+.quest-icon svg{width:20px;height:20px;display:block}
+
+/* =============================================================
    PDF COVER (hidden on screen, visible on print)
    ============================================================= */
 .pdf-doc{display:none}
 
 /* =============================================================
-   PRINT STYLES — PDF DELIVERABLE LAYOUT
+   PRINT STYLES — PDF DELIVERABLE LAYOUT (clean, reliable A4)
    ============================================================= */
 @media print{
-  @page{size:A4;margin:18mm 16mm}
-  *{animation:none !important;transition:none !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-  body{background:#ffffff !important;color:#0f1b2d !important;font-family:'Outfit',sans-serif;min-height:auto}
+  @page{size:A4;margin:0}
+  @page :first{margin:0}
+  *{animation:none !important;transition:none !important;-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;mix-blend-mode:normal !important}
+  html,body{background:#ffffff !important;color:#0f1b2d !important;font-family:'Outfit',sans-serif !important;min-height:auto;margin:0 !important;padding:0 !important}
   .mesh-bg,.particles,.topbar,.progress-wrap,.nav-row,.final-cta,.disclaimer,.achievement,.streak-bar,.stamp-overlay,.level-up,.milestone,.quest-tracker,.xp-float,.xp-burst,.confetti-wrap,.sound-toggle{display:none !important}
-  main{padding:0 !important;display:block}
-  .screen{display:none !important}
-  .screen[data-screen="result"]{display:block !important;max-width:none}
-  .screen[data-screen="result"] .phase-head,.screen[data-screen="result"] .score-hero,.screen[data-screen="result"] #paths-container,.screen[data-screen="result"] #steps-block{display:none !important}
+  .shell{display:none !important}
+  main{display:none !important}
 
-  .pdf-doc{display:block;color:#0f1b2d;font-family:'Outfit',sans-serif;line-height:1.55}
+  .pdf-doc{display:block !important;color:#0f1b2d}
 
+  /* COVER — full A4 page, no cropping */
   .pdf-cover{
-    page-break-after:always;position:relative;min-height:95vh;
+    page-break-after:always;box-sizing:border-box;
+    width:210mm;height:297mm;
+    padding:20mm 18mm;
+    background:#050d16;
+    color:#F8FBFF;
     display:flex;flex-direction:column;
-    background:linear-gradient(135deg,#050d16 0%,#0a1624 55%,#13253A 100%);
-    color:#F8FBFF;padding:22mm 18mm;margin:-18mm -16mm 0;
-    box-sizing:border-box;
+    position:relative;overflow:hidden;
   }
-  .pdf-cover::before{
-    content:"";position:absolute;top:0;right:0;width:60mm;height:60mm;
-    background:radial-gradient(circle,rgba(199,154,74,.35),transparent 65%);
+  .pdf-cover-accent{
+    position:absolute;top:-40mm;right:-40mm;width:120mm;height:120mm;border-radius:50%;
+    background:radial-gradient(circle,rgba(199,154,74,.4),transparent 70%);
+    pointer-events:none;
   }
-  .pdf-cover::after{
-    content:"";position:absolute;bottom:0;left:0;width:60mm;height:60mm;
-    background:radial-gradient(circle,rgba(40,95,150,.28),transparent 65%);
-  }
-  .pdf-brand{display:flex;align-items:center;gap:10px;font-family:'Cormorant Garamond',serif;font-size:14pt;font-weight:600;margin-bottom:auto;position:relative;z-index:2}
-  .pdf-brand-mark{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#C79A4A,#F2D49B);display:grid;place-items:center;color:#13253A;font-weight:900;font-size:13pt}
-  .pdf-brand b{color:#C79A4A;font-weight:600}
-  .pdf-cover-body{position:relative;z-index:2;margin-top:auto}
-  .pdf-eyebrow{text-transform:uppercase;letter-spacing:.3em;font-size:8pt;color:#C79A4A;font-weight:700;margin-bottom:14px}
-  .pdf-cover-title{font-family:'Cormorant Garamond',serif;font-size:44pt;font-weight:600;line-height:1;letter-spacing:-.02em;margin:0 0 18px;color:#F8FBFF}
+  .pdf-brand{display:flex;align-items:center;gap:4mm;font-family:'Cormorant Garamond',serif;margin-bottom:auto;position:relative;z-index:2}
+  .pdf-brand-logo{height:16mm;width:auto;filter:none}
+  .pdf-cover-body{position:relative;z-index:2;margin-top:auto;margin-bottom:10mm}
+  .pdf-eyebrow{text-transform:uppercase;letter-spacing:.3em;font-size:9pt;color:#C79A4A;font-weight:700;margin-bottom:6mm}
+  .pdf-cover-title{font-family:'Cormorant Garamond',serif;font-size:42pt;font-weight:600;line-height:1;letter-spacing:-.02em;margin:0 0 6mm;color:#F8FBFF}
   .pdf-cover-title em{font-style:italic;color:#F2D49B;font-weight:500}
-  .pdf-for{font-size:14pt;color:rgba(248,251,255,.8);margin-bottom:50px;max-width:140mm}
+  .pdf-for{font-size:13pt;color:rgba(248,251,255,.82);margin:0;max-width:150mm}
   .pdf-for b{color:#F8FBFF;font-weight:600}
-  .pdf-snapshot{display:grid;grid-template-columns:repeat(3,1fr);gap:10mm;margin-top:18mm;position:relative;z-index:2}
-  .pdf-snap{background:rgba(255,255,255,.06);border:1px solid rgba(199,154,74,.35);padding:10mm;border-radius:6mm}
-  .pdf-snap-label{font-size:8pt;text-transform:uppercase;letter-spacing:.2em;color:#C79A4A;font-weight:700;margin-bottom:4mm}
-  .pdf-snap-value{font-family:'Cormorant Garamond',serif;font-size:18pt;font-weight:600;color:#F8FBFF;line-height:1.1}
-  .pdf-meta{display:flex;justify-content:space-between;align-items:flex-end;margin-top:18mm;padding-top:8mm;border-top:1px solid rgba(199,154,74,.25);position:relative;z-index:2;font-size:9pt;color:rgba(248,251,255,.6)}
+  .pdf-snapshot{display:grid;grid-template-columns:repeat(3,1fr);gap:5mm;margin-top:10mm;position:relative;z-index:2}
+  .pdf-snap{background:rgba(255,255,255,.06);border:.5pt solid rgba(199,154,74,.4);padding:7mm 6mm;border-radius:4mm}
+  .pdf-snap-label{font-size:7pt;text-transform:uppercase;letter-spacing:.2em;color:#C79A4A;font-weight:700;margin-bottom:2mm}
+  .pdf-snap-value{font-family:'Cormorant Garamond',serif;font-size:16pt;font-weight:600;color:#F8FBFF;line-height:1.1}
+  .pdf-meta{display:flex;justify-content:space-between;align-items:flex-end;margin-top:8mm;padding-top:4mm;border-top:.5pt solid rgba(199,154,74,.3);position:relative;z-index:2;font-size:8pt;color:rgba(248,251,255,.6)}
   .pdf-meta b{color:#C79A4A;font-weight:600}
 
-  .pdf-section{page-break-inside:avoid;margin-bottom:14mm}
-  .pdf-section-head{display:flex;align-items:baseline;gap:8mm;margin-bottom:6mm;padding-bottom:4mm;border-bottom:2px solid #C79A4A}
-  .pdf-section-num{font-family:'Cormorant Garamond',serif;font-size:28pt;font-weight:600;color:#C79A4A;line-height:1}
-  .pdf-section-title{font-family:'Cormorant Garamond',serif;font-size:20pt;font-weight:600;color:#0f1b2d;letter-spacing:-.01em;flex:1}
+  /* PAGES 2+ — standard A4 with content padding */
+  .pdf-body{box-sizing:border-box;padding:18mm 18mm 12mm;background:#ffffff;width:210mm}
 
-  .pdf-path{page-break-inside:avoid;border:1.5pt solid #E5E9EF;border-radius:4mm;padding:6mm;margin-bottom:5mm;background:#FAFBFC}
-  .pdf-path.primary{border-color:#C79A4A;background:linear-gradient(135deg,rgba(199,154,74,.05),#FAFBFC);border-width:2pt}
+  .pdf-section{page-break-inside:avoid;margin-bottom:10mm}
+  .pdf-section-head{display:flex;align-items:baseline;gap:5mm;margin-bottom:4mm;padding-bottom:2.5mm;border-bottom:1.5pt solid #C79A4A}
+  .pdf-section-num{font-family:'Cormorant Garamond',serif;font-size:24pt;font-weight:600;color:#C79A4A;line-height:1}
+  .pdf-section-title{font-family:'Cormorant Garamond',serif;font-size:18pt;font-weight:600;color:#0f1b2d;letter-spacing:-.01em;flex:1;margin:0}
+
+  .pdf-summary{font-size:10.5pt;color:#374151;line-height:1.65;margin:0}
+  .pdf-summary b{color:#0f1b2d;font-weight:600}
+
+  .pdf-path{page-break-inside:avoid;border:.8pt solid #E5E9EF;border-radius:3mm;padding:6mm;margin-bottom:4mm;background:#ffffff}
+  .pdf-path.primary{border-color:#C79A4A;background:#FEFAF2;border-width:1.2pt}
   .pdf-path-head{display:flex;justify-content:space-between;align-items:flex-start;gap:4mm;margin-bottom:3mm}
-  .pdf-path-title{font-family:'Cormorant Garamond',serif;font-size:15pt;font-weight:600;color:#0f1b2d;margin-bottom:1mm;line-height:1.2}
-  .pdf-path-sub{font-size:8pt;text-transform:uppercase;letter-spacing:.18em;color:#6B7280;font-weight:700}
-  .pdf-path-match{padding:1.2mm 3mm;border-radius:999px;background:#C79A4A;color:#13253A;font-weight:700;font-size:9pt;white-space:nowrap}
-  .pdf-path-rarity{padding:.8mm 2.5mm;border-radius:999px;font-size:7pt;text-transform:uppercase;letter-spacing:.15em;font-weight:800;display:inline-block;margin-left:2mm}
+  .pdf-path-title{font-family:'Cormorant Garamond',serif;font-size:14pt;font-weight:600;color:#0f1b2d;margin:1mm 0 0;line-height:1.2}
+  .pdf-path-sub{font-size:7.5pt;text-transform:uppercase;letter-spacing:.18em;color:#6B7280;font-weight:700;margin:0}
+  .pdf-path-tags{display:flex;flex-direction:column;gap:1.5mm;align-items:flex-end}
+  .pdf-path-match{padding:1mm 3mm;border-radius:999px;background:#C79A4A;color:#13253A;font-weight:700;font-size:8.5pt;white-space:nowrap}
+  .pdf-path-rarity{padding:.7mm 2.5mm;border-radius:999px;font-size:6.5pt;text-transform:uppercase;letter-spacing:.12em;font-weight:800;display:inline-block}
   .pdf-path-rarity.common{background:#F3F4F6;color:#6B7280}
   .pdf-path-rarity.rare{background:#DBEAFE;color:#2563EB}
   .pdf-path-rarity.epic{background:#EDE9FE;color:#7C3AED}
-  .pdf-path-rarity.legendary{background:#FEF3C7;color:#92400E;border:1pt solid #C79A4A}
-  .pdf-path-desc{font-size:10pt;color:#374151;line-height:1.55;margin-bottom:4mm}
-  .pdf-path-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm;padding:3mm 0;border-top:1pt solid #E5E9EF;border-bottom:1pt solid #E5E9EF;margin-bottom:4mm}
-  .pdf-stat-label{font-size:7pt;text-transform:uppercase;letter-spacing:.14em;color:#9CA3AF;font-weight:700;margin-bottom:1mm}
-  .pdf-stat-value{font-size:10pt;font-weight:600;color:#0f1b2d}
-  .pdf-path-why{padding:3mm;background:rgba(74,222,128,.08);border:1pt solid rgba(74,222,128,.3);border-radius:2mm;font-size:9pt;color:#065F46;line-height:1.5}
+  .pdf-path-rarity.legendary{background:#FEF3C7;color:#92400E;border:.5pt solid #C79A4A}
+  .pdf-path-desc{font-size:9.5pt;color:#374151;line-height:1.55;margin:2mm 0 3mm}
+  .pdf-path-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm;padding:3mm 0;border-top:.5pt solid #E5E9EF;border-bottom:.5pt solid #E5E9EF;margin-bottom:3mm}
+  .pdf-stat-label{font-size:6.5pt;text-transform:uppercase;letter-spacing:.14em;color:#9CA3AF;font-weight:700;margin-bottom:.8mm}
+  .pdf-stat-value{font-size:9.5pt;font-weight:600;color:#0f1b2d}
+  .pdf-path-why{padding:2.5mm 3mm;background:#F0FDF4;border-left:2pt solid #10B981;font-size:8.5pt;color:#065F46;line-height:1.55;border-radius:0 2mm 2mm 0}
   .pdf-path-why b{color:#047857;font-weight:700}
 
-  .pdf-steps{background:#F9FAFB;border:1pt solid #E5E9EF;border-radius:4mm;padding:6mm;page-break-inside:avoid}
-  .pdf-steps h3{font-family:'Cormorant Garamond',serif;font-size:14pt;font-weight:600;color:#0f1b2d;margin:0 0 3mm}
-  .pdf-step-item{display:flex;gap:3mm;padding:2.5mm 0;border-bottom:1pt solid #E5E9EF;font-size:10pt;color:#374151;line-height:1.5}
-  .pdf-step-item:last-child{border-bottom:0}
-  .pdf-step-n{width:6mm;height:6mm;border-radius:50%;background:rgba(199,154,74,.14);border:1pt solid #C79A4A;display:grid;place-items:center;color:#8A6A2E;font-weight:700;font-size:9pt;flex-shrink:0;font-family:'Cormorant Garamond',serif}
+  .pdf-steps{background:#F9FAFB;border:.5pt solid #E5E9EF;border-radius:3mm;padding:6mm;page-break-inside:avoid}
+  .pdf-steps h3{font-family:'Cormorant Garamond',serif;font-size:13pt;font-weight:600;color:#0f1b2d;margin:0 0 3mm}
+  .pdf-step-item{display:flex;gap:3mm;padding:2.5mm 0;border-bottom:.5pt solid #E5E9EF;font-size:9.5pt;color:#374151;line-height:1.55}
+  .pdf-step-item:last-child{border-bottom:0;padding-bottom:0}
+  .pdf-step-n{width:6mm;height:6mm;min-width:6mm;border-radius:50%;background:#FEF3C7;border:.8pt solid #C79A4A;display:grid;place-items:center;color:#8A6A2E;font-weight:700;font-size:8.5pt;flex-shrink:0;font-family:'Cormorant Garamond',serif}
   .pdf-step-item b{color:#0f1b2d;font-weight:600}
 
   .pdf-contact{
-    margin-top:8mm;padding:8mm;
-    background:linear-gradient(135deg,#0f1b2d,#13253A);color:#F8FBFF;
-    border-radius:4mm;text-align:center;page-break-inside:avoid;
+    margin-top:6mm;padding:7mm;
+    background:#0f1b2d;color:#F8FBFF;
+    border-radius:3mm;text-align:center;page-break-inside:avoid;
   }
-  .pdf-contact h3{font-family:'Cormorant Garamond',serif;font-size:16pt;font-weight:600;margin:0 0 2mm;color:#F8FBFF}
-  .pdf-contact p{font-size:10pt;color:rgba(248,251,255,.8);margin-bottom:4mm;max-width:120mm;margin-left:auto;margin-right:auto}
-  .pdf-contact-tag{display:inline-block;padding:2.5mm 6mm;background:#25D366;color:#063D1F;border-radius:999px;font-weight:700;font-size:10pt;margin-top:2mm}
-  .pdf-contact-url{font-size:9pt;color:#C79A4A;margin-top:4mm}
+  .pdf-contact h3{font-family:'Cormorant Garamond',serif;font-size:15pt;font-weight:600;margin:0 0 2mm;color:#F8FBFF}
+  .pdf-contact p{font-size:9.5pt;color:rgba(248,251,255,.82);margin:0 auto 4mm;max-width:130mm;line-height:1.5}
+  .pdf-contact-tag{display:inline-block;padding:2mm 6mm;background:#25D366;color:#063D1F;border-radius:999px;font-weight:700;font-size:9.5pt}
+  .pdf-contact-url{font-size:8.5pt;color:#C79A4A;margin-top:3mm}
 
-  .pdf-disc{font-size:8pt;color:#6B7280;margin-top:6mm;line-height:1.5;padding:3mm;background:#F9FAFB;border-radius:2mm}
-  .pdf-footer{margin-top:8mm;padding-top:4mm;border-top:1pt solid #E5E9EF;font-size:7pt;color:#9CA3AF;display:flex;justify-content:space-between}
+  .pdf-disc{font-size:7.5pt;color:#6B7280;margin-top:5mm;line-height:1.55;padding:3mm;background:#F9FAFB;border-radius:2mm;border-left:2pt solid #FBBF24}
+  .pdf-disc b{color:#78350F;font-weight:700}
+  .pdf-footer{margin-top:5mm;padding-top:2mm;border-top:.5pt solid #E5E9EF;font-size:7pt;color:#9CA3AF;display:flex;justify-content:space-between}
   .pdf-footer b{color:#C79A4A;font-weight:600}
 }
 </style>
@@ -1127,7 +1160,7 @@ body[data-rank="3"] .mesh-bg,body[data-rank="4"] .mesh-bg{filter:hue-rotate(-5de
 <div class="particles" id="particles"></div>
 
 <div class="achievement" id="achievement">
-  <div class="achievement-icon" id="ach-icon">🏆</div>
+  <div class="achievement-icon" id="ach-icon"></div>
   <div>
     <div class="achievement-label">Conquista desbloqueada</div>
     <div class="achievement-title" id="ach-title">—</div>
@@ -1156,14 +1189,14 @@ body[data-rank="3"] .mesh-bg,body[data-rank="4"] .mesh-bg{filter:hue-rotate(-5de
 <div class="level-up" id="level-up">
   <div class="level-up-title">Você subiu de nível</div>
   <div class="level-up-rank">
-    <span class="level-up-rank-icon" id="level-up-icon">🧭</span>
+    <span class="level-up-rank-icon" id="level-up-icon"></span>
     <span id="level-up-name">Explorador</span>
   </div>
   <div class="level-up-desc" id="level-up-desc">Continue respondendo — novos desbloqueios vêm aí.</div>
 </div>
 
 <div class="quest-tracker" id="quest-tracker">
-  <div class="quest-icon" id="quest-icon">🎯</div>
+  <div class="quest-icon" id="quest-icon"></div>
   <div class="quest-body">
     <div class="quest-label">Missão atual</div>
     <div class="quest-text" id="quest-text">Escolha seu objetivo</div>
@@ -1179,7 +1212,7 @@ body[data-rank="3"] .mesh-bg,body[data-rank="4"] .mesh-bg{filter:hue-rotate(-5de
     <div class="xp-cluster">
       <div class="live-dot"><span id="live-count">312</span>&nbsp;online</div>
       <div class="rank-badge" id="rank-badge">
-        <div class="rank-icon-wrap"><span class="rank-icon" id="rank-icon">🧭</span></div>
+        <div class="rank-icon-wrap"><span class="rank-icon" id="rank-icon"></span></div>
         <span class="rank-label" id="rank-label">Novato</span>
         <div class="rank-progress"><div class="rank-progress-fill" id="rank-progress-fill"></div></div>
       </div>
@@ -1214,7 +1247,37 @@ body[data-rank="3"] .mesh-bg,body[data-rank="4"] .mesh-bg{filter:hue-rotate(-5de
         <div class="hero-orbit">
           <div class="hero-dot d1"></div>
           <div class="hero-dot d2"></div>
-          <div class="hero-orb">🌍</div>
+          <div class="hero-orb">
+            <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <radialGradient id="globeGrad" cx="35%" cy="30%" r="70%">
+                  <stop offset="0%" stop-color="#FFF5E1" stop-opacity="1"/>
+                  <stop offset="35%" stop-color="#F2D49B"/>
+                  <stop offset="75%" stop-color="#C79A4A"/>
+                  <stop offset="100%" stop-color="#7A5A24"/>
+                </radialGradient>
+                <clipPath id="globeClip"><circle cx="40" cy="40" r="32"/></clipPath>
+              </defs>
+              <circle cx="40" cy="40" r="32" fill="url(#globeGrad)"/>
+              <g clip-path="url(#globeClip)" stroke="rgba(19,37,58,.35)" stroke-width=".8" fill="none" class="globe-grid">
+                <ellipse cx="40" cy="40" rx="32" ry="6"/>
+                <ellipse cx="40" cy="40" rx="32" ry="14"/>
+                <ellipse cx="40" cy="40" rx="32" ry="22"/>
+                <ellipse cx="40" cy="40" rx="32" ry="30"/>
+                <line x1="8" y1="40" x2="72" y2="40"/>
+                <path d="M40 8 Q20 40 40 72 Q60 40 40 8Z"/>
+                <path d="M40 8 Q55 40 40 72 Q25 40 40 8Z"/>
+              </g>
+              <g clip-path="url(#globeClip)" fill="rgba(19,37,58,.55)" class="globe-land">
+                <path d="M18 34 Q22 28 30 30 L35 28 L38 34 L32 40 L24 38 Z"/>
+                <path d="M46 22 L54 28 L52 36 L44 34 Z"/>
+                <path d="M42 44 Q50 48 56 46 L54 54 L44 56 L40 50 Z"/>
+                <path d="M22 50 L28 52 L26 58 L20 56 Z"/>
+              </g>
+              <circle cx="40" cy="40" r="32" fill="none" stroke="rgba(255,255,255,.35)" stroke-width="1"/>
+              <circle cx="30" cy="28" r="5" fill="rgba(255,255,255,.28)"/>
+            </svg>
+          </div>
         </div>
         <div class="intro-kicker">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L15 9H22L16 13L18 20L12 16L6 20L8 13L2 9H9L12 2Z"/></svg>
@@ -1405,9 +1468,9 @@ body[data-rank="3"] .mesh-bg,body[data-rank="4"] .mesh-bg{filter:hue-rotate(-5de
      ========================================================= -->
 <div class="pdf-doc" id="pdf-doc">
   <section class="pdf-cover">
+    <div class="pdf-cover-accent"></div>
     <div class="pdf-brand">
-      <div class="pdf-brand-mark">G</div>
-      <span>Global <b>Travel</b> Intercâmbios</span>
+      <img class="pdf-brand-logo" src="globaltravel_logo_original_white_v16.png" alt="Global Travel Intercâmbios">
     </div>
     <div class="pdf-cover-body">
       <div class="pdf-eyebrow">Plano personalizado</div>
@@ -1434,56 +1497,85 @@ body[data-rank="3"] .mesh-bg,body[data-rank="4"] .mesh-bg{filter:hue-rotate(-5de
     </div>
   </section>
 
-  <section class="pdf-section">
-    <div class="pdf-section-head">
-      <span class="pdf-section-num">01</span>
-      <span class="pdf-section-title">Resumo do seu caminho</span>
+  <div class="pdf-body">
+    <section class="pdf-section">
+      <div class="pdf-section-head">
+        <span class="pdf-section-num">01</span>
+        <h2 class="pdf-section-title">Resumo do seu caminho</h2>
+      </div>
+      <p id="pdf-summary" class="pdf-summary"></p>
+    </section>
+
+    <section class="pdf-section">
+      <div class="pdf-section-head">
+        <span class="pdf-section-num">02</span>
+        <h2 class="pdf-section-title">Caminhos recomendados</h2>
+      </div>
+      <div id="pdf-paths"></div>
+    </section>
+
+    <section class="pdf-section">
+      <div class="pdf-section-head">
+        <span class="pdf-section-num">03</span>
+        <h2 class="pdf-section-title">Próximos passos</h2>
+      </div>
+      <div class="pdf-steps" id="pdf-steps"></div>
+    </section>
+
+    <section class="pdf-contact">
+      <h3>Agende sua consultoria gratuita</h3>
+      <p>Nosso especialista valida seu plano, revisa documentação e monta o checklist completo para a sua mudança.</p>
+      <div class="pdf-contact-tag">Fale com um especialista no WhatsApp</div>
+      <div class="pdf-contact-url">globaltravelintercambios.com</div>
+    </section>
+
+    <div class="pdf-disc">
+      <b>Importante:</b> este plano é orientativo, baseado nas respostas fornecidas no simulador. Cada caso é único — a consultoria com especialista valida a rota real, revisa documentação e identifica ajustes. Valores e prazos são referência para 2026 e podem variar.
     </div>
-    <p id="pdf-summary" style="font-size:11pt;color:#374151;line-height:1.65;margin:0"></p>
-  </section>
-
-  <section class="pdf-section">
-    <div class="pdf-section-head">
-      <span class="pdf-section-num">02</span>
-      <span class="pdf-section-title">Caminhos recomendados</span>
+    <div class="pdf-footer">
+      <span>Global <b>Travel</b> Intercâmbios · Plano personalizado</span>
+      <span id="pdf-footer-date">—</span>
     </div>
-    <div id="pdf-paths"></div>
-  </section>
-
-  <section class="pdf-section">
-    <div class="pdf-section-head">
-      <span class="pdf-section-num">03</span>
-      <span class="pdf-section-title">Próximos passos</span>
-    </div>
-    <div class="pdf-steps" id="pdf-steps"></div>
-  </section>
-
-  <section class="pdf-contact">
-    <h3>Agende sua consultoria gratuita</h3>
-    <p>Nosso especialista valida seu plano, revisa documentação e monta o checklist completo pra sua mudança.</p>
-    <div class="pdf-contact-tag">WhatsApp: fale com um especialista</div>
-    <div class="pdf-contact-url">globaltravelintercambios.com</div>
-  </section>
-
-  <div class="pdf-disc">
-    <b>⚠️ Importante:</b> este plano é orientativo, baseado nas respostas fornecidas no simulador. Cada caso é único — a consultoria com especialista valida a rota real, revisa documentação e identifica ajustes. Valores e prazos são referência para 2026 e podem variar.
-  </div>
-  <div class="pdf-footer">
-    <span>Global <b>Travel</b> Intercâmbios · Plano personalizado</span>
-    <span id="pdf-footer-date">—</span>
   </div>
 </div>
 
 <script>
 // =============================================================
+// ICONS (custom SVGs — outlined, 1.8px stroke, currentColor)
+// =============================================================
+const ICONS = {
+  // Intents
+  turismo:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2Z"/></svg>',
+  intercambio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5L2 10Z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
+  estudar:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V10l7-5 7 5v11"/><path d="M10 21v-5h4v5M12 10h.01"/></svg>',
+  trabalhar:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><path d="M2 13h20"/></svg>',
+  cidadania:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M8 17h8M8 19.5h5"/></svg>',
+  // Ranks
+  novato:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>',
+  explorador:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+  aventureiro: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2zM9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>',
+  nomade:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.5 5.8L21 10l-4.8 4 1.4 6.8L12 17.3 6.4 20.8 7.8 14 3 10l6.5-1.2L12 3z"/></svg>',
+  cidadao:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19l-1-12 6 4 4-8 4 8 6-4-1 12M3 20h18"/></svg>',
+  // Achievements
+  objetivo:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>',
+  jornada:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>',
+  perfil:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>',
+  acesso:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1.5" fill="currentColor"/></svg>',
+  plano:       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.5 5.8L21 9l-5 4.2L17.2 20 12 16.8 6.8 20 8 13.2 3 9l6.5-1.2L12 2z" fill="currentColor" fill-opacity=".18"/></svg>',
+  trophy:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22M14 14.66V17c0 .55.47.98.97 1.21 1.18.54 2.03 2.03 2.03 3.79M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>',
+  // UI
+  arrow:       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
+};
+
+// =============================================================
 // DATA
 // =============================================================
 const INTENTS = [
-  {id:'turismo',     icon:'✈️', title:'Turismo / Viagem',           desc:'Férias ou só passagem — estadias curtas (até 90 dias)', xp:20},
-  {id:'intercambio', icon:'🎓', title:'Intercâmbio (estudo curto)', desc:'Estudar 3-12 meses e voltar ao Brasil depois',          xp:20},
-  {id:'estudar',     icon:'🏛️', title:'Estudar e morar',            desc:'Graduação/pós + intenção de permanecer',                 xp:20},
-  {id:'trabalhar',   icon:'💼', title:'Trabalhar e morar',          desc:'Mudança definitiva via trabalho, renda ou empresa',     xp:25},
-  {id:'cidadania',   icon:'🛂', title:'Cidadania por descendência', desc:'Reconhecer cidadania europeia já existente',            xp:20}
+  {id:'turismo',     icon:ICONS.turismo,     title:'Turismo / Viagem',           desc:'Férias ou só passagem — estadias curtas (até 90 dias)', xp:20},
+  {id:'intercambio', icon:ICONS.intercambio, title:'Intercâmbio (estudo curto)', desc:'Estudar 3-12 meses e voltar ao Brasil depois',          xp:20},
+  {id:'estudar',     icon:ICONS.estudar,     title:'Estudar e morar',            desc:'Graduação/pós + intenção de permanecer',                 xp:20},
+  {id:'trabalhar',   icon:ICONS.trabalhar,   title:'Trabalhar e morar',          desc:'Mudança definitiva via trabalho, renda ou empresa',     xp:25},
+  {id:'cidadania',   icon:ICONS.cidadania,   title:'Cidadania por descendência', desc:'Reconhecer cidadania europeia já existente',            xp:20}
 ];
 const COUNTRIES = [
   {id:'pt',     flag:'🇵🇹', name:'Portugal',      hook:'Caminho mais flexível da UE',                   xp:30},
@@ -1494,18 +1586,18 @@ const COUNTRIES = [
   {id:'unsure', flag:'❓', name:'Ainda não sei',  hook:'Deixa com a gente descobrir com você',          xp:15}
 ];
 const RANKS = [
-  {min:0,   name:'Novato',         icon:'🧭', desc:'Começando a jornada. Cada resposta desbloqueia mais.'},
-  {min:100, name:'Explorador',     icon:'🌍', desc:'Você já mapeou objetivo e destino. Bora aprofundar.'},
-  {min:250, name:'Aventureiro',    icon:'🚀', desc:'Perfil definido. Você está perto do plano completo.'},
-  {min:500, name:'Nômade Global',  icon:'✨', desc:'Acesso liberado. Seu plano personalizado chegou.'},
-  {min:800, name:'Cidadão Global', icon:'👑', desc:'Jornada completa. Chegou a hora de agir.'}
+  {min:0,   name:'Novato',         icon:ICONS.novato,      desc:'Começando a jornada. Cada resposta desbloqueia mais.'},
+  {min:100, name:'Explorador',     icon:ICONS.explorador,  desc:'Você já mapeou objetivo e destino. Bora aprofundar.'},
+  {min:250, name:'Aventureiro',    icon:ICONS.aventureiro, desc:'Perfil definido. Você está perto do plano completo.'},
+  {min:500, name:'Nômade Global',  icon:ICONS.nomade,      desc:'Acesso liberado. Seu plano personalizado chegou.'},
+  {min:800, name:'Cidadão Global', icon:ICONS.cidadao,     desc:'Jornada completa. Chegou a hora de agir.'}
 ];
 const QUESTS = [
-  {at:'intent',     text:'Escolha seu objetivo', icon:'🎯'},
-  {at:'country',    text:'Selecione o país de destino', icon:'🗺️'},
-  {at:'questions',  text:'Responda sobre seu perfil', icon:'🧭'},
-  {at:'gate',       text:'Acesse seu plano personalizado', icon:'🔓'},
-  {at:'result',     text:'Fale com especialista', icon:'💬'}
+  {at:'intent',     text:'Escolha seu objetivo',          icon:ICONS.objetivo},
+  {at:'country',    text:'Selecione o país de destino',   icon:ICONS.explorador},
+  {at:'questions',  text:'Responda sobre seu perfil',     icon:ICONS.perfil},
+  {at:'gate',       text:'Acesse seu plano personalizado',icon:ICONS.acesso},
+  {at:'result',     text:'Fale com especialista',         icon:ICONS.trophy}
 ];
 
 const QUESTIONS = {
@@ -1678,7 +1770,6 @@ function updateRankAndProgress(){
   const icon  = document.getElementById('rank-icon');
   const fill  = document.getElementById('rank-progress-fill');
 
-  // progress to next rank
   const curMin = RANKS[newRank].min;
   const nextMin = (RANKS[newRank+1] && RANKS[newRank+1].min) || (curMin + 300);
   const pct = Math.min(100, Math.max(0, ((state.xp - curMin) / (nextMin - curMin)) * 100));
@@ -1688,20 +1779,20 @@ function updateRankAndProgress(){
     state.rank = newRank;
     const rk = RANKS[newRank];
     label.textContent = rk.name;
-    icon.textContent  = rk.icon;
+    icon.innerHTML    = rk.icon;
     document.getElementById('rank-badge').classList.add('promoted');
     setTimeout(()=>document.getElementById('rank-badge').classList.remove('promoted'),1000);
     showLevelUp(rk);
   } else {
     const rk = RANKS[newRank];
     label.textContent = rk.name;
-    icon.textContent  = rk.icon;
+    icon.innerHTML    = rk.icon;
   }
 }
 function showLevelUp(rk){
   SFX.level();
   const el = document.getElementById('level-up');
-  document.getElementById('level-up-icon').textContent = rk.icon;
+  document.getElementById('level-up-icon').innerHTML = rk.icon;
   document.getElementById('level-up-name').textContent = rk.name;
   document.getElementById('level-up-desc').textContent = rk.desc;
   el.classList.add('show');
@@ -1772,12 +1863,12 @@ function updateTabTitle(){
   const rk = RANKS[state.rank];
   document.title = `⚡ ${state.xp} XP · ${rk.name} · Global Travel`;
 }
-function showAchievement(title, icon='🏆'){
+function showAchievement(title, icon){
   if(state.achievements.has(title)) return;
   state.achievements.add(title);
   SFX.unlock();
   document.getElementById('ach-title').textContent = title;
-  document.getElementById('ach-icon').textContent  = icon;
+  document.getElementById('ach-icon').innerHTML    = icon || ICONS.trophy;
   const el = document.getElementById('achievement');
   el.classList.add('show');
   setTimeout(()=>el.classList.remove('show'), 3400);
@@ -1808,7 +1899,7 @@ function setQuest(key){
   const q = QUESTS.find(x=>x.at===key);
   if(!q) return;
   document.getElementById('quest-text').textContent = q.text;
-  document.getElementById('quest-icon').textContent = q.icon;
+  document.getElementById('quest-icon').innerHTML  = q.icon;
   document.getElementById('quest-tracker').classList.add('show');
 }
 function hideQuest(){ document.getElementById('quest-tracker').classList.remove('show'); }
@@ -1868,7 +1959,7 @@ function selectIntent(id, ev){
   if(!prev){
     const intent = INTENTS.find(i=>i.id===id);
     addXP(intent.xp, ev);
-    showAchievement('Objetivo definido', '🎯');
+    showAchievement('Objetivo definido', ICONS.objetivo);
   }
 }
 
@@ -1896,7 +1987,7 @@ function selectCountry(id, ev){
   if(!prev){
     const country = COUNTRIES.find(c=>c.id===id);
     addXP(country.xp, ev);
-    showAchievement(`${country.flag} ${country.name}`, country.flag);
+    showAchievement(`${country.name} selecionado`, country.flag);
     showPassportStamp(country);
   }
 }
@@ -1972,10 +2063,10 @@ function answer(qid, val, ev){
     registerAnswer();
     const answered = Object.keys(state.answers).length;
     const total = getQuestions().length;
-    if(answered === Math.ceil(total/2)) showAchievement('Jornada iniciada', '🚀');
+    if(answered === Math.ceil(total/2)) showAchievement('Jornada iniciada', ICONS.jornada);
     else if(answered === total){
       addXP(50, ev);
-      showAchievement('Perfil mapeado', '🧭');
+      showAchievement('Perfil mapeado', ICONS.perfil);
     }
   }
 }
@@ -2014,7 +2105,7 @@ function submitLead(){
   try{localStorage.setItem('gt_lead', JSON.stringify(state.lead));}catch(e){}
   try{localStorage.setItem('gt_answers', JSON.stringify({intent:state.intent,country:state.country,answers:state.answers,xp:state.xp}));}catch(e){}
   addXP(100);
-  showAchievement('Acesso concedido', '🔓');
+  showAchievement('Acesso concedido', ICONS.acesso);
   nav('loading');
 }
 
@@ -2033,7 +2124,7 @@ function runLoadingSequence(){
     if(idx >= total){
       clearInterval(interval);
       meterFill.style.width = '100%';
-      setTimeout(()=>{ addXP(200); showAchievement('Plano desbloqueado', '✨'); nav('result'); fireConfetti(); }, 400);
+      setTimeout(()=>{ addXP(200); showAchievement('Plano desbloqueado', ICONS.plano); nav('result'); fireConfetti(); }, 400);
       return;
     }
     const next = container.querySelector(`[data-i="${idx}"]`);
@@ -2227,7 +2318,7 @@ function renderResult(){
     `▸ Objetivo: ${intent?intent.title:'—'}\n` +
     `▸ Destino: ${country?country.name:'—'}\n` +
     (paths && paths.length ? `▸ Caminho sugerido: ${VISAS[paths[0].k].title}\n` : '') +
-    `▸ XP: ${state.xp} (${RANKS[state.rank].name} ${RANKS[state.rank].icon})\n\n` +
+    `▸ XP: ${state.xp} · ${RANKS[state.rank].name}\n\n` +
     `Gostaria de agendar a consultoria gratuita.`;
   const tel = '351000000000';
   document.getElementById('wpp-cta').href = `https://wa.me/${tel}?text=${encodeURIComponent(msg)}`;
@@ -2266,15 +2357,15 @@ function downloadPDF(){
       <div class="pdf-path ${i===0?'primary':''}">
         <div class="pdf-path-head">
           <div>
-            <div class="pdf-path-sub">${i===0?'Caminho principal':`Alternativa ${i}`} · 🇵🇹 ${v.code}</div>
-            <div class="pdf-path-title">${v.title}</div>
+            <p class="pdf-path-sub">${i===0?'Caminho principal':`Alternativa ${i}`} · Portugal · ${v.code}</p>
+            <h3 class="pdf-path-title">${v.title}</h3>
           </div>
-          <div style="text-align:right">
-            <div class="pdf-path-match">${p.score}% match</div>
+          <div class="pdf-path-tags">
+            <span class="pdf-path-match">${p.score}% match</span>
             <span class="pdf-path-rarity ${v.rarity}">${rarityLabel(v.rarity)}</span>
           </div>
         </div>
-        <div class="pdf-path-desc">${v.description}</div>
+        <p class="pdf-path-desc">${v.description}</p>
         <div class="pdf-path-stats">
           <div><div class="pdf-stat-label">Prazo</div><div class="pdf-stat-value">${v.prazo}</div></div>
           <div><div class="pdf-stat-label">Custo estimado</div><div class="pdf-stat-value">${v.custo}</div></div>
@@ -2325,7 +2416,7 @@ function restart(){
   document.getElementById('country-next').disabled = true;
   document.getElementById('xp-value').textContent = '0';
   document.getElementById('rank-label').textContent = 'Novato';
-  document.getElementById('rank-icon').textContent = '🧭';
+  document.getElementById('rank-icon').innerHTML = RANKS[0].icon;
   document.getElementById('rank-progress-fill').style.width = '0%';
   updateTabTitle();
   nav('intro');
@@ -2402,6 +2493,8 @@ setTimeout(()=>{
 updateTabTitle();
 bindTilt();
 document.body.setAttribute('data-rank', '0');
+// Initialize rank icon on load (was emoji, now SVG)
+document.getElementById('rank-icon').innerHTML = RANKS[0].icon;
 </script>
 </body>
 </html>

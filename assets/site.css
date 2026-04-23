@@ -30,7 +30,10 @@ img{max-width:100%;display:block}
 .container{width:var(--container);margin:0 auto}
 .site-header{position:sticky;top:0;z-index:50;background:rgba(4,11,18,.74);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
 .nav-shell{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:84px}
-.brand{display:flex;align-items:center;gap:14px;min-width:0}.brand-logo{width:245px}.brand-mark{display:none;width:48px;height:48px;border-radius:14px}
+.brand{display:flex;align-items:center;gap:14px;min-width:0}.brand-logo{width:170px !important;height:auto !important;display:block;object-fit:contain;background:transparent !important;mix-blend-mode:screen;filter:drop-shadow(0 4px 14px rgba(0,0,0,.35))}.brand-mark{display:none;width:48px;height:48px;border-radius:14px}
+.preloader-logo{width:min(180px, 46vw) !important;background:transparent !important;mix-blend-mode:screen}
+.preloader-logo img{background:transparent !important;mix-blend-mode:screen}
+.footer-grid .brand-logo{width:min(150px, 38vw) !important;mix-blend-mode:screen}
 .nav-links{display:flex;align-items:center;gap:30px}.nav-links a{font-weight:600;color:rgba(255,255,255,.82)}.nav-links a:hover,.nav-links a.active{color:#fff}
 .nav-cta{display:flex;align-items:center;gap:12px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 22px;border-radius:999px;border:1px solid transparent;font-weight:700;cursor:pointer;transition:.24s var(--ease)}
